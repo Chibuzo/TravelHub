@@ -1,0 +1,143 @@
+<div class="modal fade" id="hotelModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h4 class="modal-title">Make Reservation</h4>
+			</div>
+			<div class="modal-body">
+				<form action="../../virtual/hotel_fns.php" id="form-add-hotel" method="post" enctype="multipart/form-data">
+					<div class="form-group">
+						<div class="input-group">
+						  <div class="input-group-addon">
+							<i class="fa fa-calendar"></i>
+						  </div>
+						  <input type="text" name="hotel_name" class="form-control" name="hotel" placeholder="Hotel Name" />
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<div class="input-group">
+						  <div class="input-group-addon">
+							<i class="fa fa-globe"></i>
+						  </div>
+						  <input type="text" name="address" class="form-control" name="address" placeholder="Address" />
+						</div>
+					</div>
+						
+					<div class="row">	
+						<div class="col-md-6">
+							<div class="form-group">
+								<div class="input-group">
+								  <div class="input-group-addon">
+									<i class="fa fa-phone"></i>
+								  </div>
+								  <input type="text" name="phone" class="form-control" name="phone" placeholder="Phone Number..." />
+								</div>
+							</div>
+						</div>
+						
+						<div class="col-md-6">
+							<div class="form-group">
+								<div class="input-group">
+								  <div class="input-group-addon">
+									<i class="fa fa-envelope"></i>
+								  </div>
+								  <input type="email" name="email" class="form-control" name="email" placeholder="Email..." />
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="row">	
+						<div class="col-md-6">
+							<div class="form-group">
+								<select name="state_id" class="form-control">
+									<option value="">-- States --</option>
+									<?php
+										$db = new Db(DB_NAME);
+										$db->query("SELECT * FROM states ORDER BY state");
+										foreach ($db->stmt AS $state) {
+											echo "<option value='{$state['id']}'>{$state['state']}</option>";
+										}
+									?>
+								</select>
+							</div>
+						</div>
+						
+						<div class="col-md-6">
+							<div class="form-group">
+								<select name="local_govt_id" class="form-control">
+									<option value="">-- Local Government --</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-md-6" style="padding: 1px 5px">
+							<h4 class="modal-title" style="margin: 8px; border-bottom: #f0f0f0 solid thin; padding-bottom: 7px">&nbsp;Available Features/Services</h4>
+							<div style="padding: 0 14px">
+								<div class="form-group">
+									<label>
+										<i class="fa fa-female fa-fw"></i> &nbsp; Room Service
+										<input type="checkbox" name="room_service" class="minimal pull-right" />
+									</label>
+								</div>
+								<div class="form-group">
+									<label>
+										<i class="fa fa-wifi fa-fw"></i> &nbsp; Internet Service
+									  <input type="checkbox" name="internet" class="minimal pull-right" />
+									</label>
+								</div>
+								<div class="form-group">
+									<label>
+										<i class="fa fa-cutlery fa-fw"></i> &nbsp; Restaurant
+									  <input type="checkbox" name="restaurant" class="minimal pull-right" />
+									</label>
+								</div>
+								<div class="form-group">
+									<label>
+										<i class="fa fa-glass fa-fw"></i> &nbsp; Bar
+									  <input type="checkbox" name="bar" class="minimal pull-right" />
+									</label>
+								</div>
+								<input type="hidden" name="action" value="addNew" />
+							</div>	
+						</div>
+						
+						<div class="col-md-6" style="padding: 1px 5px">
+							<h4 class="modal-title" style="margin: 8px; border-bottom: #f0f0f0 solid thin; padding-bottom: 7px">&nbsp;</h4>
+							<div style="padding: 0 14px">
+								<div class="form-group">
+									<input type="file" class="form-control" name="photo[]" />
+								</div>
+								
+								<div class="form-group">
+									<input type="file" class="form-control" name="photo[]" />
+								</div>
+								
+								<div class="form-group">
+									<input type="file" class="form-control" name="photo[]" />
+								</div>
+								
+								<div class="form-group">
+									<input type="file" class="form-control" name="photo[]" />
+								</div>
+							</div>
+						</div>
+					</div>
+
+					
+					<div class="alert alert-warning" style="display: none"></div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+						<button type="submit" name="submit" class="btn btn-success" id="submit-btn">Add Hotel</button>
+					</div>
+				</form>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
