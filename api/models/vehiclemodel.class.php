@@ -50,7 +50,7 @@ class VehicleModel extends Model {
 
 	public function getAllVehicleTypes()
 	{
-		$sql = "SELECT * FROM vehicle_types JOIN travel_vehicle_types ON vehicle_types.id = travel_vehicle_types.vehicle_type_id WHERE travel_vehicle_types.status = '1' ORDER BY name";
+		$sql = "SELECT * FROM vehicle_types WHERE removed = '0' ORDER BY name";
 		self::$db->query($sql);
 		return self::$db->fetchAll('obj');
 	}

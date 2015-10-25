@@ -9,7 +9,7 @@ $bus = new VehicleModel();
 $route = new RouteModel();
 
 if (isset($_POST['add_vehicle'])) {
-	$bus->addBusType($_POST['vehicle_name'], $_POST['num_of_seats']);
+	$bus->addVehicleType($_POST['vehicle_name'], $_POST['num_of_seats']);
 }
 elseif (isset($_POST['add_route'])) {
 	$route->addRoute($_POST['origin'], $_POST['destination']);

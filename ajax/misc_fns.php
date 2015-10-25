@@ -11,8 +11,8 @@ if (isset($_REQUEST['op'])) {
 		}
 	}
 	elseif ($_POST['op'] == 'delete-vehicle_type') {
-		require_once "../api/models/busmodel.class.php";
-		$bus = new BusModel();
+		require_once "../api/models/vehiclemodel.class.php";
+		$bus = new VehicleModel();
 		if ($bus->removeVehicle($_POST['id']) === true) {
 			echo "Done";
 		}
@@ -34,10 +34,10 @@ if (isset($_REQUEST['op'])) {
 	}
 	elseif ($_POST['op'] == 'update-bus')
 	{
-		require_once "../api/models/busmodel.class.php";
-		$bus = new BusModel();
+		require_once "../api/models/vehiclemodel.class.php";
+		$bus = new VehicleModel();
 		extract($_POST);
-		if ($bus->updateBusType($name, $num_of_seat, $id) === true) {
+		if ($bus->updateVehicleType($name, $num_of_seat, $id) === true) {
 			echo "Done";
 		}
 	}
