@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ac0c731a-4ff5-498d-8fd2-95cb5e7ad572" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ajax/misc_fns.php" afterPath="$PROJECT_DIR$/ajax/misc_fns.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cp/routes.php" afterPath="$PROJECT_DIR$/cp/routes.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api/models/vehiclemodel.class.php" afterPath="$PROJECT_DIR$/api/models/vehiclemodel.class.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cp/travels.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cp/includes/side-bar.php" afterPath="$PROJECT_DIR$/cp/includes/side-bar.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api/models/travel.class.php" afterPath="$PROJECT_DIR$/api/models/travel.class.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="travelhub.iws" />
@@ -29,7 +29,80 @@
     <favorites_list name="travelhub" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="side-bar.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cp/includes/side-bar.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-18.166666" vertical-offset="599" max-vertical-offset="1455">
+              <caret line="69" column="32" selection-start-line="69" selection-start-column="32" selection-end-line="69" selection-end-column="32" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="travels.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cp/travels.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-178.75" vertical-offset="0" max-vertical-offset="4380">
+              <caret line="286" column="0" selection-start-line="286" selection-start-column="0" selection-end-line="286" selection-end-column="0" />
+              <folding>
+                <element signature="n#style#0;n#h2#0;n#div#0;n#div#0;n#div#0;n#div#0;n#section#1;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#h2#0;n#div#0;n#div#0;n#div#1;n#div#0;n#section#1;n#div#0;n#!!top" expanded="true" />
+                <marker date="1446045051103" expanded="true" signature="2433:2473" placeholder="SELECT * FRO..states..." />
+                <marker date="1446045051103" expanded="true" signature="4866:5322" placeholder="..." />
+                <marker date="1446045051103" expanded="true" signature="5056:5304" placeholder="..." />
+                <marker date="1446045051103" expanded="true" signature="8481:8951" placeholder="..." />
+                <marker date="1446045051103" expanded="true" signature="8689:8933" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="vehiclemodel.class.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/api/models/vehiclemodel.class.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.7009346" vertical-offset="165" max-vertical-offset="1500">
+              <caret line="51" column="5" selection-start-line="51" selection-start-column="5" selection-end-line="51" selection-end-column="5" />
+              <folding>
+                <marker date="1445812993036" expanded="true" signature="187:328" placeholder="SELECT f.id ..fares..." />
+                <marker date="1445812993036" expanded="true" signature="509:584" placeholder="INSERT INTO ..." />
+                <marker date="1445812993036" expanded="true" signature="808:903" placeholder="UPDATE vehic..." />
+                <marker date="1445812993036" expanded="true" signature="1123:1184" placeholder="SELECT * FRO..vehicle_types..." />
+                <marker date="1445812993036" expanded="true" signature="1295:1570" placeholder="INSERT INTO ..." />
+                <marker date="1445812993036" expanded="true" signature="2012:2065" placeholder="UPDATE vehic..." />
+                <marker date="1445812993036" expanded="true" signature="2156:2201" placeholder="DELETE FROM ..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="db.class.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/api/models/db.class.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-11.875" vertical-offset="360" max-vertical-offset="2025">
+              <caret line="43" column="20" selection-start-line="43" selection-start-column="20" selection-end-line="43" selection-end-column="20" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="travel.class.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/api/models/travel.class.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-25.625" vertical-offset="0" max-vertical-offset="975">
+              <caret line="41" column="5" selection-start-line="41" selection-start-column="5" selection-end-line="41" selection-end-column="5" />
+              <folding>
+                <marker date="1446060883841" expanded="true" signature="529:553" placeholder="INSERT INTO ..." />
+                <marker date="1446060883841" expanded="true" signature="529:655" placeholder="INSERT INTO ..." />
+                <marker date="1446060883841" expanded="true" signature="932:1059" placeholder="UPDATE :_thi..." />
+                <marker date="1446060883841" expanded="true" signature="938:952" placeholder="INSERT INTO ..." />
+                <marker date="1446060883841" expanded="true" signature="1263:1339" placeholder="SELECT offli.._this_tbl_ WHERE..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -60,6 +133,9 @@
         <option value="$PROJECT_DIR$/cp/routes.php" />
         <option value="$PROJECT_DIR$/api/models/vehiclemodel.class.php" />
         <option value="$PROJECT_DIR$/ajax/misc_fns.php" />
+        <option value="$PROJECT_DIR$/cp/includes/side-bar.php" />
+        <option value="$PROJECT_DIR$/cp/travels.php" />
+        <option value="$PROJECT_DIR$/api/models/travel.class.php" />
       </list>
     </option>
   </component>
@@ -68,7 +144,7 @@
     <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="1936" />
-    <option name="height" value="1056" />
+    <option name="height" value="1066" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -96,7 +172,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -139,21 +214,41 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="ajax" />
+              <option name="myItemId" value="api" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="travelhub" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="travelhub" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="api" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="models" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
-    <property name="options.lastSelected" value="Configurable.PHP" />
+    <property name="options.lastSelected" value="preferences.sourceCode.PHP" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="FullScreen" value="false" />
+    <property name="LayoutCode.rearrangeEntriesPHP" value="false" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
@@ -194,11 +289,18 @@
       <option name="number" value="Default" />
       <updated>1445552649055</updated>
     </task>
+    <task id="LOCAL-00001" summary="Fixed routes page">
+      <created>1445813326468</created>
+      <option name="number" value="00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1445813326468</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="false" />
+    <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -206,7 +308,7 @@
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25799572" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26332623" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -215,6 +317,7 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962137" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -237,23 +340,50 @@
       <TodoPanelSettings />
     </option>
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="false" />
+    <MESSAGE value="Fixed routes page" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed routes page" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/cp/includes/side-bar.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1455">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cp/includes/head.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="585" max-vertical-offset="855">
+          <caret line="39" column="55" selection-start-line="39" selection-start-column="55" selection-end-line="39" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/models/vehiclemodel.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="165" max-vertical-offset="1500">
+          <caret line="11" column="35" selection-start-line="11" selection-start-column="35" selection-end-line="11" selection-end-column="35" />
+          <folding>
+            <marker date="1445812993036" expanded="true" signature="187:328" placeholder="SELECT f.id ..fares..." />
+            <marker date="1445812993036" expanded="true" signature="509:584" placeholder="INSERT INTO ..." />
+            <marker date="1445812993036" expanded="true" signature="808:903" placeholder="UPDATE vehic..." />
+            <marker date="1445812993036" expanded="true" signature="1123:1184" placeholder="SELECT * FRO..vehicle_types..." />
+            <marker date="1445812993036" expanded="true" signature="1295:1570" placeholder="INSERT INTO ..." />
+            <marker date="1445812993036" expanded="true" signature="2012:2065" placeholder="UPDATE vehic..." />
+            <marker date="1445812993036" expanded="true" signature="2156:2201" placeholder="DELETE FROM ..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/cp/routes.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4380">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1445727670624" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..states..." />
-            <marker date="1445727670624" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1445727670624" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1445727670624" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1445727670624" expanded="true" signature="-1:-1" placeholder="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -262,13 +392,13 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="97" max-vertical-offset="1500">
           <caret line="22" column="34" selection-start-line="22" selection-start-column="20" selection-end-line="22" selection-end-column="34" />
           <folding>
-            <marker date="1445812993036" expanded="true" signature="-1:-1" placeholder="SELECT f.id ..fares..." />
-            <marker date="1445812993036" expanded="true" signature="-1:-1" placeholder="INSERT INTO ..." />
-            <marker date="1445812993036" expanded="true" signature="-1:-1" placeholder="UPDATE vehic..." />
-            <marker date="1445812993036" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..vehicle_types..." />
-            <marker date="1445812993036" expanded="true" signature="-1:-1" placeholder="INSERT INTO ..." />
-            <marker date="1445812993036" expanded="true" signature="-1:-1" placeholder="UPDATE vehic..." />
-            <marker date="1445812993036" expanded="true" signature="-1:-1" placeholder="DELETE FROM ..." />
+            <marker date="1445812993036" expanded="true" signature="187:328" placeholder="SELECT f.id ..fares..." />
+            <marker date="1445812993036" expanded="true" signature="509:584" placeholder="INSERT INTO ..." />
+            <marker date="1445812993036" expanded="true" signature="808:903" placeholder="UPDATE vehic..." />
+            <marker date="1445812993036" expanded="true" signature="1123:1184" placeholder="SELECT * FRO..vehicle_types..." />
+            <marker date="1445812993036" expanded="true" signature="1295:1570" placeholder="INSERT INTO ..." />
+            <marker date="1445812993036" expanded="true" signature="2012:2065" placeholder="UPDATE vehic..." />
+            <marker date="1445812993036" expanded="true" signature="2156:2201" placeholder="DELETE FROM ..." />
           </folding>
         </state>
       </provider>
@@ -386,14 +516,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/api/models/db.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="2025">
-          <caret line="1" column="59" selection-start-line="1" selection-start-column="59" selection-end-line="1" selection-end-column="59" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/index.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="7813" max-vertical-offset="8775">
@@ -443,13 +565,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/api/models/travel.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.14184397" vertical-offset="0" max-vertical-offset="846">
-          <caret line="8" column="22" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cp/users.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.054021608" vertical-offset="0" max-vertical-offset="3420">
@@ -492,13 +607,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cp/includes/head.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.68122786" vertical-offset="8" max-vertical-offset="855">
-          <caret line="39" column="55" selection-start-line="39" selection-start-column="55" selection-end-line="39" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cp/dashboard.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="3525">
@@ -506,9 +614,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/ajax/misc_fns.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.69148934" vertical-offset="0" max-vertical-offset="846">
+          <caret line="39" column="35" selection-start-line="39" selection-start-column="35" selection-end-line="39" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cp/includes/side-bar.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-18.166666" vertical-offset="599" max-vertical-offset="1455">
+          <caret line="69" column="32" selection-start-line="69" selection-start-column="32" selection-end-line="69" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/api/models/routemodel.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.85106385" vertical-offset="1020" max-vertical-offset="1890">
+        <state vertical-scroll-proportion="0.8901869" vertical-offset="978" max-vertical-offset="1890">
           <caret line="116" column="5" selection-start-line="116" selection-start-column="5" selection-end-line="116" selection-end-column="5" />
           <folding>
             <marker date="1445031273574" expanded="true" signature="-1:-1" placeholder="SELECT name ..states_towns..." />
@@ -522,40 +645,72 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ajax/misc_fns.php">
+    <entry file="file://$PROJECT_DIR$/cp/routes.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.69148934" vertical-offset="0" max-vertical-offset="846">
-          <caret line="39" column="35" selection-start-line="39" selection-start-column="35" selection-end-line="39" selection-end-column="35" />
+        <state vertical-scroll-proportion="0.10514019" vertical-offset="0" max-vertical-offset="4380">
+          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cp/includes/head.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.68341124" vertical-offset="0" max-vertical-offset="856">
+          <caret line="39" column="55" selection-start-line="39" selection-start-column="55" selection-end-line="39" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cp/travels.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-178.75" vertical-offset="0" max-vertical-offset="4380">
+          <caret line="286" column="0" selection-start-line="286" selection-start-column="0" selection-end-line="286" selection-end-column="0" />
+          <folding>
+            <element signature="n#style#0;n#h2#0;n#div#0;n#div#0;n#div#0;n#div#0;n#section#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#h2#0;n#div#0;n#div#0;n#div#1;n#div#0;n#section#1;n#div#0;n#!!top" expanded="true" />
+            <marker date="1446045051103" expanded="true" signature="2433:2473" placeholder="SELECT * FRO..states..." />
+            <marker date="1446045051103" expanded="true" signature="4866:5322" placeholder="..." />
+            <marker date="1446045051103" expanded="true" signature="5056:5304" placeholder="..." />
+            <marker date="1446045051103" expanded="true" signature="8481:8951" placeholder="..." />
+            <marker date="1446045051103" expanded="true" signature="8689:8933" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/models/travel.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-25.625" vertical-offset="0" max-vertical-offset="975">
+          <caret line="41" column="5" selection-start-line="41" selection-start-column="5" selection-end-line="41" selection-end-column="5" />
+          <folding>
+            <marker date="1446060883841" expanded="true" signature="529:553" placeholder="INSERT INTO ..." />
+            <marker date="1446060883841" expanded="true" signature="529:655" placeholder="INSERT INTO ..." />
+            <marker date="1446060883841" expanded="true" signature="932:1059" placeholder="UPDATE :_thi..." />
+            <marker date="1446060883841" expanded="true" signature="938:952" placeholder="INSERT INTO ..." />
+            <marker date="1446060883841" expanded="true" signature="1263:1339" placeholder="SELECT offli.._this_tbl_ WHERE..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/models/db.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-11.875" vertical-offset="360" max-vertical-offset="2025">
+          <caret line="43" column="20" selection-start-line="43" selection-start-column="20" selection-end-line="43" selection-end-column="20" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/api/models/vehiclemodel.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.19503546" vertical-offset="0" max-vertical-offset="1500">
-          <caret line="11" column="35" selection-start-line="11" selection-start-column="35" selection-end-line="11" selection-end-column="35" />
+        <state vertical-scroll-proportion="0.7009346" vertical-offset="165" max-vertical-offset="1500">
+          <caret line="51" column="5" selection-start-line="51" selection-start-column="5" selection-end-line="51" selection-end-column="5" />
           <folding>
-            <marker date="1445812993036" expanded="true" signature="-1:-1" placeholder="SELECT f.id ..fares..." />
-            <marker date="1445812993036" expanded="true" signature="-1:-1" placeholder="INSERT INTO ..." />
-            <marker date="1445812993036" expanded="true" signature="-1:-1" placeholder="UPDATE vehic..." />
-            <marker date="1445812993036" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..vehicle_types..." />
-            <marker date="1445812993036" expanded="true" signature="-1:-1" placeholder="INSERT INTO ..." />
-            <marker date="1445812993036" expanded="true" signature="-1:-1" placeholder="UPDATE vehic..." />
-            <marker date="1445812993036" expanded="true" signature="-1:-1" placeholder="DELETE FROM ..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cp/routes.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.19503546" vertical-offset="0" max-vertical-offset="4380">
-          <caret line="11" column="24" selection-start-line="11" selection-start-column="24" selection-end-line="11" selection-end-column="24" />
-          <folding>
-            <marker date="1445727670624" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..states..." />
-            <marker date="1445727670624" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1445727670624" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1445727670624" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1445727670624" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1445812993036" expanded="true" signature="187:328" placeholder="SELECT f.id ..fares..." />
+            <marker date="1445812993036" expanded="true" signature="509:584" placeholder="INSERT INTO ..." />
+            <marker date="1445812993036" expanded="true" signature="808:903" placeholder="UPDATE vehic..." />
+            <marker date="1445812993036" expanded="true" signature="1123:1184" placeholder="SELECT * FRO..vehicle_types..." />
+            <marker date="1445812993036" expanded="true" signature="1295:1570" placeholder="INSERT INTO ..." />
+            <marker date="1445812993036" expanded="true" signature="2012:2065" placeholder="UPDATE vehic..." />
+            <marker date="1445812993036" expanded="true" signature="2156:2201" placeholder="DELETE FROM ..." />
           </folding>
         </state>
       </provider>
