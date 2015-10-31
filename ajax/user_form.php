@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once "../classes/user.class.php";
+require_once "../api/models/user.class.php";
 
 $user = new User();
 extract($_POST);

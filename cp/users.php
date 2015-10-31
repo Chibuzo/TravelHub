@@ -4,6 +4,8 @@ require "includes/side-bar.php";
 require_once "../api/models/user.class.php";
 
 $user = new User();
+
+$user_types = array('admin' => "Administrator", "user" => "User", "travel_admin" => "Travel Administrator", "account" => "Account");
 ?>
 <div class="content-wrapper">
   	<section class="content-header">
@@ -42,7 +44,7 @@ $user = new User();
 													<td>" . date('jS M Y', strtotime($_user['date_created'])) . "</td>
 													<td>{$_user['fullname']}</td>
 													<td>{$_user['username']}</td>
-													<td>{$_user['user_type']}</td>
+													<td>{$user_types[$_user['user_type']]}</td>
 													<td>
 														<a data-toggle='modal' href='#edit-userModal' class='btn btn-xs btn-info edit' title='Edit user'><i class='fa fa-edit fa-lg'></i></a>&nbsp;&nbsp
 														<a href='#' title='Remove user' class='delete btn btn-xs btn-danger'><i class='fa fa-trash-o fa-lg'></i></a>
@@ -140,6 +142,7 @@ $user = new User();
 								<option value="user">User</option>
 								<!--<option value="account">Account</option>-->
 								<option value="admin">Administrator</option>
+								<option value="travel_admin">Travel Administrator</option>
 							</select>
 						</section>
 					</div>

@@ -3,7 +3,7 @@ require_once "routemodel.class.php";
 
 class TravelRoute extends RouteModel {
 	public $id, $travel_id, $route_id, $status;
-	private static $tbl = "travel_routes";
+	protected static $tbl = "travel_routes";
 
 	function __construct()
 	{
@@ -30,6 +30,13 @@ class TravelRoute extends RouteModel {
 		}
 	}
 
+    public function getTravelRoutes($travel_id)
+    {
+        $sql = "SELECT routes.* FROM routes INNER JOIN travel_routes ON travel_routes.route_id = routes.id WHERE travel_routes.travel_id = :travel_id AND travel_routes.removed = '0'";
+        self::$db->query($sql, array('travel_id' => $travel_id));
+        return self::$db->fetchAll('obj');
+    }
+
 
 	public function verifyRoute($route_id, $travel_id)
 	{
@@ -48,7 +55,7 @@ class TravelRoute extends RouteModel {
 	public function disableRoute($route_id, $travel_id)
 	{
 		$sql = "UPDATE " . self::$tbl . " SET status = '0' WHERE route_id = :route_id AND travel_id = :travel_id";
-		if (self::$db->query($sql, array('route_id' => $route_id, 'travel_id' => $travel_id)) {
+		if (self::$db->query($sql, array('route_id' => $route_id, 'travel_id' => $travel_id))) {
 			return true;
 		}
 	}
@@ -57,7 +64,7 @@ class TravelRoute extends RouteModel {
 	public function removeRoute($route_id, $travel_id)
 	{
 		$sql = "UPDATE " . self::$tbl . " SET removed = '1' WHERE route_id = :route_id AND travel_id = :travel_id";
-		if (self::$db->query($sql, array('route_id' => $route_id, 'travel_id' => $travel_id)) {
+		if (self::$db->query($sql, array('route_id' => $route_id, 'travel_id' => $travel_id))) {
 			return true;
 		}
 	}

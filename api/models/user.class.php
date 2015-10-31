@@ -13,7 +13,7 @@ class User extends Travel {
 	{
 		$sql = "SELECT username FROM users WHERE username = :username";
         self::$db->query($sql, array('username' => $username));
-		$result = $this->db->fetch();
+		$result = self::$db->fetch();
 		if (isset($result->username)) {
 			return "02"; // username already taken
 		} else {
@@ -33,7 +33,7 @@ class User extends Travel {
 						(:fullname, :username, :password, :usertype, '$salt')";
 
 			if (self::$db->query($sql, $param)) {
-				return true;
+				return self::$db->getLastInsertId();
 			}
 		}
 		return false;
@@ -86,7 +86,7 @@ class User extends Travel {
 				'id'       => $id
 		);
 
-		if ($this->db->query($sql, $param)) {
+		if (self::$db->query($sql, $param)) {
 			return true;
 		}
 	}
@@ -153,5 +153,17 @@ class User extends Travel {
 	{
 		return self::$db->query("SELECT * FROM users WHERE deleted = '0' ORDER BY date_created");
 	}
+
+    function linkUserToTravel($travel_id, $user_id)
+    {
+        return self::$db->query("INSERT INTO travel_admins (travel_id, user_id) VALUES (:travel_id, :user_id)", array('travel_id' => $travel_id, 'user_id' => $user_id));
+    }
+
+    function getUserByTravel($travel_id)
+    {
+        $sql = "SELECT users.* FROM users INNER JOIN travel_admins ON users.id = travel_admins.user_id WHERE travel_admins.travel_id = :travel_id";
+        self::$db->query($sql, array('travel_id' => $travel_id));
+        return self::$db->fetchAll('obj');
+    }
 }
 ?>
