@@ -4,13 +4,13 @@ Navicat MySQL Data Transfer
 Source Server         : MySQL
 Source Server Version : 50625
 Source Host           : localhost:3306
-Source Database       : auto_star
+Source Database       : travelhub
 
 Target Server Type    : MYSQL
 Target Server Version : 50625
 File Encoding         : 65001
 
-Date: 2015-10-31 17:26:15
+Date: 2015-11-06 02:38:33
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -56,10 +56,10 @@ CREATE TABLE `booking_details` (
   `travel_date` date NOT NULL,
   `status` char(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
-  KEY `booked_id` (`boarding_bus_id`),
-  KEY `travel_date` (`travel_date`),
-  KEY `ticket_no` (`ticket_no`),
-  KEY `route_id` (`route_id`)
+  KEY `booked_id` (`boarding_bus_id`) USING BTREE,
+  KEY `travel_date` (`travel_date`) USING BTREE,
+  KEY `ticket_no` (`ticket_no`) USING BTREE,
+  KEY `route_id` (`route_id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
@@ -114,9 +114,9 @@ CREATE TABLE `departure_time` (
   `departure_order` tinyint(4) NOT NULL,
   `departure_time` varchar(10) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `travel_id` (`travel_id`),
-  KEY `route_code` (`route_id`),
-  KEY `travel_vehicle_type_id` (`travel_vehicle_type_id`)
+  KEY `travel_id` (`travel_id`) USING BTREE,
+  KEY `route_code` (`route_id`) USING BTREE,
+  KEY `travel_vehicle_type_id` (`travel_vehicle_type_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- ----------------------------
@@ -136,7 +136,7 @@ CREATE TABLE `fares` (
   `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `date_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `travel_id` (`travel_id`)
+  KEY `travel_id` (`travel_id`) USING BTREE
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- ----------------------------
@@ -163,11 +163,11 @@ CREATE TABLE `online_booking` (
   `date_booked` date NOT NULL,
   `time_stamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `booking_details_id` (`booking_details_id`),
-  UNIQUE KEY `ticket_no` (`ticket_no`),
-  KEY `payment_opt` (`payment_opt`,`payment_status`),
-  KEY `travel_date` (`travel_date`),
-  KEY `time_stamp` (`time_stamp`)
+  UNIQUE KEY `booking_details_id` (`booking_details_id`) USING BTREE,
+  UNIQUE KEY `ticket_no` (`ticket_no`) USING BTREE,
+  KEY `payment_opt` (`payment_opt`,`payment_status`) USING BTREE,
+  KEY `travel_date` (`travel_date`) USING BTREE,
+  KEY `time_stamp` (`time_stamp`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
@@ -187,31 +187,53 @@ DROP TABLE IF EXISTS `parks`;
 CREATE TABLE `parks` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `state_id` tinyint(4) NOT NULL,
-  `terminal_name` varchar(30) NOT NULL,
+  `park` varchar(30) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `travel_id` (`state_id`)
+  KEY `travel_id` (`state_id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of parks
 -- ----------------------------
-INSERT INTO `parks` VALUES ('1', '1', 'Jibowu');
-INSERT INTO `parks` VALUES ('2', '1', 'Maza maza');
-INSERT INTO `parks` VALUES ('3', '1', 'Orile');
-INSERT INTO `parks` VALUES ('4', '1', 'Oshodi-Charity');
-INSERT INTO `parks` VALUES ('5', '1', 'Ojuelegba');
-INSERT INTO `parks` VALUES ('6', '1', 'Ikotun');
-INSERT INTO `parks` VALUES ('7', '1', 'Berger');
-INSERT INTO `parks` VALUES ('8', '1', 'Cele');
-INSERT INTO `parks` VALUES ('9', '1', 'Oshodi-Bolade');
+INSERT INTO `parks` VALUES ('1', '25', 'Jibowu');
+INSERT INTO `parks` VALUES ('2', '25', 'Maza maza');
+INSERT INTO `parks` VALUES ('3', '25', 'Orile');
+INSERT INTO `parks` VALUES ('4', '25', 'Oshodi-Charity');
+INSERT INTO `parks` VALUES ('5', '25', 'Ojuelegba');
+INSERT INTO `parks` VALUES ('6', '25', 'Ikotun');
+INSERT INTO `parks` VALUES ('7', '25', 'Berger');
+INSERT INTO `parks` VALUES ('8', '25', 'Cele');
+INSERT INTO `parks` VALUES ('9', '25', 'Oshodi-Bolade');
 INSERT INTO `parks` VALUES ('10', '1', 'Iba');
-INSERT INTO `parks` VALUES ('11', '1', 'Iyana Ipaja');
+INSERT INTO `parks` VALUES ('11', '25', 'Iyana Ipaja');
 INSERT INTO `parks` VALUES ('12', '1', 'Volks');
-INSERT INTO `parks` VALUES ('13', '1', 'Yaba');
-INSERT INTO `parks` VALUES ('14', '1', 'Ajah');
-INSERT INTO `parks` VALUES ('15', '1', 'Festac Gate');
-INSERT INTO `parks` VALUES ('16', '2', 'Holy ghost');
-INSERT INTO `parks` VALUES ('17', '2', 'Nsukka');
+INSERT INTO `parks` VALUES ('13', '25', 'Yaba');
+INSERT INTO `parks` VALUES ('14', '25', 'Ajah');
+INSERT INTO `parks` VALUES ('15', '25', 'Festac Gate');
+INSERT INTO `parks` VALUES ('16', '3', 'Holy ghost');
+INSERT INTO `parks` VALUES ('17', '3', 'Nsukka');
+
+-- ----------------------------
+-- Table structure for `park_map`
+-- ----------------------------
+DROP TABLE IF EXISTS `park_map`;
+CREATE TABLE `park_map` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `origin` varchar(30) NOT NULL,
+  `destination` varchar(30) NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`),
+  KEY `origin` (`origin`) USING BTREE,
+  KEY `destination` (`destination`) USING BTREE
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records of park_map
+-- ----------------------------
+INSERT INTO `park_map` VALUES ('1', '1', '16', '1');
+INSERT INTO `park_map` VALUES ('2', '1', '17', '1');
+INSERT INTO `park_map` VALUES ('3', '14', '17', '1');
+INSERT INTO `park_map` VALUES ('4', '14', '16', '1');
 
 -- ----------------------------
 -- Table structure for `reports`
@@ -223,7 +245,7 @@ CREATE TABLE `reports` (
   `report_date` date NOT NULL,
   `date_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `filename` (`filename`)
+  UNIQUE KEY `filename` (`filename`) USING BTREE
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
@@ -242,10 +264,10 @@ CREATE TABLE `routes` (
   `route` varchar(30) NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
-  KEY `origin` (`origin`),
-  KEY `destination` (`destination`),
+  KEY `origin` (`origin`) USING BTREE,
+  KEY `destination` (`destination`) USING BTREE,
   FULLTEXT KEY `route` (`route`)
-) ENGINE=MyISAM AUTO_INCREMENT=60 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=61 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of routes
@@ -262,7 +284,6 @@ INSERT INTO `routes` VALUES ('55', 'Abuja', 'Lagos', 'Abuja - Lagos', '1');
 INSERT INTO `routes` VALUES ('54', 'Delta', 'Lagos', 'Delta - Lagos', '1');
 INSERT INTO `routes` VALUES ('53', 'PortHarcourt', 'Abuja', 'PortHarcourt - Abuja', '1');
 INSERT INTO `routes` VALUES ('52', 'PortHarcourt', 'Lagos', 'PortHarcourt - Lagos', '1');
-INSERT INTO `routes` VALUES ('58', '', '', ' - ', '0');
 INSERT INTO `routes` VALUES ('59', 'Abia', 'Jigawa', 'Abia - Jigawa', '0');
 
 -- ----------------------------
@@ -325,7 +346,7 @@ CREATE TABLE `states_towns` (
   `name` varchar(20) NOT NULL,
   `time_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`)
+  UNIQUE KEY `name` (`name`) USING BTREE
 ) ENGINE=MyISAM AUTO_INCREMENT=56 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
@@ -376,13 +397,14 @@ CREATE TABLE `travels` (
   `date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `company_name` (`company_name`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+  UNIQUE KEY `company_name` (`company_name`) USING BTREE
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of travels
 -- ----------------------------
 INSERT INTO `travels` VALUES ('4', 'Ekene', '10', '10', '2015-10-30 05:33:01', '0');
+INSERT INTO `travels` VALUES ('5', 'Ifesinachi', '5', '10', '2015-11-02 00:08:48', '0');
 
 -- ----------------------------
 -- Table structure for `travel_admins`
@@ -393,12 +415,61 @@ CREATE TABLE `travel_admins` (
   `travel_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of travel_admins
 -- ----------------------------
 INSERT INTO `travel_admins` VALUES ('1', '4', '6');
+INSERT INTO `travel_admins` VALUES ('2', '4', '7');
+INSERT INTO `travel_admins` VALUES ('3', '4', '8');
+INSERT INTO `travel_admins` VALUES ('6', '4', '12');
+INSERT INTO `travel_admins` VALUES ('13', '4', '19');
+INSERT INTO `travel_admins` VALUES ('17', '4', '24');
+INSERT INTO `travel_admins` VALUES ('18', '4', '25');
+INSERT INTO `travel_admins` VALUES ('19', '4', '26');
+
+-- ----------------------------
+-- Table structure for `travel_park`
+-- ----------------------------
+DROP TABLE IF EXISTS `travel_park`;
+CREATE TABLE `travel_park` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `travel_id` int(11) NOT NULL,
+  `park_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `travel_id` (`travel_id`,`park_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records of travel_park
+-- ----------------------------
+INSERT INTO `travel_park` VALUES ('1', '4', '1', '24');
+INSERT INTO `travel_park` VALUES ('2', '4', '14', '25');
+INSERT INTO `travel_park` VALUES ('3', '4', '2', '26');
+
+-- ----------------------------
+-- Table structure for `travel_park_map`
+-- ----------------------------
+DROP TABLE IF EXISTS `travel_park_map`;
+CREATE TABLE `travel_park_map` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `travel_id` smallint(6) NOT NULL,
+  `park_map_id` smallint(6) NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT '0',
+  `date_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `travel_id` (`travel_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records of travel_park_map
+-- ----------------------------
+INSERT INTO `travel_park_map` VALUES ('1', '4', '1', '0', '2015-11-06 01:24:16');
+INSERT INTO `travel_park_map` VALUES ('2', '4', '2', '0', '2015-11-06 01:41:35');
+INSERT INTO `travel_park_map` VALUES ('3', '4', '3', '0', '2015-11-06 01:43:40');
+INSERT INTO `travel_park_map` VALUES ('4', '4', '4', '0', '2015-11-06 01:45:05');
 
 -- ----------------------------
 -- Table structure for `travel_routes`
@@ -412,12 +483,31 @@ CREATE TABLE `travel_routes` (
   `removed` tinyint(1) NOT NULL DEFAULT '0',
   `date_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `travel_id` (`travel_id`)
+  KEY `travel_id` (`travel_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of travel_routes
 -- ----------------------------
+
+-- ----------------------------
+-- Table structure for `travel_state`
+-- ----------------------------
+DROP TABLE IF EXISTS `travel_state`;
+CREATE TABLE `travel_state` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `travel_id` int(11) NOT NULL,
+  `state_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `travel_id` (`travel_id`,`state_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records of travel_state
+-- ----------------------------
+INSERT INTO `travel_state` VALUES ('4', '4', '16', '12');
+INSERT INTO `travel_state` VALUES ('11', '4', '25', '19');
 
 -- ----------------------------
 -- Table structure for `travel_vehicle_types`
@@ -433,7 +523,7 @@ CREATE TABLE `travel_vehicle_types` (
   `date_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `date_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `travel_id` (`travel_id`)
+  KEY `travel_id` (`travel_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- ----------------------------
@@ -454,7 +544,7 @@ CREATE TABLE `users` (
   `date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `deleted` char(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of users
@@ -465,6 +555,13 @@ INSERT INTO `users` VALUES ('3', 'Okpeke Admin', 'okpo', 'dfa8617b02c9d168c793c6
 INSERT INTO `users` VALUES ('4', 'amaka', 'amaka', '6ab0034f44a8f3fc92c2c9259133bfec8d581037cd36db30fc72bcb3d1bed9f6', 'X5AWxXtEqactoQH+DrjSuBfk4tZRyZZR', 'account', '2015-03-06 18:57:15', '0');
 INSERT INTO `users` VALUES ('5', 'Administrator', 'admin', '34d9b4b876b7bda4e21a078ec6ddaa8f6379e4bde47009db722c82466988cdd1', 'izL6onBroshZLfM85Vrb1ZqEH+BuIRGi', 'user', '2015-03-27 13:00:46', '0');
 INSERT INTO `users` VALUES ('6', 'Iroegbu Iroegbu', 'iroegbu', '648fbd2a1cc291edb8a1f7fee439d4fd63e6d470335ecce975ae0440cfb6f8a8', 'SLQbO/M3AgXsP80g4w/LQqEpG5fQ8O5w', 'travel_admin', '2015-10-31 17:18:50', '0');
+INSERT INTO `users` VALUES ('7', 'Pelumi', 'pelu', '6ba0345fa0dfb195e0be52dfb0d2ead435c1f0a4d0b369e70c42daf13a9507e9', 'mEpDVw91QNhMkITN78Ge6RDQ7DR7ilQp', 'travel_admin', '2015-10-31 17:37:06', '0');
+INSERT INTO `users` VALUES ('8', 'Chioma Amobi', 'chioma', 'a9b406e042798333f05e9856f8007eed7fe6ee62e390fc650121dbf6e8c3e5c7', 'lBBIrp9cvP4c/KcCqyh4mOP8V7WcUBez', 'travel_admin', '2015-10-31 17:43:13', '0');
+INSERT INTO `users` VALUES ('12', 'Aproko AprokoName', 'aproko', '8af34d1d0c4f28cb65dc0b9d63a2b42c1a452339c0e763f42b83d313c07de022', 'BbUHCpEa0v3zdt/P/iFGjDvmpmRQjVsi', 'state_admin', '2015-11-02 22:45:50', '0');
+INSERT INTO `users` VALUES ('24', 'Okolo Uzo', 'okoloc', 'f44c0263ddf60765eeeed2b26152d02562ace000f8727c1f177a8f8d21df0d14', '8tE5BGSybCMOezCmDVdGA78lcgtWq+0C', 'park_admin', '2015-11-03 01:15:11', '0');
+INSERT INTO `users` VALUES ('19', 'Adesuwa Okpefa', 'okpefa', 'af36c1cff6d5eec594d9071f10022513539416e656cde383922c87dcad43e1a0', '5kCa9idNn9VKN/9TzNrdUoMxgI0LCquL', 'state_admin', '2015-11-02 22:45:47', '0');
+INSERT INTO `users` VALUES ('25', 'Augustine Ogwo', 'ogwo', '9e685dad18b5d9da472d85a4b9611105ae8c580f1ba88177a9940f7a26268ff8', 'oYn9dLq7X0w3pckhFU3E2gr8Nj3Tu5ct', 'park_admin', '2015-11-03 01:17:19', '0');
+INSERT INTO `users` VALUES ('26', 'Chike UserFullName', 'chike', '76db376ca24afc11fd3d8a336917fada8d0d58fcb87a892b7a6d7ec9cf13d24f', 'Tn+vJ9gSH/bRaocs2ISsVgfCb1huczj3', 'park_admin', '2015-11-05 16:06:04', '0');
 
 -- ----------------------------
 -- Table structure for `vehicle_types`
@@ -476,7 +573,7 @@ CREATE TABLE `vehicle_types` (
   `num_of_seats` tinyint(2) NOT NULL,
   `removed` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of vehicle_types
