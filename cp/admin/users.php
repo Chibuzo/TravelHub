@@ -1,7 +1,8 @@
 <?php
 require "includes/head.php";
 require "includes/side-bar.php";
-require_once "../api/models/user.class.php";
+
+require_once "../../api/models/user.class.php";
 
 $user = new User();
 
@@ -168,7 +169,7 @@ $user_types = array('admin' => "Administrator", "user" => "User", "travel_admin"
 	$("#add-user-form").submit(function(e) {
 		e.preventDefault();
 
-		$.post("../ajax/user_form.php", $(this).serialize() + "&op=add-user", function(d) {
+		$.post("../../ajax/user_form.php", $(this).serialize() + "&op=add-user", function(d) {
 			if (d.trim() == "Done") {
 				location.reload(true);
 			}
@@ -180,7 +181,7 @@ $user_types = array('admin' => "Administrator", "user" => "User", "travel_admin"
 	$("#edit-user-form").submit(function(e) {
 		e.preventDefault();
 
-		$.post("../ajax/user_form.php", $(this).serialize() + "&op=edit-user", function(d) {
+		$.post("../../ajax/user_form.php", $(this).serialize() + "&op=edit-user", function(d) {
 			if (d.trim() == "Done") {
 				location.reload(true);
 			}
@@ -206,7 +207,7 @@ $user_types = array('admin' => "Administrator", "user" => "User", "travel_admin"
 		var id = $parentTr.attr("id");
 
 		if (confirm("Are you sure you want to remove this user?")) {
-			$.post("../ajax/user_form.php", {"op": "delete-user", "id": id}, function(d) {
+			$.post("../../ajax/user_form.php", {"op": "delete-user", "id": id}, function(d) {
 				if (d.trim() == "Done") {
 					$parentTr.fadeOut();
 				}

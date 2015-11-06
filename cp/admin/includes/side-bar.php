@@ -53,7 +53,7 @@
             </li>
 
             <li>
-                <a href="bushire.php">
+                <a href="../bushire.php">
                     <i class="fa fa-bus"></i>
                     <span>Bus Hire</span>
                 </a>
@@ -81,7 +81,7 @@
             </li>
 
             <li>
-                <a href="logout.php">
+                <a href="../logout.php">
                     <i class="fa fa-sign-out"></i>
                     <span>Logout</span>
                 </a>

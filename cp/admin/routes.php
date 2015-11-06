@@ -1,9 +1,9 @@
 <?php
 require "includes/head.php";
 require "includes/side-bar.php";
-require_once "../includes/db_handle.php";
-require_once "../api/models/vehiclemodel.class.php";
-require_once "../api/models/routemodel.class.php";
+require_once "../../includes/db_handle.php";
+require_once "../../api/models/vehiclemodel.class.php";
+require_once "../../api/models/routemodel.class.php";
 
 $bus = new VehicleModel();
 $route = new RouteModel();
@@ -51,7 +51,7 @@ elseif (isset($_POST['add_route'])) {
 									<div class="row">
 										<div class="col-md-5">
 											<div class="form-group" id="origin">
-												<select name="origin" class="form-control">
+												<select name="origin" class="form-control" required>
 													<option value="">-- Origin ( From ) --</option>
 													<?php
 														$states = '';
@@ -66,7 +66,7 @@ elseif (isset($_POST['add_route'])) {
 
 										<div class="col-md-5">
 											<div class="form-group" id="destination">
-												<select name="destination" class="form-control">
+												<select name="destination" class="form-control" required>
 													<option value="">-- Destination ( To ) --</option>
 													<?php
 														echo $states;
@@ -131,13 +131,13 @@ elseif (isset($_POST['add_route'])) {
 									<div class="row">
 										<div class="col-md-7">
 											<div class="form-group">
-												<input type="text" name="vehicle_name" class="form-control" placeholder="Vehicle type" />
+												<input type="text" name="vehicle_name" class="form-control" placeholder="Vehicle type" required />
 											</div>
 										</div>
 
 										<div class="col-md-3">
 											<div class="form-group">
-												<input type="text" name="num_of_seats" class="form-control" placeholder="No of seats" />
+												<input type="text" name="num_of_seats" class="form-control" placeholder="No of seats" required />
 											</div>
 										</div>
 										<input type="hidden" name="add_vehicle" value="yes" />
@@ -233,7 +233,7 @@ $(document).ready(function() {
 		var name = parentTr.find("input[name=bus_type]").val();
 		var num = parentTr.find("input[name=num_of_seats]").val();
 
-		$.post("../ajax/misc_fns.php", {"op": "update-bus", "name": name, "num_of_seat": num, "id": id}, function(d) {
+		$.post("../../ajax/misc_fns.php", {"op": "update-bus", "name": name, "num_of_seat": num, "id": id}, function(d) {
 			if (d.trim() == "Done") {
 			}
 		});
@@ -273,7 +273,7 @@ $(document).ready(function() {
 		var origin = parentTr.find("select[name=origin]").val();
 		var destination = parentTr.find("select[name=destination]").val();
 
-		$.post("../ajax/misc_fns.php", {"op": "update-route", "origin": origin, "destination": destination, "id": id}, function(d) {
+		$.post("../../ajax/misc_fns.php", {"op": "update-route", "origin": origin, "destination": destination, "id": id}, function(d) {
 			if (d.trim() == "Done") {
 			}
 		});

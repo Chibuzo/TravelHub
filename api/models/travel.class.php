@@ -1,5 +1,5 @@
 <?php
-require_once "../api/models/model.class.php";
+require_once "model.class.php";
 
 class Travel extends Model {
 
@@ -22,6 +22,39 @@ class Travel extends Model {
     {
         $sql = "SELECT id, company_name, offline_charge, online_charge FROM travels WHERE deleted = '0' ORDER BY date_created";
         self::$db->query($sql);
+        return self::$db->fetchAll('obj');
+    }
+
+    function getTravelByUser($user_id)
+    {
+        $sql = "SELECT travels.id, travels.company_name, travels.offline_charge, travels.online_charge FROM travel_admins INNER JOIN travels ON travel_admins.travel_id = travels.id WHERE travel_admins.user_id = :user_id";
+        self::$db->query($sql, array('user_id' => $user_id));
+        return self::$db->fetch('obj');
+    }
+
+    function getTravelStates($travel_id)
+    {
+        $sql = "SELECT travel_state.id, travel_state.travel_id AS travel_id, states.state_name, users.fullname, users.username, users.id AS user_id FROM travel_state INNER JOIN states ON travel_state.state_id = states.id INNER JOIN users ON travel_state.user_id = users.id WHERE travel_state.travel_id = :travel_id";
+        self::$db->query($sql, array('travel_id' => $travel_id));
+        return self::$db->fetchAll('obj');
+    }
+
+    function getTravelStateByUser($user_id)
+    {
+        $sql = "SELECT travel_state.id, travel_state.travel_id AS travel_id, states.state_name, states.id as state_id, users.fullname, users.username, users.id AS user_id FROM travel_state INNER JOIN states ON travel_state.state_id = states.id INNER JOIN users ON travel_state.user_id = users.id WHERE travel_state.user_id = :user_id";
+        self::$db->query($sql, array('user_id' => $user_id));
+        return self::$db->fetch('obj');
+    }
+
+    function getTravelParks($travel_id)
+    {
+        $sql = "SELECT travel_park.id, travel_park.travel_id AS travel_id, parks.park, states.state_name AS state_name, states.id AS state_id, users.fullname, users.username, users.id AS user_id
+                FROM travel_park
+                INNER JOIN parks ON travel_park.park_id = parks.id
+                INNER JOIN users ON travel_park.user_id = users.id
+                INNER JOIN states ON states.id = parks.state_id
+                WHERE travel_park.travel_id = :travel_id";
+        self::$db->query($sql, array('travel_id' => $travel_id));
         return self::$db->fetchAll('obj');
     }
 

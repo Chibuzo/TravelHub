@@ -63,7 +63,7 @@ if (isset($_REQUEST['op'])) {
     elseif ($_POST['op'] == 'travel-details')
     {
         $id = $_POST['id'];
-        require_once "../cp/mini-pages/travel-detail.php";
+        require_once "../cp/admin/mini-pages/travel-detail.php";
     }
     elseif ($_POST['op'] == 'add-travel-admin')
     {
@@ -74,6 +74,24 @@ if (isset($_REQUEST['op'])) {
             $user_model->linkUserToTravel($_POST['travel_id'], $result);
             echo "Done";
         }
+    }
+    elseif ($_POST['op'] == 'park-details')
+    {
+        $id = $_POST['id'];
+
+        require_once "../includes/db_handle.php";
+        require_once "../cp/state/mini-pages/park-detail.php";
+    }
+    elseif ($_POST['op'] == "get-state-parks")
+    {
+        $id = $_POST['state_id'];
+        require_once "../api/models/parkmodel.class.php";
+        $park_model = new ParkModel();
+
+        $parks =  $park_model->getParksByState($id);
+
+        echo json_encode($parks);
+        exit;
     }
 }
 ?>

@@ -1,10 +1,10 @@
 <?php
 require "includes/head.php";
 require "includes/side-bar.php";
-require_once "../api/models/fare.class.php";
-require_once "../api/models/vehiclemodel.class.php";
-require_once "../api/models/routemodel.class.php";
-//require_once "includes/db_handle.php";
+
+require_once "../../api/models/fare.class.php";
+require_once "../../api/models/vehiclemodel.class.php";
+require_once "../../api/models/routemodel.class.php";
 
 $fare = new Fare();
 

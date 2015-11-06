@@ -1,24 +1,24 @@
 <?php
 require "includes/head.php";
 require "includes/side-bar.php";
-require_once "../api/models/bookingmodel.class.php";
+require_once "../../api/models/buscharter.class.php";
 
-$booking = new BookingModel();
+$bus = new BusCharter();
 ?>
-<link href="plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="../plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
 <style>
-.icons .fa { color: red; }
+.icons .fa { color: #999; }
 </style>
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
 	<section class="content-header">
 	  <h1>
-		Seat Reservations
+		Bus Hire
 		<small>Control panel</small>
 	  </h1>
 	  <ol class="breadcrumb">
 		<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-		<li class="active">Seat Reservations</li>
+		<li class="active">Bus Hire</li>
 	  </ol>
 	</section>
 
@@ -28,7 +28,7 @@ $booking = new BookingModel();
 			<div class="col-md-12">
 				<div class="box box-warning">
 					<div class="box-header with-border">
-						<h2 style='font-size: 18px' class="box-title"><i class="fa fa-car"></i> &nbsp;Seat Reservations</h2>
+						<h2 style='font-size: 18px' class="box-title"><i class="fa fa-bus"></i> &nbsp;Bus Hire</h2>
 						<div class="box-tools pull-right">
 							<button data-toggle="modal" data-target="#hotelModal" class="btn bg-olive hidden"><i class="fa fa-plus"></i> New Route</button>
 						</div>
@@ -39,36 +39,39 @@ $booking = new BookingModel();
 								<thead>
 									<tr>
 										<th width='40'>S/No</th>
-										<th>Route</th>
-										<th>Travel date</th>
+										<th>Pickup Location</th>
+										<th>Destination</th>
 										<th>Customer</th>
 										<th>Phone</th>
-										<th>Ticket Ref</th>
+										<th>Travel date</th>
 										<th>Vehicle</th>
-										<th class='text-right'>Fare ( ₦ )</th>
-										<th>Payment</th>
+										<th class='text-right'>No of Vehicles</th>
 										<th>Date booked</th>
-										<th></th>
+										<th>Status</th>
+										<th colspan="2"></th>
 									</tr>
 								</thead>
 								<tbody>
 									<?php
 										$n = 0;
-										foreach ($booking->getBookings() AS $book) {
+										foreach ($bus->getBusCharter() AS $_bus) {
 											$n++;
-											echo "<tr>
+											echo "<tr id='$_bus->id'>
 													<td class='text-right'>$n</td>
-													<td>$book->route</td>
-													<td>" . date('D d/m/Y', strtotime($book->travel_date)) . "</td>
-													<td>$book->c_name</td>
-													<td>$book->phone_no</td>
-													<td>$book->ticket_no</td>
-													<td>$book->bus_type</td>
-													<td class='text-right'>" . number_format($book->fare) . "</td>
-													<td>$book->payment_status</td>
-													<td>" . date('D d/m/Y', strtotime($book->date_booked)) . "</td>
-													<td class='text-center icons' id='$book->id'>
-														<a href='' class='cancel' data-toggle='tooltip' title='Cancel ticket'><i class='fa fa-times fa-lg'></i></a>
+													<td>$_bus->departure_location</td>
+													<td>$_bus->destination</td>
+													<td>$_bus->name</td>
+													<td>$_bus->phone</td>
+													<td>" . date('D d/m/Y', strtotime($_bus->travel_date)) . "</td>
+													<td>$_bus->bus_type</td>
+													<td class='text-right'>$_bus->num_of_vehicles</td>
+													<td>" . date('D d/m/Y', strtotime($_bus->date_chartered)) . "</td>
+													<td>$_bus->status</td>
+													<td class='text-center'>
+														<a href='' class='cancel' data-toggle='tooltip' title='Confirm request'><i class='fa fa-check fa-lg'></i></a>
+													</td>
+													<td class='text-center'>
+														<a href='' class='cancel' data-toggle='tooltip' title='Cancel bus hire'><i class='fa fa-times fa-lg'></i></a>
 													</td>
 												</tr>";
 										}
@@ -84,8 +87,8 @@ $booking = new BookingModel();
 </div>
 
 <?php include_once "includes/footer.html"; ?>
-<script src="plugins/datatables/jquery.dataTables.js" type="text/javascript"></script>
-<script src="plugins/datatables/dataTables.bootstrap.js" type="text/javascript"></script>
+<script src="../plugins/datatables/jquery.dataTables.js" type="text/javascript"></script>
+<script src="../plugins/datatables/dataTables.bootstrap.js" type="text/javascript"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 	$(".cancel").click(function(e) {

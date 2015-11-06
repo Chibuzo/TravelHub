@@ -39,6 +39,49 @@ class User extends Travel {
 		return false;
 	}
 
+    function createTravelAdmin($fullname, $username, $password, $travel_id)
+    {
+        self::$db->beginDbTransaction();
+        $user_id = $this->createUser($fullname, $username, $password, 'travel_admin');
+        if ($user_id != false) {
+            $this->linkUserToTravel($travel_id, $user_id);
+            self::$db->commitTransaction();
+        } else {
+            self::$db->rollBackTransaction();
+        }
+    }
+
+    function createStateAdmin($fullname, $username, $password, $travel_id, $state_id)
+    {
+        self::$db->beginDbTransaction();
+        $user_id = $this->createUser($fullname, $username, $password, 'state_admin');
+        if ($user_id !== false) {
+            if (($this->linkUserToTravel($travel_id, $user_id) !== false) && ($this->addTravelState($travel_id, $state_id, $user_id) !== false)) {
+                self::$db->commitTransaction();
+                return true;
+            } else {
+                //TODO: roll-back isn't working!!!
+                self::$db->rollBackTransaction();
+                return false;
+            }
+        }
+    }
+
+    function createParkAdmin($fullname, $username, $password, $travel_id, $park_id)
+    {
+        self::$db->beginDbTransaction();
+        $user_id = $this->createUser($fullname, $username, $password, 'park_admin');
+        if ($user_id !== false) {
+            if (($this->linkUserToTravel($travel_id, $user_id) !== false) && ($this->addTravelPark($travel_id, $park_id, $user_id) !== false)) {
+                self::$db->commitTransaction();
+                return true;
+            } else {
+                //TODO: roll-back isn't working!!!
+                self::$db->rollBackTransaction();
+                return false;
+            }
+        }
+    }
 
 	function login($username, $password)
 	{
@@ -164,6 +207,36 @@ class User extends Travel {
         $sql = "SELECT users.* FROM users INNER JOIN travel_admins ON users.id = travel_admins.user_id WHERE travel_admins.travel_id = :travel_id";
         self::$db->query($sql, array('travel_id' => $travel_id));
         return self::$db->fetchAll('obj');
+    }
+
+    function addTravelState($travel_id, $state_id, $user_id)
+    {
+        try {
+            $sql = "INSERT INTO travel_state (travel_id, state_id, user_id) VALUES (:travel_id, :state_id, :user_id)";
+            $result = self::$db->query($sql, array('travel_id' => $travel_id, 'state_id' => $state_id, 'user_id' => $user_id));
+            if ($result !== false) {
+                $params['id'] = self::$db->getLastInsertId();
+                return $params;
+            }
+            return false;
+        } catch (\PDOException $e) {
+            return false;
+        }
+    }
+
+    function addTravelPark($travel_id, $park_id, $user_id)
+    {
+        try {
+            $sql = "INSERT INTO travel_park (travel_id, park_id, user_id) VALUES (:travel_id, :park_id, :user_id)";
+            $result = self::$db->query($sql, array('travel_id' => $travel_id, 'park_id' => $park_id, 'user_id' => $user_id));
+            if ($result !== false) {
+                $params['id'] = self::$db->getLastInsertId();
+                return $params;
+            }
+            return false;
+        } catch (\PDOException $e) {
+            return false;
+        }
     }
 }
 ?>

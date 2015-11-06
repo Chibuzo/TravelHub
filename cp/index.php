@@ -7,7 +7,20 @@ if (isset($_POST['login'])) {
 	extract($_POST);
 	$status = $user->login($username, $password);
 	if ($status === true) {
-		header("Location: dashboard.php");
+        if ($_SESSION['user_type'] == 'travel_admin') {
+            require_once '../api/models/travel.class.php';
+            $travel = (new Travel())->getTravelByUser($_SESSION['user_id']);
+            $_SESSION['travel_id'] = $travel->id;
+            header("Location: travel/dashboard.php");
+        } elseif ($_SESSION['user_type'] == 'state_admin') {
+            require_once '../api/models/travel.class.php';
+            $travel = (new Travel())->getTravelStateByUser($_SESSION['user_id']);
+            $_SESSION['travel_id'] = $travel->travel_id;
+            $_SESSION['state_id'] = $travel->state_id;
+            header("Location: state/dashboard.php");
+        } elseif ($_SESSION['user_type'] == 'admin') {
+            header("Location: admin/dashboard.php");
+        }
 		exit;
 	} else {
 		echo $status;

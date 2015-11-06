@@ -1,8 +1,8 @@
 <?php
 require "includes/head.php";
 require "includes/side-bar.php";
-require_once "../includes/db_handle.php";
-require_once "../api/models/travel.class.php";
+require_once "../../includes/db_handle.php";
+require_once "../../api/models/travel.class.php";
 
 $travel_model = new Travel();
 
@@ -160,7 +160,7 @@ if (isset($_POST['add_travel'])) {
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
                 </div>
             </form>
 
@@ -201,7 +201,7 @@ if (isset($_POST['add_travel'])) {
             var online_charge = parentTr.find("input[name=online_charge]").val();
             var offline_charge = parentTr.find("input[name=offline_charge]").val();
 
-            $.post("../ajax/misc_fns.php", {"op": "update-travel", "company_name": company_name, "online_charge": online_charge, "offline_charge": offline_charge, "id": id}, function(d) {
+            $.post("../../ajax/misc_fns.php", {"op": "update-travel", "company_name": company_name, "online_charge": online_charge, "offline_charge": offline_charge, "id": id}, function(d) {
                 if (d.trim() == "Done") {
                 }
             });
@@ -216,7 +216,7 @@ if (isset($_POST['add_travel'])) {
             e.preventDefault();
             var id = $(this).parent("td").attr("id");
 
-            $.post("../ajax/misc_fns.php", {"op": "travel-details", "id": id}, function(d) {
+            $.post("../../ajax/misc_fns.php", {"op": "travel-details", "id": id}, function(d) {
                 $("#detail-div").html(d);
             });
         });
@@ -240,9 +240,14 @@ if (isset($_POST['add_travel'])) {
             if (password !== v_password) {
                 alert("Password do not match.");
             } else {
-                $.post("../ajax/misc_fns.php", {"op": "add-travel-admin", "full_name": full_name, "username": username, "password": password, "travel_id": travel_id}, function(d) {
-                    console.log(d);
+                $.post("../../ajax/misc_fns.php", {"op": "add-travel-admin", "full_name": full_name, "username": username, "password": password, "travel_id": travel_id}, function(d) {
+                    if (d.trim() == "Done") {
+                        $.post("../../ajax/misc_fns.php", {"op": "travel-details", "id": travel_id}, function(_data) {
+                            $("#detail-div").html(_data);
+                        });
+                    }
                 });
+                $('#userModal').modal('hide');
             }
         })
 

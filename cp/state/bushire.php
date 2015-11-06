@@ -1,11 +1,11 @@
 <?php
 require "includes/head.php";
 require "includes/side-bar.php";
-require_once "../api/models/buscharter.class.php";
+require_once "../../api/models/buscharter.class.php";
 
 $bus = new BusCharter();
 ?>
-<link href="plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="../plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
 <style>
 .icons .fa { color: #999; }
 </style>
@@ -87,8 +87,8 @@ $bus = new BusCharter();
 </div>
 
 <?php include_once "includes/footer.html"; ?>
-<script src="plugins/datatables/jquery.dataTables.js" type="text/javascript"></script>
-<script src="plugins/datatables/dataTables.bootstrap.js" type="text/javascript"></script>
+<script src="../plugins/datatables/jquery.dataTables.js" type="text/javascript"></script>
+<script src="../plugins/datatables/dataTables.bootstrap.js" type="text/javascript"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 	$(".cancel").click(function(e) {

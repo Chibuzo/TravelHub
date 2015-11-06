@@ -18,7 +18,7 @@ $travel_routes = $travel_route_mapper->getTravelRoutes($id);
 //show users if they have been added.
 if (is_array($travel_admins) && count($travel_admins) > 0):
 ?>
-<table class="table tablebordered table-striped">
+<table id="travel_admin_tbl" class="table tablebordered table-striped">
     <thead>
     <tr>
         <th width='30'>S/No</th>
@@ -27,7 +27,7 @@ if (is_array($travel_admins) && count($travel_admins) > 0):
         <th>User Type</th>
     </tr>
     </thead>
-    <tbody id="routes">
+    <tbody id="travel_admin_rows">
     <?php
     $i = 1;
     foreach ($travel_admins as $admin) {
