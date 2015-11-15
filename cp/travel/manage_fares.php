@@ -4,9 +4,11 @@ require "includes/side-bar.php";
 require_once "../../api/models/fare.class.php";
 require_once "../../api/models/vehiclemodel.class.php";
 require_once "../../api/models/routemodel.class.php";
+require_once "../../api/models/travelparkmap.class.php";
 //require_once "includes/db_handle.php";
 
 $fare = new Fare();
+$travel_park_map = new TravelParkMap();
 
 // Effect price modification
 if (isset($_POST['change_fare'])) {
@@ -55,13 +57,14 @@ if (isset($_POST['change_fare'])) {
 								<tbody>
 								<?php
 									$route = new RouteModel();
+                                    $park_maps = $travel_park_map->getTravelParkMaps($_SESSION['travel_id']);
 									$routes = $route->getAllRoutes();
 									$n = 1;
-									foreach ($routes AS $_route) {
-										echo "<tr id='{$_route->id}'><td>$n</td>
-												<td>{$_route->route}</td>";
+									foreach ($park_maps AS $park_map) {
+										echo "<tr id='{$park_map->id}'><td>$n</td>
+												<td>{$park_map->origin_name} - {$park_map->destination_name}({$park_map->destination_state})</td>";
 
-										$fares = $fare->getFareByRouteId($_route->id);
+										$fares = $fare->getFareByRouteId($park_map->id);
 
 										if (count($fares) > 0) {
                                             if (count($bus_types) > 0) {

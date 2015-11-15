@@ -35,7 +35,7 @@ class TravelVehicle extends Model {
 			'amenities' => $amenities
 		);
 
-		if ($this->db->query($sql, $param)) {
+		if (self::$db->query($sql, $param)) {
 			return true;
 		}
 	}
@@ -56,7 +56,7 @@ class TravelVehicle extends Model {
 			'id' => $id
 		);
 
-		if ($this->db->query($sql, $param)) {
+		if (self::$db->query($sql, $param)) {
 			return true;
 		}
 	}
@@ -64,9 +64,9 @@ class TravelVehicle extends Model {
 
 	public function getAllVehicleTypes($travel_id)
 	{
-		$sql = "SELECT * FROM " . self::$tbl . " WHERE travel_id = :travel_id AND status = '0' ORDER BY vehicle_name";
-		$this->db->query($sql, array('travel_id' => $travel_id));
-		return $this->db->fetchAll();
+		$sql = "SELECT travel_vehicle_types.*, vehicle_types.num_of_seats, vehicle_types.name AS type_name FROM " . self::$tbl . " INNER JOIN vehicle_types ON vehicle_types.id = travel_vehicle_types.vehicle_type_id WHERE travel_id = :travel_id AND status = '0' ORDER BY vehicle_name";
+        self::$db->query($sql, array('travel_id' => $travel_id));
+		return self::$db->fetchAll('obj');
 	}
 
 
@@ -87,7 +87,7 @@ class TravelVehicle extends Model {
 			'travel_date' => $_POST['travel_date']
 		);
 
-		if ($this->db->query($sql, $param))
+		if (self::$db->query($sql, $param))
 			return true;
 	}
 
@@ -95,7 +95,7 @@ class TravelVehicle extends Model {
 	public function disableVehicle($id)
 	{
 		$sql = "UPDATE " . self::$tbl . " SET status = '0' WHERE id = :id";
-		if ($this->db->query($sql, array('id' => $id))) {
+		if (self::$db->query($sql, array('id' => $id))) {
 
 			// remove from fares we'll watch this murdafucka
 			//$sql = "DELETE FROM fares WHERE vehicle_type_id = :id";

@@ -11,10 +11,10 @@ class Fare extends Model
 	}
 
 
-	private function addFare($form)
+	public function addFare($form)
 	{
 		$sql = "INSERT INTO " . self::$db_tbl . "
-				(travel_id, vehicle_type_id, fare, route_id) VALUE (:travel_id, :vehicle_type_id, :fare, :route_id)";
+				(travel_id, vehicle_type_id, fare, park_map_id) VALUE (:travel_id, :vehicle_type_id, :fare, :park_map_id)";
 
 		self::$db->prepare($sql);
 
@@ -24,7 +24,7 @@ class Fare extends Model
 					'travel_id' => $form['travel_id'],
 					'vehicle_type_id' => $key,
 					'fare' => $val,
-					'route_id' => $form['route_id']
+					'park_map_id' => $form['park_map_id']
 				);
 				self::$db->execute($param);
 			}
@@ -54,9 +54,9 @@ class Fare extends Model
 	{
 		$sql = "UPDATE " . self::$db_tbl . " SET
 					fare = :fare
-				WHERE bus_type_id = :bus_type_id AND route_id = :route_id AND travel_id = :travel_id";
+				WHERE vehicle_type_id = :vehicle_type_id AND park_map_id = :park_map_id AND travel_id = :travel_id";
 
-		$bus_types = $this->getAllVehicleTypesInUse($form['route_id'], $form['travel_id']);
+		$bus_types = $this->getAllVehicleTypesInUse($form['park_map_id'], $form['travel_id']);
 
 		self::$db->prepare($sql);
 
@@ -65,29 +65,30 @@ class Fare extends Model
 			if (is_numeric($key) && in_array($key, $bus_types)) { // update existing vehicle type
 				$param = array(
 					'fare' => $val,
-					'bus_type_id' => $key,
-					'route_id' => $form['route_id']
+					'vehicle_type_id' => $key,
+					'park_map_id' => $form['park_map_id'],
+                    'travel_id' => $form['travel_id']
 				);
 				self::$db->execute($param);
 			} else { // add fare for new vehicle type
 				if (is_numeric($key)) {
-					$new_vehicle_types['bus_type_id'][] = $key;
+					$new_vehicle_types['vehicle_type_id'][] = $key;
 					$new_vehicle_types['fare'][] = $val;
 				}
 			}
-			return true;
 		}
 
 		$sql = "INSERT INTO " . self::$db_tbl . "
-				(bus_type_id, fare, route_id) VALUE (:bus_type_id, :fare, :route_id)";
+				(vehicle_type_id, fare, park_map_id, travel_id) VALUE (:vehicle_type_id, :fare, :park_map_id, :travel_id)";
 
 		self::$db->prepare($sql);
 
 		for ($i = 0; $i < count($new_vehicle_types['fare']); $i++) {
 			$param = array(
 				'fare' => $new_vehicle_types['fare'][$i],
-				'bus_type_id' => $new_vehicle_types['bus_type_id'][$i],
-				'route_id' => $form['route_id']
+				'vehicle_type_id' => $new_vehicle_types['vehicle_type_id'][$i],
+				'park_map_id' => $form['park_map_id'],
+				'travel_id' => $form['travel_id']
 			);
 			self::$db->execute($param);
 		}
@@ -106,15 +107,15 @@ class Fare extends Model
 	//}
 
 
-	private function getAllVehicleTypesInUse($route_id, $travel_id)
+	private function getAllVehicleTypesInUse($park_map_id, $travel_id)
 	{
-		$sql = "SELECT vehicle_type_id FROM " . self::$db_tbl . " WHERE route_id = :route_id AND travel_id = :travel_id";
-		self::$db->query($sql, array('route_id' => $route_id, 'travel_id' => $travel_id));
-		$bus_types = array();
+		$sql = "SELECT vehicle_type_id FROM " . self::$db_tbl . " WHERE park_map_id = :park_map_id AND travel_id = :travel_id";
+		self::$db->query($sql, array('park_map_id' => $park_map_id, 'travel_id' => $travel_id));
+        $vehicle_types = array();
 		foreach (self::$db->stmt AS $row) {
-			$bus_types[] = $row['bus_type_id'];
+			$vehicle_types[] = $row['vehicle_type_id'];
 		}
-		return $bus_types;
+		return $vehicle_types;
 	}
 
 
@@ -136,19 +137,19 @@ class Fare extends Model
 	}
 
 
-	public function getFareByRouteId($route_id, $travel_id = null)
+	public function getFareByRouteId($park_map_id, $travel_id = null)
 	{
 		$where = "";
 		if ($travel_id == null) {
-			$param = array('route_id' => $route_id);
+			$param = array('park_map_id' => $park_map_id);
 		} else {
-			$param = array('route_id' => $route_id, 'travel_id' => $travel_id);
-			$where = "AND travel_id = :travel_id";
+			$param = array('park_map_id' => $park_map_id, 'travel_id' => $travel_id);
+			$where = "AND f.travel_id = :travel_id";
 		}
-		$sql = "SELECT f.id, bt.id vehicle_type_id, fare, name AS vehicle_type FROM " . self::$db_tbl . " f
-				JOIN vehicle_types bt ON f.vehicle_type_id = bt.id
-				WHERE route_id = :route_id $where
-				ORDER BY name";
+		$sql = "SELECT f.id, tvt.id vehicle_type_id, fare, vehicle_name FROM " . self::$db_tbl . " f
+				JOIN travel_vehicle_types tvt ON f.vehicle_type_id = tvt.id
+				WHERE park_map_id = :park_map_id $where
+				ORDER BY vehicle_name";
 
 		//$param = array('route_id' => $route_id, 'travel_id' => $travel_id);
 
@@ -158,14 +159,14 @@ class Fare extends Model
 	}
 
 
-	public function getFareByBusType($vehicle_type_id, $route_id, $travel_id)
+	public function getFareByBusType($vehicle_type_id, $park_map_id, $travel_id)
 	{
 		$sql = "SELECT fare, id FROM " . self::$db_tbl . "
-				WHERE vehicle_type_id = :vehicle_type_id AND route_id = :route_id AND travel_id = :travel_id";
+				WHERE vehicle_type_id = :vehicle_type_id AND park_map_id = :park_map_id AND travel_id = :travel_id";
 
 		$param = array(
 			'vehicle_type_id' => $vehicle_type_id,
-			'route_id' => $route_id,
+			'route_id' => $park_map_id,
 			'travel_id' => $travel_id
 		);
 
@@ -178,10 +179,10 @@ class Fare extends Model
 	}
 
 
-	private function deleteAllRouteFares($route_id, $travel_id)
+	private function deleteAllRouteFares($park_map_id, $travel_id)
 	{
-		$param = array('route_id' => $route_id, 'travel_id' => $travel_id);
-		self::$db->query("DELETE FROM " . self::$db_tbl . " WHERE route_id = :route_id AND travel_id = :travel_id", $param);
+		$param = array('route_id' => $park_map_id, 'travel_id' => $travel_id);
+		self::$db->query("DELETE FROM " . self::$db_tbl . " WHERE park_map_id = :park_map_id AND travel_id = :travel_id", $param);
 	}
 }
 ?>

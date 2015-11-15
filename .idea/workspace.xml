@@ -2,48 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ac0c731a-4ff5-498d-8fd2-95cb5e7ad572" name="Default" comment="Add Travel and Travel Admin">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cp/state/bookings.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cp/travel/bookings.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cp/admin/bushire.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cp/state/bushire.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cp/state/dashboard.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cp/travel/dashboard.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cp/state/includes/footer.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cp/travel/includes/footer.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cp/state/includes/head.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cp/travel/includes/head.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cp/travel/includes/hotel-modal.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cp/state/mini-pages/index.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cp/state/manage_fares.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cp/travel/manage_fares.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cp/state/mini-pages/park-detail.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/api/models/parkmodel.class.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cp/state/includes/side-bar.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cp/travel/includes/side-bar.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cp/state/travel-routes.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cp/travel/travel-routes.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/api/models/travelparkmap.class.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cp/state/view_reports.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cp/travel/view_reports.php" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="" />
-      <change type="MOVED" beforePath="C:\xampp\htdocs\travelhub\cp\bookings.php" afterPath="$PROJECT_DIR$/cp/admin/bookings.php" />
-      <change type="MOVED" beforePath="C:\xampp\htdocs\travelhub\cp\bushire.php" afterPath="$PROJECT_DIR$/cp/travel/bushire.php" />
-      <change type="MOVED" beforePath="C:\xampp\htdocs\travelhub\cp\dashboard.php" afterPath="$PROJECT_DIR$/cp/admin/dashboard.php" />
-      <change type="MOVED" beforePath="C:\xampp\htdocs\travelhub\cp\includes\footer.html" afterPath="$PROJECT_DIR$/cp/admin/includes/footer.html" />
-      <change type="MOVED" beforePath="C:\xampp\htdocs\travelhub\cp\includes\head.php" afterPath="$PROJECT_DIR$/cp/admin/includes/head.php" />
-      <change type="MOVED" beforePath="C:\xampp\htdocs\travelhub\cp\includes\hotel-modal.html" afterPath="$PROJECT_DIR$/cp/state/includes/hotel-modal.html" />
-      <change type="MOVED" beforePath="C:\xampp\htdocs\travelhub\cp\includes\side-bar.php" afterPath="$PROJECT_DIR$/cp/admin/includes/side-bar.php" />
-      <change type="MOVED" beforePath="C:\xampp\htdocs\travelhub\cp\manage_fares.php" afterPath="$PROJECT_DIR$/cp/admin/manage_fares.php" />
-      <change type="MOVED" beforePath="C:\xampp\htdocs\travelhub\cp\mini-pages\index.php" afterPath="$PROJECT_DIR$/cp/admin/mini-pages/index.php" />
-      <change type="MOVED" beforePath="C:\xampp\htdocs\travelhub\cp\mini-pages\travel-detail.php" afterPath="$PROJECT_DIR$/cp/admin/mini-pages/travel-detail.php" />
-      <change type="MOVED" beforePath="C:\xampp\htdocs\travelhub\cp\routes.php" afterPath="$PROJECT_DIR$/cp/admin/routes.php" />
-      <change type="MOVED" beforePath="C:\xampp\htdocs\travelhub\cp\travels.php" afterPath="$PROJECT_DIR$/cp/admin/travels.php" />
-      <change type="MOVED" beforePath="C:\xampp\htdocs\travelhub\cp\users.php" afterPath="$PROJECT_DIR$/cp/admin/users.php" />
-      <change type="MOVED" beforePath="C:\xampp\htdocs\travelhub\cp\view_reports.php" afterPath="$PROJECT_DIR$/cp/admin/view_reports.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cp/index.php" afterPath="$PROJECT_DIR$/cp/index.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ajax/misc_fns.php" afterPath="$PROJECT_DIR$/ajax/misc_fns.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api/models/travel.class.php" afterPath="$PROJECT_DIR$/api/models/travel.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api/models/user.class.php" afterPath="$PROJECT_DIR$/api/models/user.class.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cp/travel/travel-vehicles.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api/models/fare.class.php" afterPath="$PROJECT_DIR$/api/models/fare.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cp/state/includes/head.php" afterPath="$PROJECT_DIR$/cp/state/includes/head.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cp/state/manage_fares.php" afterPath="$PROJECT_DIR$/cp/state/manage_fares.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cp/travel/manage_fares.php" afterPath="$PROJECT_DIR$/cp/travel/manage_fares.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cp/travel/includes/side-bar.php" afterPath="$PROJECT_DIR$/cp/travel/includes/side-bar.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api/models/travelparkmap.class.php" afterPath="$PROJECT_DIR$/api/models/travelparkmap.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api/models/travelvehicle.class.php" afterPath="$PROJECT_DIR$/api/models/travelvehicle.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="travelhub.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -69,18 +36,125 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="travel-routes.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/cp/state/travel-routes.php">
+      <file leaf-file-name="travel-vehicles.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cp/travel/travel-vehicles.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5949821" vertical-offset="3388" max-vertical-offset="4245">
-              <caret line="248" column="46" selection-start-line="248" selection-start-column="46" selection-end-line="248" selection-end-column="46" />
+            <state vertical-scroll-proportion="-20.0" vertical-offset="390" max-vertical-offset="2595">
+              <caret line="58" column="41" selection-start-line="58" selection-start-column="41" selection-end-line="58" selection-end-column="41" />
               <folding>
-                <marker date="1446771613581" expanded="true" signature="2360:2739" placeholder="..." />
-                <marker date="1446771613581" expanded="true" signature="2585:2721" placeholder="..." />
-                <marker date="1446771613581" expanded="true" signature="5030:5070" placeholder="SELECT * FRO..states..." />
-                <marker date="1446771613581" expanded="true" signature="7155:7640" placeholder="..." />
-                <marker date="1446771613581" expanded="true" signature="7378:7622" placeholder="..." />
-                <marker date="1446771613581" expanded="true" signature="9133:9219" placeholder="SELECT * FRO..parks..." />
+                <element signature="n#style#0;n#h2#0;n#div#0;n#div#0;n#div#0;n#div#0;n#section#1;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#h2#0;n#div#0;n#div#0;n#div#1;n#div#0;n#section#1;n#div#0;n#!!top" expanded="true" />
+                <marker date="1447594700337" expanded="true" signature="2504:2810" placeholder="..." />
+                <marker date="1447594700337" expanded="true" signature="4574:5093" placeholder="..." />
+                <marker date="1447594700337" expanded="true" signature="4831:5075" placeholder="..." />
+                <marker date="1447594700337" expanded="true" signature="7180:7385" placeholder="..." />
+                <marker date="1447594700337" expanded="true" signature="7494:7548" placeholder="..." />
+                <marker date="1447594700337" expanded="true" signature="7529:7537" placeholder="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="manage_fares.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/cp/state/manage_fares.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.40303737" vertical-offset="585" max-vertical-offset="2580">
+              <caret line="62" column="32" selection-start-line="62" selection-start-column="32" selection-end-line="62" selection-end-column="32" />
+              <folding>
+                <marker date="1447599335982" expanded="true" signature="2294:2423" placeholder="..." />
+                <marker date="1447599335982" expanded="true" signature="3534:3746" placeholder="..." />
+                <marker date="1447599335982" expanded="true" signature="3642:3728" placeholder="..." />
+                <marker date="1447599335982" expanded="true" signature="4582:4811" placeholder="..." />
+                <marker date="1447599335982" expanded="true" signature="4608:4811" placeholder="..." />
+                <marker date="1447599335982" expanded="true" signature="4640:4811" placeholder="..." />
+                <marker date="1447599335982" expanded="true" signature="4905:5102" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="fare.class.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/api/models/fare.class.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-16.25" vertical-offset="1800" max-vertical-offset="2910">
+              <caret line="146" column="28" selection-start-line="146" selection-start-column="28" selection-end-line="146" selection-end-column="28" />
+              <folding>
+                <marker date="1447599124448" expanded="true" signature="211:354" placeholder="INSERT INTO ..." />
+                <marker date="1447599124448" expanded="true" signature="2028:2171" placeholder="INSERT INTO ..." />
+                <marker date="1447599124448" expanded="true" signature="2896:3005" placeholder="SELECT vehic..self_db_tbl..." />
+                <marker date="1447599124448" expanded="true" signature="3860:4078" placeholder="SELECT f.id,..self_db_tbl..." />
+                <marker date="1447599124448" expanded="true" signature="4333:4478" placeholder="SELECT fare,..self_db_tbl..." />
+                <marker date="1447599124448" expanded="true" signature="4901:4994" placeholder="DELETE FROM ..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="vehiclemodel.class.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/api/models/vehiclemodel.class.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-12.208333" vertical-offset="457" max-vertical-offset="1500">
+              <caret line="50" column="20" selection-start-line="50" selection-start-column="20" selection-end-line="50" selection-end-column="20" />
+              <folding>
+                <marker date="1445812993036" expanded="true" signature="187:328" placeholder="SELECT f.id ..fares..." />
+                <marker date="1445812993036" expanded="true" signature="509:584" placeholder="INSERT INTO ..." />
+                <marker date="1445812993036" expanded="true" signature="808:903" placeholder="UPDATE vehic..." />
+                <marker date="1445812993036" expanded="true" signature="1123:1184" placeholder="SELECT * FRO..vehicle_types..." />
+                <marker date="1445812993036" expanded="true" signature="1295:1570" placeholder="INSERT INTO ..." />
+                <marker date="1445812993036" expanded="true" signature="2012:2065" placeholder="UPDATE vehic..." />
+                <marker date="1445812993036" expanded="true" signature="2156:2201" placeholder="DELETE FROM ..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="travelvehicle.class.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/api/models/travelvehicle.class.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-9.416667" vertical-offset="764" max-vertical-offset="1710">
+              <caret line="66" column="106" selection-start-line="66" selection-start-column="97" selection-end-line="66" selection-end-column="106" />
+              <folding>
+                <marker date="1447593851208" expanded="true" signature="604:764" placeholder="INSERT INTO ..." />
+                <marker date="1447593851208" expanded="true" signature="1521:1787" placeholder="SELECT trave..self_tbl..." />
+                <marker date="1447593851208" expanded="true" signature="1938:2213" placeholder="INSERT INTO ..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="db.class.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/api/models/db.class.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-13.458333" vertical-offset="847" max-vertical-offset="2025">
+              <caret line="78" column="25" selection-start-line="78" selection-start-column="22" selection-end-line="78" selection-end-column="25" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="travel-routes.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cp/travel/travel-routes.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-31.916666" vertical-offset="2024" max-vertical-offset="3105">
+              <caret line="186" column="6" selection-start-line="137" selection-start-column="0" selection-end-line="186" selection-end-column="6" />
+              <folding>
+                <marker date="1446771377976" expanded="true" signature="1997:2591" placeholder="..." />
+                <marker date="1446771377976" expanded="true" signature="2204:2573" placeholder="..." />
+                <marker date="1446771377976" expanded="true" signature="4124:4609" placeholder="..." />
+                <marker date="1446771377976" expanded="true" signature="4347:4591" placeholder="..." />
+                <marker date="1446771377976" expanded="true" signature="6260:6300" placeholder="SELECT * FRO..states..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="routes.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cp/admin/routes.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-19.791666" vertical-offset="1655" max-vertical-offset="3420">
+              <caret line="206" column="15" selection-start-line="0" selection-start-column="0" selection-end-line="286" selection-end-column="0" />
+              <folding>
+                <element signature="tag#div#1;tag#div#0;tag#section#1;tag#div#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -99,11 +173,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/includes/header.php" />
-        <option value="$PROJECT_DIR$/api/models/model.class.php" />
-        <option value="$PROJECT_DIR$/cp/dashboard.php" />
-        <option value="$PROJECT_DIR$/api/models/bookingmodel.class.php" />
-        <option value="$PROJECT_DIR$/api/models/fare.class.php" />
         <option value="$PROJECT_DIR$/cp/manage_fares.php" />
         <option value="$PROJECT_DIR$/cp/bushire.php" />
         <option value="$PROJECT_DIR$/api/models/buscharter.class.php" />
@@ -137,10 +206,8 @@
         <option value="$PROJECT_DIR$/cp/travel/travel-dashboard.php" />
         <option value="$PROJECT_DIR$/cp/travel/includes/head.php" />
         <option value="$PROJECT_DIR$/cp/travel/includes/footer.html" />
-        <option value="$PROJECT_DIR$/cp/travel/manage_fares.php" />
         <option value="$PROJECT_DIR$/cp/travel/bookings.php" />
         <option value="$PROJECT_DIR$/cp/travel/bushire.php" />
-        <option value="$PROJECT_DIR$/cp/travel/includes/side-bar.php" />
         <option value="$PROJECT_DIR$/cp/index.php" />
         <option value="$PROJECT_DIR$/api/models/user.class.php" />
         <option value="$PROJECT_DIR$/cp/state/mini-pages/park-detail.php" />
@@ -149,7 +216,14 @@
         <option value="$PROJECT_DIR$/ajax/misc_fns.php" />
         <option value="$PROJECT_DIR$/api/models/travel.class.php" />
         <option value="$PROJECT_DIR$/api/models/parkmodel.class.php" />
+        <option value="$PROJECT_DIR$/cp/state/includes/head.php" />
         <option value="$PROJECT_DIR$/api/models/travelparkmap.class.php" />
+        <option value="$PROJECT_DIR$/cp/travel/manage_fares.php" />
+        <option value="$PROJECT_DIR$/cp/travel/includes/side-bar.php" />
+        <option value="$PROJECT_DIR$/api/models/travelvehicle.class.php" />
+        <option value="$PROJECT_DIR$/cp/travel/travel-vehicles.php" />
+        <option value="$PROJECT_DIR$/api/models/fare.class.php" />
+        <option value="$PROJECT_DIR$/cp/state/manage_fares.php" />
       </list>
     </option>
   </component>
@@ -215,7 +289,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="includes" />
+              <option name="myItemId" value="cp" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -230,6 +304,10 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="cp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="travel" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -261,7 +339,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="config" />
+              <option name="myItemId" value="cp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="admin" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -297,27 +379,13 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="travelhub" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="travelhub" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ajax" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$/.idea" />
-    <property name="options.lastSelected" value="project.propVCSSupport.Ignored.Files" />
+    <property name="options.lastSelected" value="reference.settingsdialog.IDE.editor.colors.Font" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -395,7 +463,13 @@
       <option name="project" value="LOCAL" />
       <updated>1446309080303</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Updating database.">
+      <created>1446774024898</created>
+      <option name="number" value="00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1446774024898</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -420,22 +494,22 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
-      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32893288" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32929516" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32893288" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32893288" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16897655" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17537314" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32893288" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32893288" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -463,41 +537,14 @@
     <MESSAGE value="Fixed routes page" />
     <MESSAGE value="working on adding Travels." />
     <MESSAGE value="Add Travel and Travel Admin" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add Travel and Travel Admin" />
+    <MESSAGE value="Updating database." />
+    <option name="LAST_COMMIT_MESSAGE" value="Updating database." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/includes/db_handle.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.625" vertical-offset="0" max-vertical-offset="165">
-          <caret line="1" column="52" selection-start-line="1" selection-start-column="52" selection-end-line="1" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api/models/customer.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1170">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="7813" max-vertical-offset="8775">
-          <caret line="24" column="18" selection-start-line="24" selection-start-column="18" selection-end-line="24" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/includes/footer.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="870">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/includes/header.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="846">
@@ -516,20 +563,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.67375886" vertical-offset="0" max-vertical-offset="846">
           <caret line="38" column="28" selection-start-line="38" selection-start-column="28" selection-end-line="38" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api/models/fare.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33333334" vertical-offset="1788" max-vertical-offset="2895">
-          <caret line="138" column="20" selection-start-line="138" selection-start-column="20" selection-end-line="138" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api/models/vehiclemodel.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="165" max-vertical-offset="1500">
-          <caret line="54" column="42" selection-start-line="52" selection-start-column="8" selection-end-line="54" selection-end-column="42" />
         </state>
       </provider>
     </entry>
@@ -673,13 +706,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cp/travel/manage_fares.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.25" vertical-offset="0" max-vertical-offset="2505">
-          <caret line="10" column="28" selection-start-line="10" selection-start-column="28" selection-end-line="10" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cp/travel/bookings.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-1.875" vertical-offset="0" max-vertical-offset="1860">
@@ -691,13 +717,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-1.875" vertical-offset="0" max-vertical-offset="1905">
           <caret line="3" column="20" selection-start-line="3" selection-start-column="20" selection-end-line="3" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cp/travel/includes/side-bar.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-16.875" vertical-offset="0" max-vertical-offset="1245">
-          <caret line="27" column="51" selection-start-line="27" selection-start-column="51" selection-end-line="27" selection-end-column="51" />
         </state>
       </provider>
     </entry>
@@ -722,14 +741,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/api/models/db.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.18457943" vertical-offset="487" max-vertical-offset="2025">
-          <caret line="43" column="20" selection-start-line="43" selection-start-column="20" selection-end-line="43" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cp/admin/travels.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33451957" vertical-offset="3033" max-vertical-offset="3900">
@@ -744,24 +755,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cp/admin/routes.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.75495917" vertical-offset="3523" max-vertical-offset="4380">
-          <caret line="278" column="11" selection-start-line="275" selection-start-column="8" selection-end-line="278" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/api/models/model.class.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.537923" vertical-offset="64" max-vertical-offset="945">
           <caret line="35" column="20" selection-start-line="35" selection-start-column="20" selection-end-line="35" selection-end-column="20" />
-          <folding>
-            <marker date="1445682744591" expanded="true" signature="-1:-1" placeholder="SELECT * FRO.._tbl_ WHERE..." />
-            <marker date="1445682744591" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..tbl_..." />
-            <marker date="1445682744591" expanded="true" signature="-1:-1" placeholder="SELECT * FRO.._tbl_ WHERE..." />
-            <marker date="1445682744591" expanded="true" signature="-1:-1" placeholder="SELECT COUNT..tbl_name_..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -769,23 +766,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.6149358" vertical-offset="2863" max-vertical-offset="3720">
           <caret line="226" column="13" selection-start-line="226" selection-start-column="13" selection-end-line="226" selection-end-column="13" />
-          <folding>
-            <marker date="1446509705186" expanded="true" signature="-1:-1" placeholder="SELECT usern..users..." />
-            <marker date="1446509705186" expanded="true" signature="-1:-1" placeholder="INSERT INTO ..." />
-            <marker date="1446509705186" expanded="true" signature="-1:-1" placeholder="SELECT salt ..users..." />
-            <marker date="1446509705186" expanded="true" signature="-1:-1" placeholder="SELECT usern..users..." />
-            <marker date="1446509705186" expanded="true" signature="-1:-1" placeholder="UPDATE users..." />
-            <marker date="1446509705186" expanded="true" signature="-1:-1" placeholder="UPDATE users..." />
-            <marker date="1446509705186" expanded="true" signature="-1:-1" placeholder="SELECT salt,..users..." />
-            <marker date="1446509705186" expanded="true" signature="-1:-1" placeholder="UPDATE users..." />
-            <marker date="1446509705186" expanded="true" signature="-1:-1" placeholder="UPDATE users..." />
-            <marker date="1446509705186" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..users..." />
-            <marker date="1446509705186" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..users..." />
-            <marker date="1446509705186" expanded="true" signature="-1:-1" placeholder="INSERT INTO ..." />
-            <marker date="1446509705186" expanded="true" signature="-1:-1" placeholder="SELECT users..users..." />
-            <marker date="1446509705186" expanded="true" signature="-1:-1" placeholder="INSERT INTO ..." />
-            <marker date="1446509705186" expanded="true" signature="-1:-1" placeholder="INSERT INTO ..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -793,7 +774,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.45519713" vertical-offset="2851" max-vertical-offset="10605">
           <caret line="231" column="63" selection-start-line="231" selection-start-column="63" selection-end-line="231" selection-end-column="63" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -801,11 +781,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.19253209" vertical-offset="0" max-vertical-offset="1170">
           <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-          <folding>
-            <marker date="1446234668080" expanded="true" signature="-1:-1" placeholder="INSERT INTO ..." />
-            <marker date="1446234668080" expanded="true" signature="-1:-1" placeholder="SELECT route..routes..." />
-            <marker date="1446234668080" expanded="true" signature="-1:-1" placeholder="SELECT id FR..self_tbl..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -813,15 +788,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.77012837" vertical-offset="0" max-vertical-offset="1890">
           <caret line="44" column="20" selection-start-line="44" selection-start-column="20" selection-end-line="44" selection-end-column="20" />
-          <folding>
-            <marker date="1445031273574" expanded="true" signature="-1:-1" placeholder="SELECT name ..states_towns..." />
-            <marker date="1445031273574" expanded="true" signature="-1:-1" placeholder="SELECT id FR..routes..." />
-            <marker date="1445031273574" expanded="true" signature="-1:-1" placeholder="SELECT id FR..self_tbl..." />
-            <marker date="1445031273574" expanded="true" signature="-1:-1" placeholder="INSERT INTO ..." />
-            <marker date="1445031273574" expanded="true" signature="-1:-1" placeholder="UPDATE route..." />
-            <marker date="1445031273574" expanded="true" signature="-1:-1" placeholder="UPDATE route..." />
-            <marker date="1445031273574" expanded="true" signature="-1:-1" placeholder="DELETE FROM ..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -829,22 +795,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-30.458334" vertical-offset="664" max-vertical-offset="1545">
           <caret line="93" column="13" selection-start-line="93" selection-start-column="13" selection-end-line="93" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api/models/travelparkmap.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.08984831" vertical-offset="463" max-vertical-offset="1995">
-          <caret line="36" column="24" selection-start-line="36" selection-start-column="24" selection-end-line="36" selection-end-column="24" />
-          <folding>
-            <marker date="1446773385704" expanded="true" signature="-1:-1" placeholder="INSERT INTO ..." />
-            <marker date="1446773385704" expanded="true" signature="-1:-1" placeholder="SELECT pm.*,..park_map..." />
-            <marker date="1446773385704" expanded="true" signature="-1:-1" placeholder="SELECT pm.*,..park_map..." />
-            <marker date="1446773385704" expanded="true" signature="-1:-1" placeholder="SELECT pm.*,..park_map..." />
-            <marker date="1446773385704" expanded="true" signature="-1:-1" placeholder="SELECT pm.*,..park_map..." />
-            <marker date="1446773385704" expanded="true" signature="-1:-1" placeholder="SELECT id FR..self_tbl..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -852,17 +802,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.84014004" vertical-offset="270" max-vertical-offset="1980">
           <caret line="66" column="5" selection-start-line="66" selection-start-column="5" selection-end-line="66" selection-end-column="5" />
-          <folding>
-            <marker date="1446772977357" expanded="true" signature="-1:-1" placeholder="SELECT parks..parks..." />
-            <marker date="1446772977357" expanded="true" signature="-1:-1" placeholder="SELECT parks..parks..." />
-            <marker date="1446772977357" expanded="true" signature="-1:-1" placeholder="SELECT trave..travel_park..." />
-            <marker date="1446772977357" expanded="true" signature="-1:-1" placeholder="SELECT trave..travel_park..." />
-            <marker date="1446772977357" expanded="true" signature="-1:-1" placeholder="SELECT id FR..self_tbl..." />
-            <marker date="1446772977357" expanded="true" signature="-1:-1" placeholder="INSERT INTO ..." />
-            <marker date="1446772977357" expanded="true" signature="-1:-1" placeholder="UPDATE park_..." />
-            <marker date="1446772977357" expanded="true" signature="-1:-1" placeholder="UPDATE park_..." />
-            <marker date="1446772977357" expanded="true" signature="-1:-1" placeholder="DELETE FROM ..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -870,45 +810,173 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.1196682" vertical-offset="45" max-vertical-offset="1605">
           <caret line="66" column="9" selection-start-line="66" selection-start-column="9" selection-end-line="66" selection-end-column="9" />
-          <folding>
-            <marker date="1446772185629" expanded="true" signature="-1:-1" placeholder="SELECT id, c..travels..." />
-            <marker date="1446772185629" expanded="true" signature="-1:-1" placeholder="SELECT id, c..travels..." />
-            <marker date="1446772185629" expanded="true" signature="-1:-1" placeholder="SELECT trave..travel_admins..." />
-            <marker date="1446772185629" expanded="true" signature="-1:-1" placeholder="SELECT trave..travel_state..." />
-            <marker date="1446772185629" expanded="true" signature="-1:-1" placeholder="SELECT trave..travel_state..." />
-            <marker date="1446772185629" expanded="true" signature="-1:-1" placeholder="SELECT trave..travel_park..." />
-            <marker date="1446772185629" expanded="true" signature="-1:-1" placeholder="INSERT INTO ..." />
-            <marker date="1446772185629" expanded="true" signature="-1:-1" placeholder="UPDATE :_thi..." />
-            <marker date="1446772185629" expanded="true" signature="-1:-1" placeholder="SELECT offli.._this_tbl_ WHERE..." />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cp/travel/travel-routes.php">
+    <entry file="file://$PROJECT_DIR$/cp/state/includes/head.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.1201867" vertical-offset="268" max-vertical-offset="3105">
-          <caret line="11" column="31" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
-          <folding>
-            <marker date="1446771377976" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1446771377976" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1446771377976" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1446771377976" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1446771377976" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..states..." />
-          </folding>
+        <state vertical-scroll-proportion="0.052570093" vertical-offset="0" max-vertical-offset="856">
+          <caret line="3" column="25" selection-start-line="3" selection-start-column="25" selection-end-line="3" selection-end-column="25" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cp/state/travel-routes.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5949821" vertical-offset="3388" max-vertical-offset="4245">
-          <caret line="248" column="46" selection-start-line="248" selection-start-column="46" selection-end-line="248" selection-end-column="46" />
+        <state vertical-scroll-proportion="31.25" vertical-offset="1245" max-vertical-offset="4245">
+          <caret line="33" column="50" selection-start-line="33" selection-start-column="50" selection-end-line="33" selection-end-column="50" />
           <folding>
-            <marker date="1446771613581" expanded="true" signature="2360:2739" placeholder="..." />
-            <marker date="1446771613581" expanded="true" signature="2585:2721" placeholder="..." />
-            <marker date="1446771613581" expanded="true" signature="5030:5070" placeholder="SELECT * FRO..states..." />
-            <marker date="1446771613581" expanded="true" signature="7155:7640" placeholder="..." />
-            <marker date="1446771613581" expanded="true" signature="7378:7622" placeholder="..." />
-            <marker date="1446771613581" expanded="true" signature="9133:9219" placeholder="SELECT * FRO..parks..." />
+            <marker date="1446771613581" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1446771613581" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1446771613581" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..states..." />
+            <marker date="1446771613581" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1446771613581" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1446771613581" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..parks..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cp/travel/manage_fares.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.47313085" vertical-offset="765" max-vertical-offset="2550">
+          <caret line="78" column="82" selection-start-line="78" selection-start-column="82" selection-end-line="78" selection-end-column="82" />
+          <folding>
+            <marker date="1447588446474" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1447588446474" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1447588446474" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1447588446474" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1447588446474" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1447588446474" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1447588446474" expanded="true" signature="-1:-1" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/models/travelparkmap.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.36799064" vertical-offset="600" max-vertical-offset="1995">
+          <caret line="61" column="113" selection-start-line="61" selection-start-column="113" selection-end-line="61" selection-end-column="113" />
+          <folding>
+            <marker date="1447366120139" expanded="true" signature="-1:-1" placeholder="INSERT INTO ..." />
+            <marker date="1447366120139" expanded="true" signature="-1:-1" placeholder="SELECT pm.*,..park_map..." />
+            <marker date="1447366120139" expanded="true" signature="-1:-1" placeholder="SELECT pm.*,..park_map..." />
+            <marker date="1447366120139" expanded="true" signature="-1:-1" placeholder="SELECT pm.*,..park_map..." />
+            <marker date="1447366120139" expanded="true" signature="-1:-1" placeholder="SELECT id FR..self_tbl..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cp/admin/routes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-19.791666" vertical-offset="1655" max-vertical-offset="3420">
+          <caret line="206" column="15" selection-start-line="0" selection-start-column="0" selection-end-line="286" selection-end-column="0" />
+          <folding>
+            <element signature="tag#div#1;tag#div#0;tag#section#1;tag#div#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cp/travel/includes/side-bar.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.0864486" vertical-offset="0" max-vertical-offset="1350">
+          <caret line="62" column="40" selection-start-line="62" selection-start-column="40" selection-end-line="62" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cp/travel/travel-routes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-31.916666" vertical-offset="2024" max-vertical-offset="3105">
+          <caret line="186" column="6" selection-start-line="137" selection-start-column="0" selection-end-line="186" selection-end-column="6" />
+          <folding>
+            <marker date="1446771377976" expanded="true" signature="1997:2591" placeholder="..." />
+            <marker date="1446771377976" expanded="true" signature="2204:2573" placeholder="..." />
+            <marker date="1446771377976" expanded="true" signature="4124:4609" placeholder="..." />
+            <marker date="1446771377976" expanded="true" signature="4347:4591" placeholder="..." />
+            <marker date="1446771377976" expanded="true" signature="6260:6300" placeholder="SELECT * FRO..states..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/models/vehiclemodel.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-12.208333" vertical-offset="457" max-vertical-offset="1500">
+          <caret line="50" column="20" selection-start-line="50" selection-start-column="20" selection-end-line="50" selection-end-column="20" />
+          <folding>
+            <marker date="1445812993036" expanded="true" signature="187:328" placeholder="SELECT f.id ..fares..." />
+            <marker date="1445812993036" expanded="true" signature="509:584" placeholder="INSERT INTO ..." />
+            <marker date="1445812993036" expanded="true" signature="808:903" placeholder="UPDATE vehic..." />
+            <marker date="1445812993036" expanded="true" signature="1123:1184" placeholder="SELECT * FRO..vehicle_types..." />
+            <marker date="1445812993036" expanded="true" signature="1295:1570" placeholder="INSERT INTO ..." />
+            <marker date="1445812993036" expanded="true" signature="2012:2065" placeholder="UPDATE vehic..." />
+            <marker date="1445812993036" expanded="true" signature="2156:2201" placeholder="DELETE FROM ..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/models/db.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-13.458333" vertical-offset="847" max-vertical-offset="2025">
+          <caret line="78" column="25" selection-start-line="78" selection-start-column="22" selection-end-line="78" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/models/travelvehicle.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.416667" vertical-offset="764" max-vertical-offset="1710">
+          <caret line="66" column="106" selection-start-line="66" selection-start-column="97" selection-end-line="66" selection-end-column="106" />
+          <folding>
+            <marker date="1447593851208" expanded="true" signature="604:764" placeholder="INSERT INTO ..." />
+            <marker date="1447593851208" expanded="true" signature="1521:1787" placeholder="SELECT trave..self_tbl..." />
+            <marker date="1447593851208" expanded="true" signature="1938:2213" placeholder="INSERT INTO ..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cp/travel/travel-vehicles.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-20.0" vertical-offset="390" max-vertical-offset="2595">
+          <caret line="58" column="41" selection-start-line="58" selection-start-column="41" selection-end-line="58" selection-end-column="41" />
+          <folding>
+            <element signature="n#style#0;n#h2#0;n#div#0;n#div#0;n#div#0;n#div#0;n#section#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#h2#0;n#div#0;n#div#0;n#div#1;n#div#0;n#section#1;n#div#0;n#!!top" expanded="true" />
+            <marker date="1447594700337" expanded="true" signature="2504:2810" placeholder="..." />
+            <marker date="1447594700337" expanded="true" signature="4574:5093" placeholder="..." />
+            <marker date="1447594700337" expanded="true" signature="4831:5075" placeholder="..." />
+            <marker date="1447594700337" expanded="true" signature="7180:7385" placeholder="..." />
+            <marker date="1447594700337" expanded="true" signature="7494:7548" placeholder="..." />
+            <marker date="1447594700337" expanded="true" signature="7529:7537" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/models/fare.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-16.25" vertical-offset="1800" max-vertical-offset="2910">
+          <caret line="146" column="28" selection-start-line="146" selection-start-column="28" selection-end-line="146" selection-end-column="28" />
+          <folding>
+            <marker date="1447599124448" expanded="true" signature="211:354" placeholder="INSERT INTO ..." />
+            <marker date="1447599124448" expanded="true" signature="2028:2171" placeholder="INSERT INTO ..." />
+            <marker date="1447599124448" expanded="true" signature="2896:3005" placeholder="SELECT vehic..self_db_tbl..." />
+            <marker date="1447599124448" expanded="true" signature="3860:4078" placeholder="SELECT f.id,..self_db_tbl..." />
+            <marker date="1447599124448" expanded="true" signature="4333:4478" placeholder="SELECT fare,..self_db_tbl..." />
+            <marker date="1447599124448" expanded="true" signature="4901:4994" placeholder="DELETE FROM ..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cp/state/manage_fares.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.40303737" vertical-offset="585" max-vertical-offset="2580">
+          <caret line="62" column="32" selection-start-line="62" selection-start-column="32" selection-end-line="62" selection-end-column="32" />
+          <folding>
+            <marker date="1447599335982" expanded="true" signature="2294:2423" placeholder="..." />
+            <marker date="1447599335982" expanded="true" signature="3534:3746" placeholder="..." />
+            <marker date="1447599335982" expanded="true" signature="3642:3728" placeholder="..." />
+            <marker date="1447599335982" expanded="true" signature="4582:4811" placeholder="..." />
+            <marker date="1447599335982" expanded="true" signature="4608:4811" placeholder="..." />
+            <marker date="1447599335982" expanded="true" signature="4640:4811" placeholder="..." />
+            <marker date="1447599335982" expanded="true" signature="4905:5102" placeholder="..." />
           </folding>
         </state>
       </provider>

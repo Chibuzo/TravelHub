@@ -59,7 +59,7 @@ class TravelParkMap extends ParkModel {
      */
     public function getTravelStateParkMaps($travel_id, $state_id)
     {
-        $sql = "SELECT pm.*, d.park AS destination_name, o.park AS origin_name, d_s.state_name as destination_state
+        $sql = "SELECT pm.*, d.park AS destination_name, o.park AS origin_name, state.state_name as origin_state, d_s.state_name as destination_state
                 FROM park_map AS pm
                 INNER JOIN travel_park_map ON travel_park_map.park_map_id = pm.id
                 INNER JOIN parks AS d ON pm.destination = d.id

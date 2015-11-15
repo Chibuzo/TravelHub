@@ -60,6 +60,13 @@
             </li>
 
             <li>
+                <a href="travel-vehicles.php">
+                    <i class="fa fa-bus"></i>
+                    <span>Manage Vehicles</span>
+                </a>
+            </li>
+
+            <li>
                 <a href="view_reports.php">
                     <i class="fa fa-book"></i>
                     <span>Reports</span>
