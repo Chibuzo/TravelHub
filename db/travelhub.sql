@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50625
 File Encoding         : 65001
 
-Date: 2015-11-06 02:38:33
+Date: 2015-11-18 00:26:32
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -132,16 +132,28 @@ CREATE TABLE `fares` (
   `travel_id` tinyint(4) NOT NULL,
   `vehicle_type_id` tinyint(4) NOT NULL,
   `fare` varchar(5) NOT NULL,
-  `route_id` int(11) NOT NULL,
+  `park_map_id` int(11) NOT NULL,
   `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `date_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `travel_id` (`travel_id`) USING BTREE
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of fares
 -- ----------------------------
+INSERT INTO `fares` VALUES ('1', '4', '1', '5500', '1', '2015-11-15 15:53:14', '2015-11-15 15:24:16');
+INSERT INTO `fares` VALUES ('2', '4', '3', '6500', '1', '2015-11-15 15:53:14', '2015-11-15 15:24:16');
+INSERT INTO `fares` VALUES ('3', '4', '4', '4200', '1', '2015-11-15 15:53:14', '2015-11-15 15:24:16');
+INSERT INTO `fares` VALUES ('4', '4', '1', '5200', '2', '2015-11-15 15:53:29', '2015-11-15 15:24:26');
+INSERT INTO `fares` VALUES ('5', '4', '3', '5500', '2', '2015-11-15 15:24:26', '2015-11-15 15:24:26');
+INSERT INTO `fares` VALUES ('6', '4', '4', '', '2', '2015-11-15 15:24:26', '2015-11-15 15:24:26');
+INSERT INTO `fares` VALUES ('7', '4', '1', '', '3', '2015-11-15 15:53:54', '2015-11-15 15:53:54');
+INSERT INTO `fares` VALUES ('8', '4', '3', '', '3', '2015-11-15 15:53:54', '2015-11-15 15:53:54');
+INSERT INTO `fares` VALUES ('9', '4', '4', '2700', '3', '2015-11-15 15:53:54', '2015-11-15 15:53:54');
+INSERT INTO `fares` VALUES ('10', '4', '1', '5000', '4', '2015-11-15 15:54:04', '2015-11-15 15:54:04');
+INSERT INTO `fares` VALUES ('11', '4', '3', '', '4', '2015-11-15 15:54:04', '2015-11-15 15:54:04');
+INSERT INTO `fares` VALUES ('12', '4', '4', '', '4', '2015-11-15 15:54:04', '2015-11-15 15:54:04');
 
 -- ----------------------------
 -- Table structure for `online_booking`
@@ -519,16 +531,19 @@ CREATE TABLE `travel_vehicle_types` (
   `vehicle_name` varchar(20) NOT NULL,
   `vehicle_type_id` tinyint(4) NOT NULL,
   `amenities` varchar(40) NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1 for active, 0 for inactive',
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0 for active, 1 for inactive',
   `date_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `date_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `travel_id` (`travel_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of travel_vehicle_types
 -- ----------------------------
+INSERT INTO `travel_vehicle_types` VALUES ('1', '4', 'Coach', '4', '', '0', '2015-11-15 14:17:41', '2015-11-15 14:13:14');
+INSERT INTO `travel_vehicle_types` VALUES ('3', '4', 'Executive', '1', '', '0', '2015-11-15 14:30:18', '2015-11-15 14:30:18');
+INSERT INTO `travel_vehicle_types` VALUES ('4', '4', 'Luxury Bus', '5', '', '0', '2015-11-15 14:30:57', '2015-11-15 14:30:57');
 
 -- ----------------------------
 -- Table structure for `users`
@@ -573,7 +588,7 @@ CREATE TABLE `vehicle_types` (
   `num_of_seats` tinyint(2) NOT NULL,
   `removed` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of vehicle_types
@@ -582,8 +597,9 @@ INSERT INTO `vehicle_types` VALUES ('1', 'Regular Sienna', '5', '0');
 INSERT INTO `vehicle_types` VALUES ('2', 'Car', '3', '0');
 INSERT INTO `vehicle_types` VALUES ('3', 'Toyota Bus', '10', '0');
 INSERT INTO `vehicle_types` VALUES ('4', 'Coaster Bus', '19', '0');
-INSERT INTO `vehicle_types` VALUES ('5', 'A motor', '75', '0');
+INSERT INTO `vehicle_types` VALUES ('5', 'Luxury Bus', '75', '0');
 INSERT INTO `vehicle_types` VALUES ('6', 'gos', '7', '1');
 INSERT INTO `vehicle_types` VALUES ('7', 'Executive Sienna', '5', '0');
 INSERT INTO `vehicle_types` VALUES ('8', 'Hiace', '16', '0');
 INSERT INTO `vehicle_types` VALUES ('9', 'Hummer', '6', '1');
+INSERT INTO `vehicle_types` VALUES ('12', 'Another Motor', '20', '0');

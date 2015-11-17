@@ -2,8 +2,6 @@
 require "includes/head.php";
 require "includes/side-bar.php";
 require_once "../../api/models/fare.class.php";
-require_once "../../api/models/vehiclemodel.class.php";
-require_once "../../api/models/routemodel.class.php";
 require_once "../../api/models/travelparkmap.class.php";
 require_once "../../api/models/travelvehicle.class.php";
 
@@ -58,8 +56,7 @@ if (isset($_POST['change_fare'])) {
 								</thead>
 								<tbody>
 								<?php
-									$route = new RouteModel();
-                                    $park_maps = $travel_park_map->getTravelStateParkMaps($_SESSION['travel_id'],$_SESSION['state_id']);
+									$park_maps = $travel_park_map->getTravelStateParkMaps($_SESSION['travel_id'],$_SESSION['state_id']);
 
 									$n = 1;
 									foreach ($park_maps AS $park_map) {

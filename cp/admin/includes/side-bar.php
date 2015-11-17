@@ -53,13 +53,6 @@
             </li>
 
             <li>
-                <a href="../bushire.php">
-                    <i class="fa fa-bus"></i>
-                    <span>Bus Hire</span>
-                </a>
-            </li>
-
-            <li>
                 <a href="view_reports.php">
                     <i class="fa fa-book"></i>
                     <span>Reports</span>
