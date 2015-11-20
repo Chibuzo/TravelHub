@@ -39,23 +39,23 @@
             </li>
 
             <li>
+                <a href="parks.php">
+                    <i class="fa fa-road"></i>
+                    <span>Manage Parks</span>
+                </a>
+            </li>
+
+            <!--<li>
                 <a href="manage_fares.php">
                     <i class="fa fa-money"></i>
                     <span>Manage Fares</span>
                 </a>
-            </li>
+            </li>-->
 
             <li>
                 <a href="bookings.php">
                     <i class="fa fa-car"></i>
                     <span>Reservations</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="view_reports.php">
-                    <i class="fa fa-book"></i>
-                    <span>Reports</span>
                 </a>
             </li>
 
@@ -70,6 +70,13 @@
                 <a href="users.php">
                     <i class="fa fa-users"></i>
                     <span>Manage Users</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="view_reports.php">
+                    <i class="fa fa-book"></i>
+                    <span>Reports</span>
                 </a>
             </li>
 

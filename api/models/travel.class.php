@@ -85,7 +85,7 @@ class Travel extends Model {
 
     private function updateTravel($params)
     {
-        $sql = "UPDATE {$this->tbl} SET company_name = :company_name, offline_charge = :offline_charge, online_charge = :offline_charge WHERE id = :id";
+        $sql = "UPDATE {$this->tbl} SET company_name = :company_name, offline_charge = :offline_charge, online_charge = :online_charge WHERE id = :id";
         $result = self::$db->query($sql, $params);
         if ($result !== false) {
             return true;

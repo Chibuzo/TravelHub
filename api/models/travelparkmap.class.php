@@ -39,12 +39,13 @@ class TravelParkMap extends ParkModel {
      */
     public function getTravelParkMaps($travel_id)
     {
-        $sql = "SELECT pm.*, d.park AS destination_name, o.park AS origin_name, states.state_name as destination_state
+        $sql = "SELECT pm.*, d.park AS destination_name, o.park AS origin_name, states.state_name as destination_state, state.state_name AS origin_state
                 FROM park_map AS pm
                 INNER JOIN travel_park_map ON travel_park_map.park_map_id = pm.id
                 INNER JOIN parks AS d ON pm.destination = d.id
                 INNER JOIN parks AS o ON pm.origin = o.id
                 INNER JOIN states ON d.state_id = states.id
+                INNER JOIN states AS state ON o.state_id = state.id
                 WHERE travel_park_map.travel_id = :travel_id AND travel_park_map.status = '0'";
         self::$db->query($sql, array('travel_id' => $travel_id));
         return self::$db->fetchAll('obj');
@@ -91,6 +92,23 @@ class TravelParkMap extends ParkModel {
                 WHERE o_s.id = :origin AND d_s.id = :destination";
         self::$db->query($sql, array('origin' => $origin, 'destination'=> $destination));
         return self::$db->fetchAll('obj');
+    }
+
+    /**
+     * Returns the route for the given park_map
+     *
+     * @param $park_map_id
+     * @return mixed
+     */
+    public function getRoute($park_map_id)
+    {
+        $sql = "SELECT routes.* FROM routes
+                INNER JOIN parks po ON po.state_id = routes.origin
+                INNER JOIN parks pd ON pd.state_id = routes.destination
+                INNER JOIN park_map pm ON pm.origin = po.id AND pm.destination = pd.id
+                WHERE pm.id = :park_map_id";
+        self::$db->query($sql, array('park_map_id' => $park_map_id));
+        return self::$db->fetch('obj');
     }
 
 	public function verifyParkMap($park_map_id, $travel_id)

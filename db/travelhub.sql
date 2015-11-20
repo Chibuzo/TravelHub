@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50625
 File Encoding         : 65001
 
-Date: 2015-11-18 00:26:32
+Date: 2015-11-20 17:01:32
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -133,27 +133,25 @@ CREATE TABLE `fares` (
   `vehicle_type_id` tinyint(4) NOT NULL,
   `fare` varchar(5) NOT NULL,
   `park_map_id` int(11) NOT NULL,
+  `route_id` int(11) NOT NULL,
   `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `date_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `travel_id` (`travel_id`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of fares
 -- ----------------------------
-INSERT INTO `fares` VALUES ('1', '4', '1', '5500', '1', '2015-11-15 15:53:14', '2015-11-15 15:24:16');
-INSERT INTO `fares` VALUES ('2', '4', '3', '6500', '1', '2015-11-15 15:53:14', '2015-11-15 15:24:16');
-INSERT INTO `fares` VALUES ('3', '4', '4', '4200', '1', '2015-11-15 15:53:14', '2015-11-15 15:24:16');
-INSERT INTO `fares` VALUES ('4', '4', '1', '5200', '2', '2015-11-15 15:53:29', '2015-11-15 15:24:26');
-INSERT INTO `fares` VALUES ('5', '4', '3', '5500', '2', '2015-11-15 15:24:26', '2015-11-15 15:24:26');
-INSERT INTO `fares` VALUES ('6', '4', '4', '', '2', '2015-11-15 15:24:26', '2015-11-15 15:24:26');
-INSERT INTO `fares` VALUES ('7', '4', '1', '', '3', '2015-11-15 15:53:54', '2015-11-15 15:53:54');
-INSERT INTO `fares` VALUES ('8', '4', '3', '', '3', '2015-11-15 15:53:54', '2015-11-15 15:53:54');
-INSERT INTO `fares` VALUES ('9', '4', '4', '2700', '3', '2015-11-15 15:53:54', '2015-11-15 15:53:54');
-INSERT INTO `fares` VALUES ('10', '4', '1', '5000', '4', '2015-11-15 15:54:04', '2015-11-15 15:54:04');
-INSERT INTO `fares` VALUES ('11', '4', '3', '', '4', '2015-11-15 15:54:04', '2015-11-15 15:54:04');
-INSERT INTO `fares` VALUES ('12', '4', '4', '', '4', '2015-11-15 15:54:04', '2015-11-15 15:54:04');
+INSERT INTO `fares` VALUES ('16', '4', '1', '3500', '1', '14', '2015-11-20 16:47:52', '2015-11-20 16:47:52');
+INSERT INTO `fares` VALUES ('17', '4', '3', '4000', '1', '14', '2015-11-20 16:47:52', '2015-11-20 16:47:52');
+INSERT INTO `fares` VALUES ('18', '4', '4', '3000', '1', '14', '2015-11-20 16:47:52', '2015-11-20 16:47:52');
+INSERT INTO `fares` VALUES ('19', '4', '1', '5200', '3', '14', '2015-11-20 16:48:21', '2015-11-20 16:48:21');
+INSERT INTO `fares` VALUES ('20', '4', '3', '9000', '3', '14', '2015-11-20 16:48:21', '2015-11-20 16:48:21');
+INSERT INTO `fares` VALUES ('21', '4', '4', '3400', '3', '14', '2015-11-20 16:48:21', '2015-11-20 16:48:21');
+INSERT INTO `fares` VALUES ('22', '4', '1', '', '5', '29', '2015-11-20 16:59:03', '2015-11-20 16:59:03');
+INSERT INTO `fares` VALUES ('23', '4', '3', '10700', '5', '29', '2015-11-20 16:59:03', '2015-11-20 16:59:03');
+INSERT INTO `fares` VALUES ('24', '4', '4', '', '5', '29', '2015-11-20 16:59:03', '2015-11-20 16:59:03');
 
 -- ----------------------------
 -- Table structure for `online_booking`
@@ -237,7 +235,7 @@ CREATE TABLE `park_map` (
   PRIMARY KEY (`id`),
   KEY `origin` (`origin`) USING BTREE,
   KEY `destination` (`destination`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of park_map
@@ -246,6 +244,7 @@ INSERT INTO `park_map` VALUES ('1', '1', '16', '1');
 INSERT INTO `park_map` VALUES ('2', '1', '17', '1');
 INSERT INTO `park_map` VALUES ('3', '14', '17', '1');
 INSERT INTO `park_map` VALUES ('4', '14', '16', '1');
+INSERT INTO `park_map` VALUES ('5', '14', '12', '1');
 
 -- ----------------------------
 -- Table structure for `reports`
@@ -284,19 +283,19 @@ CREATE TABLE `routes` (
 -- ----------------------------
 -- Records of routes
 -- ----------------------------
-INSERT INTO `routes` VALUES ('1', 'Enugu', 'Lagos', 'Enugu - Lagos', '1');
-INSERT INTO `routes` VALUES ('26', 'Enugu', 'Abuja', 'Enugu - Abuja', '1');
-INSERT INTO `routes` VALUES ('14', 'Lagos', 'Enugu', 'Lagos - Enugu', '1');
-INSERT INTO `routes` VALUES ('29', 'Lagos', 'Abuja', 'Lagos - Abuja', '1');
-INSERT INTO `routes` VALUES ('31', 'Lagos', 'PortHarcourt', 'Lagos - PortHarcourt', '1');
-INSERT INTO `routes` VALUES ('32', 'Lagos', 'Delta', 'Lagos - Delta', '1');
-INSERT INTO `routes` VALUES ('57', 'Abuja', 'Enugu', 'Abuja - Enugu', '1');
-INSERT INTO `routes` VALUES ('56', 'Delta', 'Abuja', 'Delta - Abuja', '1');
-INSERT INTO `routes` VALUES ('55', 'Abuja', 'Lagos', 'Abuja - Lagos', '1');
-INSERT INTO `routes` VALUES ('54', 'Delta', 'Lagos', 'Delta - Lagos', '1');
-INSERT INTO `routes` VALUES ('53', 'PortHarcourt', 'Abuja', 'PortHarcourt - Abuja', '1');
-INSERT INTO `routes` VALUES ('52', 'PortHarcourt', 'Lagos', 'PortHarcourt - Lagos', '1');
-INSERT INTO `routes` VALUES ('59', 'Abia', 'Jigawa', 'Abia - Jigawa', '0');
+INSERT INTO `routes` VALUES ('1', '3', '25', 'Enugu - Lagos', '1');
+INSERT INTO `routes` VALUES ('26', '3', '1', 'Enugu - Abuja', '1');
+INSERT INTO `routes` VALUES ('14', '25', '3', 'Lagos - Enugu', '1');
+INSERT INTO `routes` VALUES ('29', '25', '1', 'Lagos - Abuja', '1');
+INSERT INTO `routes` VALUES ('31', '25', '33', 'Lagos - Rivers', '1');
+INSERT INTO `routes` VALUES ('32', '25', '12', 'Lagos - Delta', '0');
+INSERT INTO `routes` VALUES ('57', '1', '3', 'Abuja - Enugu', '1');
+INSERT INTO `routes` VALUES ('56', '12', '1', 'Delta - Abuja', '1');
+INSERT INTO `routes` VALUES ('55', '1', '25', 'Abuja - Lagos', '1');
+INSERT INTO `routes` VALUES ('54', '12', '25', 'Delta - Lagos', '1');
+INSERT INTO `routes` VALUES ('53', '33', '1', 'Rivers - Abuja', '0');
+INSERT INTO `routes` VALUES ('52', '33', '25', 'Rivers - Lagos', '1');
+INSERT INTO `routes` VALUES ('59', '6', '18', 'Abia - Jigawa', '0');
 
 -- ----------------------------
 -- Table structure for `states`
@@ -415,7 +414,7 @@ CREATE TABLE `travels` (
 -- ----------------------------
 -- Records of travels
 -- ----------------------------
-INSERT INTO `travels` VALUES ('4', 'Ekene', '10', '10', '2015-10-30 05:33:01', '0');
+INSERT INTO `travels` VALUES ('4', 'Ekene', '8', '11', '2015-10-30 05:33:01', '0');
 INSERT INTO `travels` VALUES ('5', 'Ifesinachi', '5', '10', '2015-11-02 00:08:48', '0');
 
 -- ----------------------------
@@ -473,7 +472,7 @@ CREATE TABLE `travel_park_map` (
   `date_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `travel_id` (`travel_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of travel_park_map
@@ -482,6 +481,7 @@ INSERT INTO `travel_park_map` VALUES ('1', '4', '1', '0', '2015-11-06 01:24:16')
 INSERT INTO `travel_park_map` VALUES ('2', '4', '2', '0', '2015-11-06 01:41:35');
 INSERT INTO `travel_park_map` VALUES ('3', '4', '3', '0', '2015-11-06 01:43:40');
 INSERT INTO `travel_park_map` VALUES ('4', '4', '4', '0', '2015-11-06 01:45:05');
+INSERT INTO `travel_park_map` VALUES ('5', '4', '5', '0', '2015-11-20 15:51:32');
 
 -- ----------------------------
 -- Table structure for `travel_routes`
@@ -576,7 +576,7 @@ INSERT INTO `users` VALUES ('12', 'Aproko AprokoName', 'aproko', '8af34d1d0c4f28
 INSERT INTO `users` VALUES ('24', 'Okolo Uzo', 'okoloc', 'f44c0263ddf60765eeeed2b26152d02562ace000f8727c1f177a8f8d21df0d14', '8tE5BGSybCMOezCmDVdGA78lcgtWq+0C', 'park_admin', '2015-11-03 01:15:11', '0');
 INSERT INTO `users` VALUES ('19', 'Adesuwa Okpefa', 'okpefa', 'af36c1cff6d5eec594d9071f10022513539416e656cde383922c87dcad43e1a0', '5kCa9idNn9VKN/9TzNrdUoMxgI0LCquL', 'state_admin', '2015-11-02 22:45:47', '0');
 INSERT INTO `users` VALUES ('25', 'Augustine Ogwo', 'ogwo', '9e685dad18b5d9da472d85a4b9611105ae8c580f1ba88177a9940f7a26268ff8', 'oYn9dLq7X0w3pckhFU3E2gr8Nj3Tu5ct', 'park_admin', '2015-11-03 01:17:19', '0');
-INSERT INTO `users` VALUES ('26', 'Chike UserFullName', 'chike', '76db376ca24afc11fd3d8a336917fada8d0d58fcb87a892b7a6d7ec9cf13d24f', 'Tn+vJ9gSH/bRaocs2ISsVgfCb1huczj3', 'park_admin', '2015-11-05 16:06:04', '0');
+INSERT INTO `users` VALUES ('26', 'Chike Mgbemena', 'chike', '76db376ca24afc11fd3d8a336917fada8d0d58fcb87a892b7a6d7ec9cf13d24f', 'Tn+vJ9gSH/bRaocs2ISsVgfCb1huczj3', 'user', '2015-11-19 00:13:12', '0');
 
 -- ----------------------------
 -- Table structure for `vehicle_types`
@@ -594,7 +594,7 @@ CREATE TABLE `vehicle_types` (
 -- Records of vehicle_types
 -- ----------------------------
 INSERT INTO `vehicle_types` VALUES ('1', 'Regular Sienna', '5', '0');
-INSERT INTO `vehicle_types` VALUES ('2', 'Car', '3', '0');
+INSERT INTO `vehicle_types` VALUES ('2', 'Car', '3', '1');
 INSERT INTO `vehicle_types` VALUES ('3', 'Toyota Bus', '10', '0');
 INSERT INTO `vehicle_types` VALUES ('4', 'Coaster Bus', '19', '0');
 INSERT INTO `vehicle_types` VALUES ('5', 'Luxury Bus', '75', '0');

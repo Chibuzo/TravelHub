@@ -111,7 +111,7 @@ class RouteModel extends Model {
 	{
 		$sql = "UPDATE routes SET status = '0' WHERE id = :id";
 		if (self::$db->query($sql, array('id' => $id))) {
-			self::$db->query("DELETE FROM fares WHERE route_id = :route_id", array('route_id' => $id));
+			self::$db->query("DELETE FROM fares WHERE park_map_id = :park_map_id", array('park_map_id' => $id));
 			return true;
 		}
 	}

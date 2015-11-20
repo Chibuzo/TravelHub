@@ -1,19 +1,12 @@
 <?php
 require "includes/head.php";
 require "includes/side-bar.php";
-require_once "../../includes/db_handle.php";
-require_once "../../api/models/vehiclemodel.class.php";
-require_once "../../api/models/routemodel.class.php";
 
-$bus = new VehicleModel();
-$route = new RouteModel();
+require_once "../../api/models/parkmodel.class.php";
 
-if (isset($_POST['add_vehicle'])) {
-	$bus->addVehicleType($_POST['vehicle_name'], $_POST['num_of_seats']);
-}
-elseif (isset($_POST['add_route'])) {
-	$route->addRoute($_POST['origin'], $_POST['destination']);
-}
+$park_model = new ParkModel();
+
+//Add Park
 
 ?>
 <style>
@@ -29,7 +22,7 @@ elseif (isset($_POST['add_route'])) {
 	  </h1>
 	  <ol class="breadcrumb">
 		<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-		<li class="active">Routes & Vehicles</li>
+		<li class="active">States & Parks</li>
 	  </ol>
 	</section>
 
@@ -39,71 +32,30 @@ elseif (isset($_POST['add_route'])) {
 			<div class="col-md-6 col-xs-12">
 				<div class="box box-warning">
 					<div class="box-header with-border">
-						<h2 style='font-size: 18px' class="box-title"><i class="fa fa-road"></i> &nbsp;Manage Routes</h2>
-						<div class="box-tools pull-right">
-							<button data-toggle="modal" data-target="#hotelModal" class="btn bg-olive hidden"><i class="fa fa-plus"></i> New Route</button>
-						</div>
+						<h2 style='font-size: 18px' class="box-title"><i class="fa fa-road"></i> &nbsp; States</h2>
 					</div>
 					<div class="box-body">
 						<div>
-							<div id="route-div">
-								<form method="post">
-									<div class="row">
-										<div class="col-md-5">
-											<div class="form-group" id="origin">
-												<select name="origin" class="form-control" required>
-													<option value="">-- Origin ( From ) --</option>
-													<?php
-														$states = '';
-														foreach ($db->query("SELECT * FROM states ORDER BY state_name") AS $st) {
-															$states .= "<option value='{$st['state_name']}'>{$st['state_name']}</option>";
-														}
-														echo $states;
-													?>
-												</select>
-											</div>
-										</div>
-
-										<div class="col-md-5">
-											<div class="form-group" id="destination">
-												<select name="destination" class="form-control" required>
-													<option value="">-- Destination ( To ) --</option>
-													<?php
-														echo $states;
-													?>
-												</select>
-											</div>
-										</div>
-										<input type="hidden" name="add_route" value="yes" />
-
-										<div class="col-md-2">
-											<button type="submit" name="addRoute" class="btn bg-olive"><i class='fa fa-plus'></i> Add</button>
-										</div>
-									</div>
-								</form>
-							</div>
-
 							<table class="table table-bordered table-striped">
 								<thead>
 									<tr>
 										<th width='30'>S/No</th>
-										<th>Origin</th>
-										<th>Destination</th>
+										<th>State</th>
 										<th></th>
 									</tr>
 								</thead>
 								<tbody id="route-tbl">
 								<?php
 									$html = ""; $n = 0;
-									foreach ($route->getAllRoutes() AS $rout) {
+									foreach ($park_model->getStates() as $state) {
 										$n++;
 										$html .= "<tr>
 													<td class='text-right'>$n</td>
-													<td>{$rout->origin}</td>
-													<td>{$rout->destination}</td>
-													<td class='opt-icons text-center' id='{$rout->id}'>
+													<td>{$state->state_name}</td>
+													<td class='opt-icons text-center' id='{$state->id}'>
 														<a href='' class='edit-route' title='Edit' data-toggle='tooltip'><i class='fa fa-pencil'></i></a>
 														<a href='' class='remove-route' title='Remove' data-toggle='tooltip'><i class='fa fa-trash-o'></i></a>
+														<a href='' class='display-parks' title='Parks' data-toggle='tooltip'><i class='fa fa-arrow-right'></i></a>
 													</td>
 												</tr>";
 									}

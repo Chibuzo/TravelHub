@@ -64,7 +64,7 @@ if (isset($_POST['change_fare'])) {
 										echo "<tr id='{$park_map->id}'><td>$n</td>
 												<td>{$park_map->origin_name} - {$park_map->destination_name}({$park_map->destination_state})</td>";
 
-										$fares = $fare->getFareByRouteId($park_map->id);
+										$fares = $fare->getFareByParkMapId($park_map->id);
 
 										if (count($fares) > 0) {
                                             if (count($bus_types) > 0) {

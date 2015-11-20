@@ -6,7 +6,13 @@ require_once "../../api/models/user.class.php";
 
 $user = new User();
 
-$user_types = array('admin' => "Administrator", "user" => "User", "travel_admin" => "Travel Administrator", "account" => "Account");
+$user_types = array('admin' => "Administrator",
+    "user" => "User",
+    "travel_admin" => "Travel Administrator",
+    "account" => "Account",
+    "state_admin" => "State Manager",
+    "park_admin" => "Park Manager"
+);
 ?>
 <div class="content-wrapper">
   	<section class="content-header">

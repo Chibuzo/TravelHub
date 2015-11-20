@@ -197,7 +197,7 @@ if (isset($_POST['park_map'])) {
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Add Travel Manager</h4>
+                <h4 class="modal-title" id="myModalLabel">Add Park Manager</h4>
             </div>
             <form action="" method="post" id="addPark">
                 <div class="modal-body">

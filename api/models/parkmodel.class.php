@@ -9,6 +9,12 @@ class ParkModel extends Model {
 		parent::__construct();
 	}
 
+    function getStates()
+    {
+        $sql = "SELECT id, state_name FROM states ORDER BY state_name";
+        self::$db->query($sql);
+        return self::$db->fetchAll('obj');
+    }
 
 	function getParks()
 	{

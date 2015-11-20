@@ -67,6 +67,7 @@ class Fare extends Model
 					'fare' => $val,
 					'vehicle_type_id' => $key,
 					'park_map_id' => $form['park_map_id'],
+                    'route_id' => $form['route_id'],
                     'travel_id' => $form['travel_id']
 				);
 				self::$db->execute($param);
@@ -78,20 +79,23 @@ class Fare extends Model
 			}
 		}
 
-		$sql = "INSERT INTO " . self::$db_tbl . "
-				(vehicle_type_id, fare, park_map_id, travel_id) VALUE (:vehicle_type_id, :fare, :park_map_id, :travel_id)";
+		if (count($new_vehicle_types) > 0) {
+            $sql = "INSERT INTO " . self::$db_tbl . "
+				(vehicle_type_id, fare, park_map_id, route_id, travel_id) VALUE (:vehicle_type_id, :fare, :park_map_id, :route_id, :travel_id)";
 
-		self::$db->prepare($sql);
+            self::$db->prepare($sql);
 
-		for ($i = 0; $i < count($new_vehicle_types['fare']); $i++) {
-			$param = array(
-				'fare' => $new_vehicle_types['fare'][$i],
-				'vehicle_type_id' => $new_vehicle_types['vehicle_type_id'][$i],
-				'park_map_id' => $form['park_map_id'],
-				'travel_id' => $form['travel_id']
-			);
-			self::$db->execute($param);
-		}
+            for ($i = 0; $i < count($new_vehicle_types['fare']); $i++) {
+                $param = array(
+                    'fare' => $new_vehicle_types['fare'][$i],
+                    'vehicle_type_id' => $new_vehicle_types['vehicle_type_id'][$i],
+                    'park_map_id' => $form['park_map_id'],
+                    'route_id' => $form['route_id'],
+                    'travel_id' => $form['travel_id']
+                );
+                self::$db->execute($param);
+            }
+        }
 	}
 
 
@@ -137,7 +141,15 @@ class Fare extends Model
 	}
 
 
-	public function getFareByRouteId($park_map_id, $travel_id = null)
+    /**
+     * Supply park_map id and get all fares for that park_map - park_map is connection between parks
+     * optional: travel_id, will ensure that you get fares for only the give travel
+     *
+     * @param $park_map_id
+     * @param null $travel_id
+     * @return mixed
+     */
+    public function getFareByParkMapId($park_map_id, $travel_id = null)
 	{
 		$where = "";
 		if ($travel_id == null) {
@@ -146,17 +158,66 @@ class Fare extends Model
 			$param = array('park_map_id' => $park_map_id, 'travel_id' => $travel_id);
 			$where = "AND f.travel_id = :travel_id";
 		}
-		$sql = "SELECT f.id, tvt.id vehicle_type_id, fare, vehicle_name FROM " . self::$db_tbl . " f
+		$sql = "SELECT f.id, tvt.id, f.vehicle_type_id, fare, vehicle_name FROM " . self::$db_tbl . " f
 				JOIN travel_vehicle_types tvt ON f.vehicle_type_id = tvt.id
 				WHERE park_map_id = :park_map_id $where
 				ORDER BY vehicle_name";
-
-		//$param = array('route_id' => $route_id, 'travel_id' => $travel_id);
 
 		if (self::$db->query($sql, $param)) {
 			return self::$db->fetchAll('obj');
 		}
 	}
+
+    /**
+     * Supply route id and get all fares for that route - route is connection between states
+     * optional: travel_id, will ensure that you get fares for only the give travel
+     *
+     * @param $routeId
+     * @param null $travel_id
+     * @return mixed
+     */
+    public function getFareByRouteId($routeId, $travel_id = null)
+    {
+        $where = "";
+        if ($travel_id == null) {
+            $param = array('route_id' => $routeId);
+        } else {
+            $param = array('route_id' => $routeId, 'travel_id' => $travel_id);
+            $where = "AND f.travel_id = :travel_id";
+        }
+        $sql = "SELECT f.id, tvt.id, f.vehicle_type_id, fare, vehicle_name FROM " . self::$db_tbl . " f
+				JOIN travel_vehicle_types tvt ON f.vehicle_type_id = tvt.id
+				WHERE route_id = :route_id $where
+				ORDER BY vehicle_name";
+
+        if (self::$db->query($sql, $param)) {
+            return self::$db->fetchAll('obj');
+        }
+    }
+
+    /**
+     * Returns fares given origin and destination state ids
+     *
+     * @param $origin
+     * @param $destination
+     * @return mixed
+     */
+    public function getFareByStates($origin, $destination)
+    {
+        $sql = "SELECT fares.*, pm.origin, pm.destination, d.park AS destination_name, o.park AS origin_name, d_s.state_name AS destination_state, o_s.state_name AS origin_state
+                FROM fares
+                INNER JOIN park_map AS pm ON fares.park_map_id = pm.id
+                INNER JOIN travel_park_map ON travel_park_map.park_map_id = pm.id
+                INNER JOIN parks AS d ON pm.destination = d.id
+                INNER JOIN parks AS o ON pm.origin = o.id
+                INNER JOIN states AS o_s ON o.state_id = o_s.id
+                INNER JOIN states AS d_s ON d.state_id = d_s.id
+                WHERE o_s.id = :origin_state AND d_s.id = :destination_state";
+
+        if (self::$db->query($sql, array('origin_state' => $origin, 'destination_state' => $destination))) {
+            return self::$db->fetch('obj');
+        }
+    }
 
 
 	public function getFareByBusType($vehicle_type_id, $park_map_id, $travel_id)

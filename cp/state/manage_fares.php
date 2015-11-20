@@ -60,10 +60,10 @@ if (isset($_POST['change_fare'])) {
 
 									$n = 1;
 									foreach ($park_maps AS $park_map) {
-										echo "<tr id='{$park_map->id}'><td>$n</td>
+										echo "<tr data-park-map-id='{$park_map->id}' data-route-id='{$travel_park_map->getRoute($park_map->id)->id}'><td>$n</td>
 												<td>{$park_map->origin_name} - {$park_map->destination_name} &nbsp; ({$park_map->destination_state})</td>";
 
-										$fares = $fare->getFareByRouteId($park_map->id, $_SESSION['travel_id']);
+										$fares = $fare->getFareByParkMapId($park_map->id, $_SESSION['travel_id']);
 
 										if (count($fares) > 0) {
                                             if (count($vehicle_types) > 0) {
@@ -133,6 +133,7 @@ if (isset($_POST['change_fare'])) {
 				?>
 				</div>
 				<input type="hidden" name="park_map_id" id="park_map_id" value="" />
+				<input type="hidden" name="route_id" id="route_id" value="" />
 
 				<div class="modal-footer">
 				  <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
@@ -150,8 +151,10 @@ $(document).ready(function() {
 	$('.edit-route-info').click(function(e) {
 		e.preventDefault();
 		var $thisTr = $(this).parents('tr');
-		var park_map_id = $thisTr.attr("id");
+		var park_map_id = $thisTr.data("park-map-id");
+		var route_id = $thisTr.data("route-id");
 		$("#park_map_id").val(park_map_id);
+		$("#route_id").val(route_id);
 
 		var fare = 0;
 		$('#form-fare').find("input[type='text']").each(function(i, input) {
