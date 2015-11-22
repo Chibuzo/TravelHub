@@ -38,12 +38,12 @@
                 </a>
             </li>
 
-            <li>
+            <!--<li>
                 <a href="manage_fares.php">
                     <i class="fa fa-money"></i>
                     <span>Manage Fares</span>
                 </a>
-            </li>
+            </li>-->
 
             <li>
                 <a href="bookings.php">

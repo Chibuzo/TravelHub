@@ -188,7 +188,8 @@ class User extends Travel {
 
 	function getUserById($id)
 	{
-		return self::$db->query("SELECT * FROM users WHERE id = :id AND deleted = '0'", array('id' => $id));
+		self::$db->query("SELECT * FROM users WHERE id = :id AND deleted = '0'", array('id' => $id));
+        return self::$db->fetch('obj');
 	}
 
 

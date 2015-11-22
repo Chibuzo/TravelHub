@@ -15,6 +15,14 @@ if (isset($_POST['add_state'])) {
     $user_model = new User();
     $user_model->createStateAdmin($_POST['full_name'], $_POST['username'], $_POST['password'], $_SESSION['travel_id'], $_POST['state']);
 }
+if (isset($_POST['update_state'])) {
+    //var_dump($_POST);
+    $user_model = new User();
+    $user = $user_model->getUserById($_POST['user_id']);
+    $user_model->updateUser($_POST['user_id'], $_POST['full_name'], $_POST['username'], 'state_admin');
+    /*var_dump($user, $_POST);
+    exit;*/
+}
 
 ?>
 <style>
@@ -65,10 +73,11 @@ if (isset($_POST['add_state'])) {
 													<td class='text-right'>$n</td>
 													<td>{$row->state_name}</td>
 													<td>{$row->fullname} ({$row->username})</td>
-													<td class='opt-icons text-center' id='{$row->id}'>
-														<a href='' class='edit-state' title='Edit' data-toggle='tooltip'><i class='fa fa-pencil'></i></a>
-														<a href='' class='remove-state' title='Remove' data-toggle='tooltip'><i class='fa fa-trash-o'></i></a>
-														<a href='' class='state-detail' title='Detail' data-toggle='tooltip'><i class='fa fa-arrow-right'></i></a>
+													<td class='opt-icons text-center' id='{$row->id}' data-row-id='{$row->id}' data-userid='{$row->user_id}' data-fullname='{$row->fullname}' data-username='{$row->username}' data-state-id='{$row->state_id}'>
+                                                        <span data-toggle='tooltip' title='Edit'>
+                                                            <a href='#' class='edit-state' data-toggle='modal' rel='tooltip' data-target='#editState'><i class='fa fa-pencil'></i></a>
+                                                        </span>
+														<a href='#' class='remove-state' title='Remove' data-toggle='tooltip'><i class='fa fa-trash-o'></i></a>
 													</td>
 												</tr>";
 									}
@@ -135,13 +144,19 @@ if (isset($_POST['add_state'])) {
 		</div>
 	</section>
 </div>
-<!-- Modal -->
+<?php
+$states = '';
+foreach ($db->query("SELECT * FROM states ORDER BY state_name") AS $st) {
+    $states .= "<option value='{$st['id']}'>{$st['state_name']}</option>";
+}
+?>
+<!-- State Modal -->
 <div class="modal fade" id="stateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Add Travel Manager</h4>
+                <h4 class="modal-title" id="myModalLabel">Add State Manager</h4>
             </div>
             <form action="" method="post" id="addState">
                 <div class="modal-body">
@@ -150,21 +165,17 @@ if (isset($_POST['add_state'])) {
                         <select name="state" class="form-control" required>
                             <option value="">-- State --</option>
                             <?php
-                            $states = '';
-                            foreach ($db->query("SELECT * FROM states ORDER BY state_name") AS $st) {
-                                $states .= "<option value='{$st['id']}'>{$st['state_name']}</option>";
-                            }
                             echo $states;
                             ?>
                         </select>
                     </div>
                     <div class="form-group">
                         <label>Full Name</label>
-                        <input class="form-control" type="text" placeholder="Full Name" name="full_name" id="full_name" required>
+                        <input class="form-control" type="text" placeholder="Full Name" name="full_name" required>
                     </div>
                     <div class="form-group">
                         <label>Username</label>
-                        <input class="form-control" type="text" placeholder="Username" name="username" id="username" required>
+                        <input class="form-control" type="text" placeholder="Username" name="username" required>
                     </div>
                     <div class="form-group">
                         <label>Password</label>
@@ -185,6 +196,44 @@ if (isset($_POST['add_state'])) {
         </div>
     </div>
 </div>
+
+<!-- Edit State Modal -->
+<div class="modal fade" id="editState" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Update State Manager</h4>
+            </div>
+            <form action="" method="post" id="updateState">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input class="form-control" type="text" placeholder="Full Name" name="full_name" id="full_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input class="form-control" type="text" placeholder="Username" name="username" id="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input class="form-control" type="password" placeholder="Password" name="password" id="u_password" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Verify Password</label>
+                        <input class="form-control" type="password" placeholder="Verify Password" name="v_password" id="u_v_password" required>
+                    </div>
+                    <input type="hidden" name="update_state" value="yes" />
+                    <input type="hidden" id="user_id" name="user_id" value="" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <?php include_once "includes/footer.html"; ?>
 <script>
 $(document).ready(function() {
@@ -196,6 +245,12 @@ $(document).ready(function() {
             e.preventDefault();
             alert("Password do not match.");
         }
+    });
+    $('.edit-state').on('click', function() {
+        var $thisTr = $(this).parents('td');
+        $('#user_id').val($thisTr.data('userid'));
+        $('#full_name').val($thisTr.data('fullname'));
+        $('#username').val($thisTr.data('username'));
     });
 });
 </script>

@@ -34,7 +34,7 @@ class Travel extends Model {
 
     function getTravelStates($travel_id)
     {
-        $sql = "SELECT travel_state.id, travel_state.travel_id AS travel_id, states.state_name, users.fullname, users.username, users.id AS user_id FROM travel_state INNER JOIN states ON travel_state.state_id = states.id INNER JOIN users ON travel_state.user_id = users.id WHERE travel_state.travel_id = :travel_id";
+        $sql = "SELECT travel_state.id, travel_state.travel_id AS travel_id, states.state_name, states.id AS state_id, users.fullname, users.username, users.id AS user_id FROM travel_state INNER JOIN states ON travel_state.state_id = states.id INNER JOIN users ON travel_state.user_id = users.id WHERE travel_state.travel_id = :travel_id";
         self::$db->query($sql, array('travel_id' => $travel_id));
         return self::$db->fetchAll('obj');
     }
