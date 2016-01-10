@@ -1,8 +1,8 @@
 <?php
 session_start();
 if (!isset($_SESSION['username'])) {
-	header("Location: ../index.php");
-	exit;
+    header("Location: ../index.php");
+    exit;
 }
 ?>
 <!DOCTYPE html>
@@ -17,7 +17,6 @@ if (!isset($_SESSION['username'])) {
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <!-- Ionicons -->
     <link href="http://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet" type="text/css" />
-
     <!-- iCheck for checkboxes and radio inputs -->
     <link href="../plugins/iCheck/minimal/blue.css" rel="stylesheet" type="text/css" />
     <!-- Theme style -->

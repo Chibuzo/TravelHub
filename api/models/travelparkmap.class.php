@@ -1,35 +1,36 @@
 <?php
 require_once "parkmodel.class.php";
 
-class TravelParkMap extends ParkModel {
+class TravelParkMap extends ParkModel
+{
 
-	public $id, $travel_id, $route_id, $status;
-	protected static $tbl = "travel_park_map";
+    public $id, $travel_id, $route_id, $status;
+    protected static $tbl = "travel_park_map";
 
-	function __construct()
-	{
-		parent::__construct();
-	}
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
 
-	public function addParkMap($origin, $destination, $travel_id)
-	{
-		$park_map_id = parent::addParkMap($origin, $destination);
+    public function addParkMap($origin, $destination, $travel_id)
+    {
+        $park_map_id = parent::addParkMap($origin, $destination);
 
-		// check if the route has been added already
-		if (is_numeric($this->verifyParkMap($park_map_id, $travel_id))) {
-			return true;
-		}
+        // check if the route has been added already
+        if (is_numeric($this->verifyParkMap($park_map_id, $travel_id))) {
+            return true;
+        }
 
-		$sql = "INSERT INTO " . self::$tbl . " (travel_id, park_map_id) VALUES (:travel_id, :park_map_id)";
-		$param = array(
-			'travel_id' =>$travel_id,
-			'park_map_id' => $park_map_id
-		);
-		if (self::$db->query($sql, $param)) {
-			return self::$db->getLastInsertId();
-		}
-	}
+        $sql = "INSERT INTO " . self::$tbl . " (travel_id, park_map_id) VALUES (:travel_id, :park_map_id)";
+        $param = array(
+            'travel_id' =>$travel_id,
+            'park_map_id' => $park_map_id
+        );
+        if (self::$db->query($sql, $param)) {
+            return self::$db->getLastInsertId();
+        }
+    }
 
     /**
      * Returns all park_maps for a travel irrespective of destination and origin
@@ -111,35 +112,35 @@ class TravelParkMap extends ParkModel {
         return self::$db->fetch('obj');
     }
 
-	public function verifyParkMap($park_map_id, $travel_id)
-	{
-		$sql = "SELECT id FROM " . self::$tbl . " WHERE park_map_id = :park_map_id AND travel_id = :travel_id";
-		$param = array(
-			'travel_id' => $travel_id,
-			'park_map_id' => $park_map_id
-		);
-		self::$db->query($sql, $param);
-		if ($id = self::$db->fetch('obj')) {
-			return $id->id;
-		}
-	}
+    public function verifyParkMap($park_map_id, $travel_id)
+    {
+        $sql = "SELECT id FROM " . self::$tbl . " WHERE park_map_id = :park_map_id AND travel_id = :travel_id";
+        $param = array(
+            'travel_id' => $travel_id,
+            'park_map_id' => $park_map_id
+        );
+        self::$db->query($sql, $param);
+        if ($id = self::$db->fetch('obj')) {
+            return $id->id;
+        }
+    }
 
 
-	public function disableRoute($route_id, $travel_id)
-	{
-		$sql = "UPDATE " . self::$tbl . " SET status = '0' WHERE route_id = :route_id AND travel_id = :travel_id";
-		if (self::$db->query($sql, array('route_id' => $route_id, 'travel_id' => $travel_id))) {
-			return true;
-		}
-	}
+    public function disableRoute($route_id, $travel_id)
+    {
+        $sql = "UPDATE " . self::$tbl . " SET status = '0' WHERE route_id = :route_id AND travel_id = :travel_id";
+        if (self::$db->query($sql, array('route_id' => $route_id, 'travel_id' => $travel_id))) {
+            return true;
+        }
+    }
 
 
-	public function removeRoute($route_id, $travel_id)
-	{
-		$sql = "UPDATE " . self::$tbl . " SET removed = '1' WHERE route_id = :route_id AND travel_id = :travel_id";
-		if (self::$db->query($sql, array('route_id' => $route_id, 'travel_id' => $travel_id))) {
-			return true;
-		}
-	}
+    public function removeRoute($route_id, $travel_id)
+    {
+        $sql = "UPDATE " . self::$tbl . " SET removed = '1' WHERE route_id = :route_id AND travel_id = :travel_id";
+        if (self::$db->query($sql, array('route_id' => $route_id, 'travel_id' => $travel_id))) {
+            return true;
+        }
+    }
 }
 ?>

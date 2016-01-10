@@ -51,7 +51,7 @@ $booking = new BookingModel();
               <div class="small-box bg-aqua">
                 <div class="inner">
                   <h3><?php echo $books; ?></h3>
-                  <p>All Reservations</p>
+                  <p>All Bookings</p>
                 </div>
                 <div class="icon">
                   <i class="fa fa-credit-card"></i>
@@ -145,8 +145,8 @@ $booking = new BookingModel();
               <!-- Calendar -->
               <div class="box box-solid bg-olive">
                 <div class="box-header">
-                  <i class="fa fa-calendar"></i>
-                  <h3 class="box-title">Calendar</h3>
+                  <i class="fa fa-bar-chart"></i>
+                  <h3 class="box-title">Sales Chart</h3>
                   <!-- tools box -->
                   <div class="pull-right box-tools">
                     <!-- button with a dropdown -->
@@ -165,7 +165,7 @@ $booking = new BookingModel();
                 </div><!-- /.box-header -->
                 <div class="box-body no-padding">
                   <!--The calendar -->
-                  <div id="calendar" style="width: 100%"></div>
+                  
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
 			</div>

@@ -46,6 +46,13 @@
             </li>
 
             <li>
+                <a href="manage_trips.php">
+                    <i class="fa fa-road"></i>
+                    <span>Trips</span>
+                </a>
+            </li>
+
+            <li>
                 <a href="bookings.php">
                     <i class="fa fa-car"></i>
                     <span>Reservations</span>
