@@ -4,7 +4,7 @@ session_start();
 
 if ($_REQUEST['op'] == 'ticket_details')
 {
-	$_SESSION['seat_no']             = $_REQUEST['seat_no'];
+	$_SESSION['seat_no']     = $_REQUEST['seat_no'];
 	$_SESSION['bus_id']      = $_REQUEST['bus_id'];
 	$_SESSION['travel_date'] = $_REQUEST['travel_date'];
 	//$_SESSION['departure_time']      = $_REQUEST['departure_time'];

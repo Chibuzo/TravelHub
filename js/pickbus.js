@@ -1,22 +1,22 @@
-var BASE_URL = "http://localhost/auto/";
+//var BASE_URL = "http://localhost/travelhub/";
 
 $(document).ready(function() {
 
 	/*** Show seating arrangement ***/
-	$('.bus').on('click', '.display-seats', function(e) {
+	$('.vehicle').on('click', '.display-seats', function(e) {
 		e.preventDefault();
 
 		var $this = $(this);
 		$this.next('.loading').css('visibility', 'visible');
-		var bus_type_id  = $(this).data('bus_type_id');
+		var vehicle_type_id  = $(this).data('vehicle_type_id');
 		var num_of_seats = $(this).data('num_of_seats');
 		var route_id     = $(this).data('route_id');
 		var fare         = $(this).data('fare');
-		var fare_id     = $(this).data('fare_id');
+		var fare_id      = $(this).data('fare_id');
 		var travel_date  = $(this).data('travel_date');
 
 		$.post('ajax/seating.php', {
-			'bus_type_id' :bus_type_id,
+			'vehicle_type_id' :vehicle_type_id,
 			'num_of_seats':num_of_seats,
 			'route_id'    :route_id,
 			'fare'        :fare,
@@ -27,7 +27,7 @@ $(document).ready(function() {
 				var height = '';
 				if (num_of_seats > 15) height = "280px";
 				else height = "+220px";
-				$('#show-seat_' + bus_type_id).css('display', 'block').animate({height: height}, function() {
+				$('#show-seat_' + vehicle_type_id).css('display', 'block').animate({height: height}, function() {
 					$(this).html(d);
 					$this.next('.loading').css('visibility', 'hidden');
 				});
@@ -66,40 +66,33 @@ $(document).ready(function() {
 	});
 
  /*** Proceed to customer details page ***/
-	$('.bus, .show-seat').on('click', '.continue', function(e) {
+	$('.vehicle, .show-seat').on('click', '.continue', function(e) {
 		e.preventDefault();
 
 		var $seating_parent = $(this).parents('.seat_arrangement');
 
-		var travel_id, boarding_bus_id, num_of_seats = null;
-		if (true) {
-			var fare        = $seating_parent.data('fare');
-			var bus_type_id      = $seating_parent.data('bus_type_id');
-			var travel_date = $seating_parent.data('travel_date');
-			var seat_no     = $seating_parent.find('.picked_seat').text();
-			var boarding_bus_id = $seating_parent.data('boarding_bus_id');
+		var boarding_vehicle_id, num_of_seats = null;
+		var fare        = $seating_parent.data('fare');
+		var fare_id     = $seating_parent.data('fare_id');
+		var vehicle_type_id = $seating_parent.data('vehicle_type_id');
+		var travel_date = $seating_parent.data('travel_date');
+		var seat_no     = $seating_parent.find('.picked_seat').text();
+		var boarding_vehicle_id = $seating_parent.data('boarding_vehicle_id');
 
-			if (seat_no.length < 1) {
-				alert("Pick a seat before you continue");
-				return false;
-			}
-		} else {
-			var fare = $(this).data('fare');
-			var bus_type_id = $(this).data('bus_type_id');
-			var travel_date = $(this).data('travel_date');
-			var seat_no = '0';
-			num_of_seats = $(this).data('num_of_seats');
-			travel_id = $(this).data('travel_id');
+		if (seat_no.length < 1) {
+			alert("Pick a seat before you continue");
+			return false;
 		}
 
 		$.post('ajax/hold_details.php', {
-			'bus_type_id': bus_type_id,
+			'vehicle_type_id': vehicle_type_id,
 			'fare'       : fare,
+			'fare_id'    : fare_id,
 			'seat_no'    : seat_no,
 			'travel_date': travel_date,
 			'num_of_seats': num_of_seats,
-			'travel_id'  : travel_id,
-			'boarding_bus_id' : boarding_bus_id
+			//'travel_id'  : travel_id,
+			'boarding_vehicle_id' : boarding_vehicle_id
 		},
 			function(d) {
 				location.href = "details.php";

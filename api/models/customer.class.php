@@ -21,8 +21,8 @@ class Customer extends Model {
 				VALUES
 				(:c_name, :phone_no, :next_of_kin_phone)";
 
-		if ($this->db->query($sql, $param)) {
-			return $this->db->getLastInsertId();
+		if (self::$db->query($sql, $param)) {
+			return self::$db->getLastInsertId();
 		} else {
 			return false;
 		}
@@ -38,7 +38,7 @@ class Customer extends Model {
 					email = :email
 				WHERE id = :id";
 
-		if ($this->db->query($sql, $param)) {
+		if (self::$db->query($sql, $param)) {
 			return true;
 		} else {
 			return false;
@@ -49,8 +49,8 @@ class Customer extends Model {
 	function findCustomer($field, $value)
 	{
 		$sql = "SELECT id FROM customers WHERE {$field} = :value";
-		if ($this->db->query($sql, array('value' => $value))) {
-			$customer = $this->db->fetch('obj');
+		self::$db->query($sql, array('value' => $value));
+		if ($customer = self::$db->fetch('obj')) {
 			return $customer->id;
 		} else {
 			return false;
@@ -61,8 +61,8 @@ class Customer extends Model {
 	function getCustomer($field, $id)
 	{
 		$sql = "SELECT * FROM customers WHERE {$field} = '$id'";
-		if ($this->db->query($sql)) {
-			return $this->db->fetch();
+		if (self::$db->query($sql)) {
+			return self::$db->fetch();
 		} else {
 			return false;
 		}

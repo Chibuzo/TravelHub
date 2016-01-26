@@ -16,10 +16,10 @@ class RouteModel extends Model {
 	}
 
 
-	function getRouteId($route)
+	function getRouteId($origin, $destination)
 	{
-		$sql = "SELECT id FROM routes WHERE route = :route";
-		$param = array('route' => $route);
+		$sql = "SELECT id FROM routes WHERE origin = :origin AND destination = :destination";
+		$param = array('origin' => $origin, 'destination' => $destination);
 		self::$db->query($sql, $param);
 		if ($result = self::$db->fetch('obj')) {
 			return $result->id;
@@ -69,21 +69,47 @@ class RouteModel extends Model {
 
 	public function getDestination($origin)
 	{
-		return parent::getManyById('routes', 'origin', $origin, 'destination');
+		$sql = "SELECT CONCAT(destination, '-', state_name) dest_concat, destination, state_name FROM routes r JOIN states s ON r.destination = s.id WHERE origin = :origin ORDER BY state_name";
+		self::$db->query($sql, array('origin' => $origin));
+		return self::$db->fetchAll();
 	}
 
 
-	//function getRouteMap($route_id)
-	//{
-	//	$sql = "SELECT route FROM routes WHERE id = :id";
-	//	$param = array('id' => $route_id);
-	//	self::$db->query($sql, $param);
-	//	if ($result = self::$db->fetch()) {
-	//		return $result;
-	//	} else {
-	//		return false;
-	//	}
-	//}
+	/*
+	 * get all origin and destination separately
+	**/
+	public function getOriginsAndDestinations()
+	{
+		$routes = array();
+		self::$db->query("SELECT DISTINCT origin origin_id, state_name FROM routes r JOIN states s ON r.origin = s.id ORDER BY state_name ");
+		$routes['origins'] = self::$db->fetchAll('obj');
+
+		self::$db->query("SELECT DISTINCT destination destination_id, state_name FROM routes r JOIN states s ON r.destination = s.id ORDER BY state_name ");
+		$routes['destinations'] = self::$db->fetchAll('obj');
+		return $routes;
+	}
+
+
+	/*
+	 * for fast and easy route selection on the home page
+	 */
+	public function mapAllOrigin($origins)
+	{
+		$route_map = array();
+		foreach ($origins AS $origin) {
+			$route_map[$origin->origin_id] = $this->getDestination($origin->origin_id);
+		}
+
+		// flatten the shitty array result
+		array_walk($route_map, function(&$destinations) {
+			$temp = array();
+			foreach ($destinations AS $key => $val) {
+				$temp[] = $val['dest_concat'];
+			}
+			$destinations = implode(",", $temp);
+		});
+		return $route_map;
+	}
 
 
 	public function editRoute($origin, $destination, $id)

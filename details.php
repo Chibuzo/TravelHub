@@ -2,20 +2,15 @@
 session_start();
 require_once "includes/banner.php";
 require_once "includes/db_handle.php";
+require_once "api/models/bookingmodel.class.php";
 
 /*** Get ticket booking details ***/
 $fare_id      = $_SESSION['fare_id'];
 $travel_date = $_SESSION['travel_date'];
 $travel_date = date('D d M Y', strtotime($travel_date));
 
-$sql = "SELECT f.id fare_id, bt.name bus_type, num_of_seats, fare, route
-		FROM fares f
-		JOIN bus_types bt ON f.bus_type_id = bt.id
-		JOIN routes r ON r.id = f.route_id
-		WHERE f.id = '$fare_id'";
-
-$db->query($sql);
-$bus = $db->fetch('obj');
+$booking = new BookingModel();
+$vehicle = $booking->getBookingDetails($fare_id);
 ?>
 <style>
 .ticket-details {
@@ -96,21 +91,21 @@ $bus = $db->fetch('obj');
 
 	<div class="col-md-3 ticket-details">
 		<div><b>Ticket Details</b></div><hr style='margin:5px 0px' />
-		&nbsp;<span class='glyphicon glyphicon-hand-right'></span>&nbsp;&nbsp; AutoStar Travels<br />
-		&nbsp;<span class='glyphicon glyphicon-hand-right'></span>&nbsp;&nbsp; <?php echo "{$bus->route}<br />
-		&nbsp;<span class='glyphicon glyphicon-hand-right'></span>&nbsp;&nbsp; JIbowu park<br />
+		&nbsp;<span class='glyphicon glyphicon-hand-right'></span>&nbsp;&nbsp; <?php echo $vehicle->company_name; ?><br />
+		&nbsp;<span class='glyphicon glyphicon-hand-right'></span>&nbsp;&nbsp; <?php echo " {$vehicle->route}<br />
+		&nbsp;<span class='glyphicon glyphicon-hand-right'></span>&nbsp;&nbsp; {$vehicle->park} park<br />
 		&nbsp;<span class='glyphicon glyphicon-hand-right'></span>&nbsp;&nbsp; {$travel_date}<br />
-		&nbsp;<span class='glyphicon glyphicon-hand-right'></span>&nbsp;&nbsp; $bus->bus_type<br />";
+		&nbsp;<span class='glyphicon glyphicon-hand-right'></span>&nbsp;&nbsp; $vehicle->vehicle_type<br />";
 		echo ($_SESSION['seat_no'] != 0) ? "&nbsp;<span class='glyphicon glyphicon-hand-right'></span>&nbsp;&nbsp; Seat no: {$_SESSION['seat_no']}<br />" : '';
 		//echo "&nbsp;<span class='glyphicon glyphicon-hand-right'></span>&nbsp;&nbsp; Departure: $bus->departure_time<br />
-		echo "&nbsp;<span class='glyphicon glyphicon-hand-right'></span>&nbsp;&nbsp; Fare: $bus->fare NGN<br />
+		echo "&nbsp;<span class='glyphicon glyphicon-hand-right'></span>&nbsp;&nbsp; Fare: $vehicle->fare NGN<br />
 		<hr style='margin:5px 0px' />
-		<b>Total amount: $bus->fare NGN</b>
+		<b>Total amount: $vehicle->fare NGN</b>
 	</div>";
 	?>
 
 	<form id="payment-gateway" action="https://voguepay.com/pay/" method="post">
-		<input type="hidden" id="total" name="total" value="<?php echo $bus->fare; ?>" />
+		<input type="hidden" id="total" name="total" value="<?php echo $vehicle->fare; ?>" />
 		<input type="hidden" id="merchant_ref" name="merchant_ref" />
 		<input type="hidden" id="v_merchant_id" name="v_merchant_id" value="1447-16254" />
 		<input type='hidden' name='memo' value='Bus ticket booking from oya.com.ng' />
@@ -123,7 +118,7 @@ $bus = $db->fetch('obj');
 $(document).ready(function() {
 	$('#customer_info').submit(function(e) {
 		e.preventDefault();
-		var $this_form = $(this);
+		//var $this_form = $(this);
 
 		/*** validate customer's form ***/
 		var bln_validate = true;
@@ -152,29 +147,21 @@ $(document).ready(function() {
 			if (bln_validate == false) return false;
 		}
 
-		// Validate email
-		//var emailReg = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-		//if (!emailReg.test($('#email-address').val())) {
-		//	$('.alert').html("The email address you enter doesn't appear to be valid.").fadeIn().fadeOut(9000);
-		//	return false;
-		//}
-
 		$('#names').val($('#customer_names').val());
 		$('#phone_number').val($('#phone-number').val());
 		//$('#email_address').val($('#email-address').val());
 
-		var boarding_bus_id = "<?php echo $_SESSION['boarding_bus_id']; ?>";
+		var boarding_vehicle_id = "<?php echo $_SESSION['boarding_vehicle_id']; ?>";
 		var seat_no = "<?php echo $_SESSION['seat_no']; ?>";
 
 		$.ajax({
 			type: "POST",
 			url : 'ajax/save_booking_details.php',
 			data: 'seat_no=' + seat_no
-				+ '&boarding_bus_id=' + boarding_bus_id
+				+ '&boarding_vehicle_id=' + boarding_vehicle_id
 				+ '&payment_opt=' + $('input[name=payment_opt]:checked').val()
 				+ '&customer_name=' + $('#customer_names').val()
 				+ '&customer_phone=' + $('#phone-number').val()
-				+ '&email=' + $('#email-address').val()
 				+ '&next_of_kin_phone=' + $('#next_of_kin_num').val(),
 
 			success: function(d) {

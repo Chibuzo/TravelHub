@@ -10,15 +10,15 @@ class BookingModel extends Model {
 	}
 
 
-	function reserveSeat($boarding_bus_id, $seat_no) {
+	function reserveSeat($boarding_vehicle_id, $seat_no) {
 		// get the booked seats
-		$sql = "SELECT booked_seats, num_of_seats FROM boarding_bus bb
-				JOIN fares f ON bb.fare_id = f.id
-				JOIN vehicle_types bt ON f.bus_type_id = bt.id
-				WHERE bb.id = :id";
+		$sql = "SELECT booked_seats, num_of_seats FROM boarding_vehicle bv
+				JOIN fares f ON bv.fare_id = f.id
+				JOIN vehicle_types vt ON f.vehicle_type_id = vt.id
+				WHERE bv.id = :id";
 
-		$this->db->query($sql, array('id' => $boarding_bus_id));
-		$seat_details = $this->db->fetch('obj');
+		self::$db->query($sql, array('id' => $boarding_vehicle_id));
+		$seat_details = self::$db->fetch('obj');
 
 		if (!empty($seat_details->booked_seats)) {
 			$booked_seats = explode(",", $seat_details->booked_seats);
@@ -42,62 +42,69 @@ class BookingModel extends Model {
 		}
 
 		# START TRANSACTION
-		$this->db->beginDbTransaction();
+		self::$db->beginDbTransaction();
 		$query_check = true;
 
 		// Check if the seats are filled
 		$status = 'Not full';
-		if ($num_of_seats_booked + 1 == $seat_details->num_of_seats) {
+		if ($num_of_seats_booked + 1 == $seat_details->num_of_seats)
 			$status = 'Full';
-		}
 
-		$sql = "UPDATE boarding_bus SET
+		$sql = "UPDATE boarding_vehicle SET
 					booked_seats = '$booked_seats',
 					seat_status = '$status'
-				WHERE id = :boarding_bus_id";
+				WHERE id = :boarding_vehicle_id";
 
-		$this->db->query($sql, array('boarding_bus_id' => $boarding_bus_id)) ? null : $query_check = false;
+		self::$db->query($sql, array('boarding_vehicle_id' => $boarding_vehicle_id)) ? null : $query_check = false;
 
 		if ($query_check == false) {
-			$this->db->rollBackTransaction();
+			self::$db->rollBackTransaction();
 			return false;
 		} else
-			$this->db->commitTransaction();
+			self::$db->commitTransaction();
 		return $seat_no;
 	}
 
 
-	function book($boarding_bus_id, $seat_no, $payment_opt, $fare, $customer_name, $next_of_kin_phone, $customer_phone)
+	function book($boarding_vehicle_id, $seat_no, $payment_opt, $customer_id)
 	{
-		// get more details
-		$sql = "SELECT route_id, travel_date, fare FROM boarding_bus bb
-				JOIN fares f ON bb.fare_id = f.id
-				WHERE bb.id = :boarding_bus_id";
-
-		$this->db->query($sql, array('boarding_bus_id' => $boarding_bus_id));
-		$d = $this->db->fetch();
-		extract($d);
-
 		$ticket_no = $this->generateRefNo();
-		$terminal_name = "Jibowu";
 
 		$sql = "INSERT INTO " . self::$db_tbl . "
-		(ticket_no, payment_opt, boarding_bus_id, route_id, fare, seat_no, c_name, next_of_kin_phone, phone_no, travel_date, terminal)
+		(ticket_no, payment_opt, boarding_vehicle_id, seat_no, customer_id)
 		VALUES
-		('$ticket_no', :payment_opt, :boarding_bus_id, '$route_id', '$fare', '$seat_no', '$customer_name', '$next_of_kin_phone', '$customer_phone', '$travel_date', '$terminal_name')";
+		('$ticket_no', :payment_opt, :boarding_vehicle_id, :seat_no, '$customer_id')";
 
-		$param = array('payment_opt' => $payment_opt, 'boarding_bus_id' => $boarding_bus_id);
+		$param = array(
+			'payment_opt' => $payment_opt,
+			'boarding_vehicle_id' => $boarding_vehicle_id,
+			'seat_no' => $seat_no
+		);
 
-		if ($this->db->query($sql, $param)) {
-			$bd_id = $this->db->getLastInsertId();
+		if (self::$db->query($sql, $param)) {
+			$bd_id = self::$db->getLastInsertId();
 
-			//$_SESSION['email'] = $email;
 			$_SESSION['ticket_id'] = $bd_id;
 
 			return '{"msg" : "' . $bd_id . '"}';
 		} else {
 			return '{"msg" : "03"}'; // Booking wasn't successful
 		}
+	}
+
+
+	public function getBookingDetails($fare_id)
+	{
+		$sql = "SELECT f.id fare_id, vt.name vehicle_type, num_of_seats, fare, route, company_name, park FROM fares f
+					JOIN vehicle_types vt ON f.vehicle_type_id = vt.id
+					JOIN routes r ON r.id = f.route_id
+					JOIN travels t ON f.travel_id = t.id
+					JOIN park_map pm ON f.park_map_id = pm.id
+					JOIN parks p ON pm.destination = p.id
+				WHERE f.id = '$fare_id'";
+
+		self::$db->query($sql);
+		return self::$db->fetch('obj');
 	}
 
 
@@ -146,5 +153,4 @@ class BookingModel extends Model {
 		return $count->num_rows;
 	}
 }
-
 ?>

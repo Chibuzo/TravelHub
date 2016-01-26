@@ -1,4 +1,5 @@
 <?php
+/**** Class not in use ****/
 require_once "model.class.php";
 
 class SeatModel extends Model {
@@ -9,15 +10,15 @@ class SeatModel extends Model {
 	}
 
 
-	function reserveSeat($boarding_bus_id, $seat_no) {
+	function reserveSeat($boarding_vehicle_id, $seat_no) {
 		// get the booked seats
-		$sql = "SELECT booked_seats, num_of_seats FROM boarding_bus bb
-				JOIN fares f ON bb.fare_id = f.id
-				JOIN bus_types bt ON f.bus_type_id = bt.id
-				WHERE bb.id = :id";
+		$sql = "SELECT booked_seats, num_of_seats FROM boarding_vehicle bv
+				JOIN fares f ON bv.fare_id = f.id
+				JOIN vehicle_types vt ON f.vehicle_type_id = vt.id
+				WHERE bv.id = :id";
 
-		$this->db->query($sql, array('id' => $boarding_bus_id));
-		$seat_details = $this->db->fetch('obj');
+		self::$db->query($sql, array('id' => $boarding_vehicle_id));
+		$seat_details = self::$db->fetch('obj');
 
 		if (!empty($seat_details->booked_seats)) {
 			$booked_seats = explode(",", $seat_details->booked_seats);
@@ -41,7 +42,7 @@ class SeatModel extends Model {
 		}
 
 		# START TRANSACTION
-		$this->db->beginDbTransaction();
+		self::$db->beginDbTransaction();
 		$query_check = true;
 
 		// Check if the seats are filled
@@ -49,23 +50,23 @@ class SeatModel extends Model {
 		if ($num_of_seats_booked + 1 == $seat_details->num_of_seats)
 			$status = 'Full';
 
-		$sql = "UPDATE boarding_bus SET
+		$sql = "UPDATE boarding_vehicle SET
 					booked_seats = '$booked_seats',
 					seat_status = '$status'
-				WHERE id = :boarding_bus_id";
+				WHERE id = :boarding_vehicle_id";
 
-		$this->db->query($sql, array('boarding_bus_id' => $boarding_bus_id)) ? null : $query_check = false;
+		self::$db->query($sql, array('boarding_vehicle_id' => $boarding_vehicle_id)) ? null : $query_check = false;
 
 		if ($query_check == false) {
-			$this->db->rollBackTransaction();
+			self::$db->rollBackTransaction();
 			return false;
 		} else
-			$this->db->commitTransaction();
+			self::$db->commitTransaction();
 		return $seat_no;
 	}
 
 
-	function assignSeatNumber($bus_id, $travel_date, $num_of_seats)
+	/*function assignSeatNumber($bus_id, $travel_date, $num_of_seats)
 	{
 		$sql = "SELECT booked_seats, seats, tb.id FROM boarding_bus AS tb
 				JOIN buses AS b ON tb.bus_id = b.id
@@ -102,7 +103,7 @@ class SeatModel extends Model {
 			$_SESSION['boarding_bus_id'] = $this->db->getLastInsertId();
 			return '{"msg" : "0"}';
 		}
-	}
+	}*/
 }
 
 ?>
