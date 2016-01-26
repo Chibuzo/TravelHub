@@ -1,28 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ac0c731a-4ff5-498d-8fd2-95cb5e7ad572" name="Default" comment="Added booking capability">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/php.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/api/models/seatpicker.class.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pick_bus.php" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/travelhub.iml" afterPath="$PROJECT_DIR$/.idea/travelhub.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ajax/data_submission.php" afterPath="$PROJECT_DIR$/ajax/data_submission.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ajax/hold_details.php" afterPath="$PROJECT_DIR$/ajax/hold_details.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ajax/save_booking_details.php" afterPath="$PROJECT_DIR$/ajax/save_booking_details.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ajax/seating.php" afterPath="$PROJECT_DIR$/ajax/seating.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api/models/bookingmodel.class.php" afterPath="$PROJECT_DIR$/api/models/bookingmodel.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api/models/customer.class.php" afterPath="$PROJECT_DIR$/api/models/customer.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api/models/routemodel.class.php" afterPath="$PROJECT_DIR$/api/models/routemodel.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api/models/seatmodel.class.php" afterPath="$PROJECT_DIR$/api/models/seatmodel.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api/models/vehiclemodel.class.php" afterPath="$PROJECT_DIR$/api/models/vehiclemodel.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/details.php" afterPath="$PROJECT_DIR$/details.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/includes/banner.php" afterPath="$PROJECT_DIR$/includes/banner.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/includes/footer.php" afterPath="$PROJECT_DIR$/includes/footer.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.php" afterPath="$PROJECT_DIR$/index.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/pickbus.js" afterPath="$PROJECT_DIR$/js/pickbus.js" />
+    <list default="true" id="ac0c731a-4ff5-498d-8fd2-95cb5e7ad572" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/db/travelhub_new_jan.sql" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/travelhub.sql" afterPath="$PROJECT_DIR$/db/travelhub.sql" />
     </list>
     <ignored path="travelhub.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -118,7 +99,7 @@
       <file leaf-file-name="hold_details.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ajax/hold_details.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.27880183">
+            <state vertical-scroll-proportion="0.27912343">
               <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
               <folding />
             </state>
@@ -417,7 +398,13 @@
       <option name="project" value="LOCAL" />
       <updated>1448187802440</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Added booking capability">
+      <created>1453814594307</created>
+      <option name="number" value="00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1453814594307</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -911,7 +898,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ajax/hold_details.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.27880183">
+        <state vertical-scroll-proportion="0.27912343">
           <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
           <folding />
         </state>
