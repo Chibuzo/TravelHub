@@ -55,7 +55,7 @@
             <li>
                 <a href="bookings.php">
                     <i class="fa fa-car"></i>
-                    <span>Reservations</span>
+                    <span>Bookings</span>
                 </a>
             </li>
 

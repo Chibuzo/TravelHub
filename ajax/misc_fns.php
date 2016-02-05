@@ -113,7 +113,7 @@ if (isset($_REQUEST['op'])) {
         $mode = $_POST['mode'];
         $type = $_POST['type'];
         $reports = array();
-        if ($type == "month") {
+        if ($type == "bookings") {
             $reports = $report_model->adminGetBooking($mode, $start_date, $end_date);
         }
 

@@ -103,7 +103,7 @@ elseif (isset($_POST['add_route'])) {
 													<td>{$rout->destination_state}</td>
 													<td class='opt-icons text-center' id='{$rout->id}'>
 														<a href='' class='edit-route' title='Edit' data-toggle='tooltip'><i class='fa fa-pencil'></i></a>
-														<a href='' class='remove-route' title='Remove' data-toggle='tooltip'><i class='fa fa-trash-o'></i></a>
+														<a href='' class='remove-route hidden' title='Remove' data-toggle='tooltip'><i class='fa fa-trash-o'></i></a>
 													</td>
 												</tr>";
 									}
@@ -169,7 +169,7 @@ elseif (isset($_POST['add_route'])) {
 													<td><span>{$_bus->num_of_seats}</span> Seats</td>
 													<td class='opt-icons text-center' id='{$_bus->id}'>
 														<a href='' class='edit-vehicle' title='Edit' data-toggle='tooltip'><i class='fa fa-pencil'></i></a>
-														<a href='' class='delete' title='Remove' data-toggle='tooltip'><i class='fa fa-trash-o'></i></a>
+														<a href='' class='delete hidden' title='Remove' data-toggle='tooltip'><i class='fa fa-trash-o'></i></a>
 													</td>
 												</tr>";
 									}

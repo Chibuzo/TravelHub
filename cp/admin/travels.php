@@ -99,7 +99,7 @@ if (isset($_POST['add_travel'])) {
 													<td>{$travel->offline_charge}</td>
 													<td class='opt-icons text-center' id='{$travel->id}'>
 														<a href='' class='edit-travel' title='Edit' data-toggle='tooltip'><i class='fa fa-pencil'></i></a>
-														<a href='' class='remove-travel' title='Remove' data-toggle='tooltip'><i class='fa fa-trash-o'></i></a>
+														<a href='' class='remove-travel hidden' title='Remove' data-toggle='tooltip'><i class='fa fa-trash-o'></i></a>
 														<a href='' class='travel-details' title='Details' data-toggle='tooltip'><i class='fa fa-arrow-right'></i></a>
 													</td>
 												</tr>";

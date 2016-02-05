@@ -40,13 +40,13 @@ require "includes/side-bar.php";
 					<div class="box-body">
 						<div>
 							<div style="margin-bottom: 8px">
-								<form action="../reports/download_report.php" method="post" class="form-horizontal">
+								<form action="" id="generate-form" method="post" class="form-horizontal">
 									<div class="row">
 										<div class="col-md-2">
                                             <select class="form-control" name="report_type" id="report_type">
                                                 <option value="">-- Report Type --</option>
                                                 <option value="payments">Payments</option>
-                                                <option value="bookings">Bookings</option>
+                                                <option value="bookings" selected>Bookings</option>
                                             </select>
                                         </div>
                                         <div class="col-md-2">
@@ -57,12 +57,12 @@ require "includes/side-bar.php";
                                         </div>
                                         <div class="col-md-2">
                                             <div class="input-groupform-group">
-                                                <input name="start_date" class="form-control date" id="start_date" type="text" value="" placeholder="State date..." />
+                                                <input name="start_date" class="form-control date" id="start_date" type="text" value="" placeholder="State date..." required/>
                                             </div>
                                         </div>
                                         <div class="col-md-2">
                                             <div class="input-groupform-group">
-                                                <input name="end_date" class="form-control date" id="end_date" type="text" value="" placeholder="End date..." />
+                                                <input name="end_date" class="form-control date" id="end_date" type="text" value="" placeholder="End date..." required/>
                                             </div>
                                         </div>
 
@@ -107,7 +107,7 @@ $(document).ready(function() {
 		autoclose: true
 	});
 
-    $('#get-reports').on('click', function(e) {
+    $('#generate-form').on('submit', function(e) {
         e.preventDefault();
         var mode = $('select#report_mode').val();
         var type = $('select#report_type').val();
@@ -115,12 +115,18 @@ $(document).ready(function() {
         var start_date = $('input#start_date').val();
         var end_date = $('input#end_date').val();
 
+        var mode_name = capitalizeFirstLetter(mode);
+
+        if (start_date == "" || end_date == "") {
+            alert("please complete form");
+        }
+
         $.post('../../ajax/misc_fns.php', {'op': 'admin-bookings-report', 'mode' : mode, 'type' : type, 'start_date' : start_date, 'end_date' : end_date}, function(d) {
             var data = jQuery.parseJSON(d);
             $('.report-data > thead')
                 .html($('<tr />')
                     .html($('<th />').text('S/N'))
-                    .append($('<th />').text('Month'))
+                    .append($('<th />').text(mode_name))
                     .append($('<th />').text('Number of ' + type_text))
                 );
             var q = 1;
@@ -133,9 +139,12 @@ $(document).ready(function() {
                         .append($('<th />').text(v.numb))
                 );
                 q++;
-                console.log(v);
             });
         });
-    })
+    });
+
+    function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
 });
 </script>

@@ -134,7 +134,7 @@ $states = $park_model->getStates();
 													<td>{$park->park}</td>
 													<td class='opt-icons text-center' id='{$park->id}'>
 														<a href='' class='edit-park' title='Edit' data-toggle='tooltip'><i class='fa fa-pencil'></i></a>
-														<a href='' class='remove-route' title='Remove' data-toggle='tooltip'><i class='fa fa-trash-o'></i></a>
+														<a href='' class='remove-route hidden' title='Remove' data-toggle='tooltip'><i class='fa fa-trash-o'></i></a>
 													</td>
 												</tr>";
                                     }
