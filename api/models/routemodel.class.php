@@ -66,6 +66,12 @@ class RouteModel extends Model {
 		return parent::getManyById('routes', 'status', 1, 'route');
 	}
 
+    public function getRouteNames()
+    {
+        $sql = "SELECT r.*, os.state_name AS origin_state, ds.state_name AS destination_state FROM routes r JOIN states os ON os.id = r.origin JOIN states ds ON ds.id = r.destination";
+        self::$db->query($sql);
+        return self::$db->fetchAll('obj');
+    }
 
 	public function getDestination($origin)
 	{
@@ -114,17 +120,17 @@ class RouteModel extends Model {
 
 	public function editRoute($origin, $destination, $id)
 	{
-		$route_map = $origin . ' - ' . $destination;
 		$sql = "UPDATE routes SET
 					origin = :origin,
 					destination = :destination,
-					route = :route
+					route = CONCAT((SELECT state_name FROM states WHERE id = :origin_2), ' - ', (SELECT state_name FROM states WHERE id = :destination_2))
 				WHERE id = :id";
 
 		$param = array(
 			'origin' => $origin,
+			'origin_2' => $origin,
 			'destination' => $destination,
-			'route' => $route_map,
+			'destination_2' => $destination,
 			'id' => $id
 		);
 		if (self::$db->query($sql, $param)) {

@@ -113,19 +113,66 @@ class BookingModel extends Model {
 		if ($limit != null) {
 			$limit = "LIMIT 0, 5";
 		}
-		$sql = "SELECT bd.*, name bus_type, route FROM " . self::$db_tbl . " bd
-				JOIN routes r ON bd.route_id = r.id
-				JOIN boarding_vehicle bb ON bd.boarding_bus_id = bb.id
-				JOIN fares f ON bb.fare_id = f.id
-				JOIN vehicle_types bt ON f.vehicle_type_id = bt.id
-				WHERE bd.status = '1'
-				ORDER BY travel_date DESC
-				{$limit}";
+        $sql = "SELECT booking_details.*, boarding_vehicle.travel_date AS travel_date, customers.c_name, customers.phone_no, fares.fare, travels.company_name, CONCAT(op.park, ' - ', dp.park) AS route, vehicle_types.`name` AS vehicle_type
+                FROM " . self::$db_tbl . "
+                INNER JOIN boarding_vehicle ON boarding_vehicle.id = booking_details.boarding_vehicle_id
+                INNER JOIN fares ON fares.id = boarding_vehicle.fare_id
+                INNER JOIN travels ON travels.id = fares.travel_id
+                INNER JOIN customers ON customers.id = booking_details.customer_id
+                INNER JOIN park_map pm ON pm.id = fares.park_map_id
+                INNER JOIN parks op ON pm.origin = op.id
+                INNER JOIN parks dp ON pm.destination = dp.id
+                INNER JOIN vehicle_types ON vehicle_types.id = fares.vehicle_type_id
+                {$limit}";
 
 		self::$db->query($sql);
 		return self::$db->fetchAll('obj');
 	}
 
+    public function getByTravel($travel_id, $limit = null)
+    {
+        if ($limit != null) {
+            $limit = "LIMIT 0, 5";
+        }
+        $sql = "SELECT booking_details.*, boarding_vehicle.travel_date AS travel_date, customers.c_name, customers.phone_no, fares.fare, travels.company_name, CONCAT(op.park, ' - ', dp.park) AS route, vehicle_types.`name` AS vehicle_type
+                FROM " . self::$db_tbl . "
+                INNER JOIN boarding_vehicle ON boarding_vehicle.id = booking_details.boarding_vehicle_id
+                INNER JOIN fares ON fares.id = boarding_vehicle.fare_id
+                INNER JOIN travels ON travels.id = fares.travel_id
+                INNER JOIN customers ON customers.id = booking_details.customer_id
+                INNER JOIN park_map pm ON pm.id = fares.park_map_id
+                INNER JOIN parks op ON pm.origin = op.id
+                INNER JOIN parks dp ON pm.destination = dp.id
+                INNER JOIN vehicle_types ON vehicle_types.id = fares.vehicle_type_id
+                WHERE fares.travel_id = :travel_id
+                {$limit}";
+
+        self::$db->query($sql, array('travel_id' => $travel_id));
+        return self::$db->fetchAll('obj');
+    }
+
+    public function getByTravelState($travel_id, $state_id, $limit = null)
+    {
+        if ($limit != null) {
+            $limit = "LIMIT 0, 5";
+        }
+        $sql = "SELECT booking_details.*, boarding_vehicle.travel_date AS travel_date, customers.c_name, customers.phone_no, fares.fare, travels.company_name, CONCAT(op.park, ' - ', dp.park) AS route, vehicle_types.`name` AS vehicle_type
+                FROM " . self::$db_tbl . "
+                INNER JOIN boarding_vehicle ON boarding_vehicle.id = booking_details.boarding_vehicle_id
+                INNER JOIN fares ON fares.id = boarding_vehicle.fare_id
+                INNER JOIN travels ON travels.id = fares.travel_id
+                INNER JOIN customers ON customers.id = booking_details.customer_id
+                INNER JOIN park_map pm ON pm.id = fares.park_map_id
+                INNER JOIN parks op ON pm.origin = op.id
+                INNER JOIN parks dp ON pm.destination = dp.id
+                INNER JOIN vehicle_types ON vehicle_types.id = fares.vehicle_type_id
+                INNER JOIN states ON states.id = op.state_id
+                WHERE fares.travel_id = :travel_id AND states.id = :state_id
+                {$limit}";
+
+        self::$db->query($sql, array('travel_id' => $travel_id, 'state_id' => $state_id));
+        return self::$db->fetchAll('obj');
+    }
 
 	function cancelBooking($id = null, $travel_date = null, $ref_no = null)
 	{

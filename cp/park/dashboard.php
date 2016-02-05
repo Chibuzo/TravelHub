@@ -27,7 +27,6 @@ $result = $stmt->fetch();
 $bustypes = $result['num'];
 
 $booking = new BookingModel();
-$bookings = $booking->getByTravel($_SESSION['travel_id']);
 ?>
       <!-- Right side column. Contains the navbar and content of the page -->
       <div class="content-wrapper">
@@ -125,7 +124,7 @@ $bookings = $booking->getByTravel($_SESSION['travel_id']);
 								</thead>
 								<tbody>
 									<?php
-										foreach ($bookings AS $book) {
+										foreach ($booking->getBookings('limit') AS $book) {
 											echo "<tr>
 													<td>$book->route</td>
 													<td>" . date('D d/m/Y', strtotime($book->travel_date)) . "</td>

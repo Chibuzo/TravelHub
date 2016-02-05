@@ -93,5 +93,30 @@ if (isset($_REQUEST['op'])) {
         echo json_encode($parks);
         exit;
     }
+    elseif ($_POST['op'] == 'update-park')
+    {
+        require_once "../api/models/parkmodel.class.php";
+        $id = $_POST['id'];
+        $name = $_POST['name'];
+        $park_model = new ParkModel();
+
+        if ($park_model->updatePark($name, $id)) {
+            echo "Done";
+        }
+    }
+    elseif ($_POST['op'] == "admin-bookings-report")
+    {
+        require_once "../api/models/reportmodel.class.php";
+        $report_model = new Report();
+        $start_date = date('Y-m-d', strtotime($_POST['start_date']));
+        $end_date =  date('Y-m-d', strtotime($_POST['end_date']));
+        $mode = $_POST['mode'];
+        $type = $_POST['type'];
+        $reports = array();
+        if ($type == "month") {
+            $reports = $report_model->adminGetBooking($mode, $start_date, $end_date);
+        }
+
+        echo json_encode($reports);
+    }
 }
-?>

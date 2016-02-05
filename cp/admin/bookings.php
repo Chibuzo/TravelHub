@@ -64,7 +64,7 @@ $booking = new BookingModel();
 													<td>$book->c_name</td>
 													<td>$book->phone_no</td>
 													<td>$book->ticket_no</td>
-													<td>$book->bus_type</td>
+													<td>$book->vehicle_type</td>
 													<td class='text-right'>" . number_format($book->fare) . "</td>
 													<td>$book->payment_status</td>
 													<td>" . date('D d/m/Y', strtotime($book->date_booked)) . "</td>

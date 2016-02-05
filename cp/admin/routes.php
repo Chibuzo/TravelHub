@@ -56,7 +56,7 @@ elseif (isset($_POST['add_route'])) {
 													<?php
 														$states = '';
 														foreach ($db->query("SELECT * FROM states ORDER BY state_name") AS $st) {
-															$states .= "<option value='{$st['state_name']}'>{$st['state_name']}</option>";
+															$states .= "<option value='{$st['id']}'>{$st['state_name']}</option>";
 														}
 														echo $states;
 													?>
@@ -95,12 +95,12 @@ elseif (isset($_POST['add_route'])) {
 								<tbody id="route-tbl">
 								<?php
 									$html = ""; $n = 0;
-									foreach ($route->getAllRoutes() AS $rout) {
+									foreach ($route->getRouteNames() AS $rout) {
 										$n++;
 										$html .= "<tr>
 													<td class='text-right'>$n</td>
-													<td>{$rout->origin}</td>
-													<td>{$rout->destination}</td>
+													<td>{$rout->origin_state}</td>
+													<td>{$rout->destination_state}</td>
 													<td class='opt-icons text-center' id='{$rout->id}'>
 														<a href='' class='edit-route' title='Edit' data-toggle='tooltip'><i class='fa fa-pencil'></i></a>
 														<a href='' class='remove-route' title='Remove' data-toggle='tooltip'><i class='fa fa-trash-o'></i></a>
@@ -271,14 +271,16 @@ $(document).ready(function() {
 		var parentTr = $(this).parents("tr");
 		var id = $(this).parent("td").attr("id");
 		var origin = parentTr.find("select[name=origin]").val();
+		var origin_name = parentTr.find("select[name=origin] option:selected").text();
 		var destination = parentTr.find("select[name=destination]").val();
+		var destination_name = parentTr.find("select[name=destination] option:selected").text();
 
 		$.post("../../ajax/misc_fns.php", {"op": "update-route", "origin": origin, "destination": destination, "id": id}, function(d) {
 			if (d.trim() == "Done") {
 			}
 		});
-		parentTr.find("td:nth-child(2)").text(origin);
-		parentTr.find("td:nth-child(3)").text(destination);
+		parentTr.find("td:nth-child(2)").text(origin_name);
+		parentTr.find("td:nth-child(3)").text(destination_name);
 		$(this).removeClass('save-route').html("<i class='fa fa-pencil'></i>").addClass("edit-route");
 	});
 

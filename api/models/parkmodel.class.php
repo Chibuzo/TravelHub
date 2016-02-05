@@ -9,11 +9,59 @@ class ParkModel extends Model {
 		parent::__construct();
 	}
 
+    function addPark($park_name, $state_id)
+    {
+        if (!$this->getParkByName($park_name, $state_id)) {
+            $sql = "INSERT INTO parks (state_id, park) VALUES (:state_id, :park)";
+            if (self::$db->query($sql, array('state_id' => $state_id, 'park' => $park_name))) {
+                return self::$db->getLastInsertId();
+            }
+        }
+        return false;
+    }
+
+    function updatePark($park_name, $id)
+    {
+        $sql = "UPDATE parks SET park = :park WHERE id = :id";
+        if (self::$db->query($sql, array('park' => $park_name, 'id' => $id))) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     function getStates()
     {
         $sql = "SELECT id, state_name FROM states ORDER BY state_name";
         self::$db->query($sql);
         return self::$db->fetchAll('obj');
+    }
+
+    function getState($state_id)
+    {
+        $sql = "SELECT id, state_name FROM states WHERE id = :id";
+        self::$db->query($sql, array('id' => $state_id));
+        return self::$db->fetch('obj');
+    }
+
+    function getPark($id, $state_id)
+    {
+        $sql = "SELECT parks.id AS id, parks.park AS park, states.id AS state_id, states.state_name AS state_name
+                FROM parks
+                INNER JOIN states ON parks.state_id = states.id
+                WHERE parks.id = :id AND parks.state_id = :state_id";
+        self::$db->query($sql, array('id' => $id, 'state_id' => $state_id));
+        return self::$db->fetch('obj');
+    }
+
+    function getParkByName($park_name, $state_id)
+    {
+        $sql = "SELECT parks.id AS id, parks.park AS park, states.id AS state_id, states.state_name AS state_name
+                FROM parks
+                INNER JOIN states ON parks.state_id = states.id
+                WHERE parks.park = :park_name AND parks.state_id = :state_id";
+        self::$db->query($sql, array('park_name' => $park_name, 'state_id' => $state_id));
+        return self::$db->fetch('obj');
     }
 
 	function getParks()
