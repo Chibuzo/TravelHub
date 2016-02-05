@@ -7,9 +7,9 @@ if (!isset($_SESSION['user_id'])) header("Location: index.php");
 
 $db = new Db(DB_NAME);
 // bus hire count
-$stmt = $db->query("SELECT COUNT(*) num FROM bus_charter");
+$stmt = $db->query("SELECT COUNT(*) num FROM customers");
 $result = $stmt->fetch();
-$bushire = $result['num'];
+$customers = $result['num'];
 
 // reservation count
 $stmt = $db->query("SELECT COUNT(*) num FROM booking_details WHERE status = '1'");
@@ -63,11 +63,11 @@ $booking = new BookingModel();
               <!-- small box -->
               <div class="small-box bg-yellow">
                 <div class="inner">
-                  <h3><?php echo $bushire; ?></h3>
-                  <p>Bus Hires</p>
+                  <h3><?php echo $customers; ?></h3>
+                  <p>Customers</p>
                 </div>
                 <div class="icon">
-                  <i class="fa fa-bus"></i>
+                  <i class="fa fa-users"></i>
                 </div>
                 <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
               </div>
