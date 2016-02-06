@@ -10,14 +10,14 @@ class Trip extends Model
         parent::__construct();
     }
 
-    public function addTrip($travel_park_map_id, $departure, $travel_id, $state_id, $route_id, $vehicle_type, $amenities, $departure_time)
+    public function addTrip($travel_park_map_id, $departure, $travel_id, $state_id, $route_id, $vehicle_type, $amenities, $departure_time, $fare)
     {
         if (is_numeric($this->verifyTrip($travel_park_map_id, $vehicle_type, $departure))) {
             return true;
         }
 
-        $sql = "INSERT INTO trips (travel_park_map_id, travel_id, state_id, departure, vehicle_type, route_id, amenities, departure_time) 
-            VALUES (:travel_park_map_id, :travel_id, :state_id, :departure, :vehicle_type, :route_id, :amenities, :departure_time)";
+        $sql = "INSERT INTO trips (travel_park_map_id, travel_id, state_id, departure, vehicle_type, route_id, amenities, departure_time, fare)
+            VALUES (:travel_park_map_id, :travel_id, :state_id, :departure, :vehicle_type, :route_id, :amenities, :departure_time, :fare)";
 
         $param = array(
             "travel_park_map_id" => $travel_park_map_id,
@@ -25,13 +25,24 @@ class Trip extends Model
             'state_id' => $state_id,
             "departure" => $departure,
             "route_id" => $route_id,
-            'vehicle_type' => $vehicle_type,
+            'vehicle_type_id' => $vehicle_type,
             "amenities" => $amenities,
             "departure_time" => $departure_time,
+            "fare" => $fare,
         );
         if (self::$db->query($sql, $param)) {
             return self::$db->getLastInsertId();
         }
+    }
+
+    public function updateTrip($trip_id, $amenities, $fare)
+    {
+        $sql = "UPDATE trips SET amenities = :amenities, fare = :fare WHERE id = :id";
+        $result = self::$db->query($sql, array('amenities' => $amenities, 'fare' => $fare, 'id' => $trip_id));
+        if ($result !== false) {
+            return true;
+        }
+        return false;
     }
 
     public function getByState($state_id)
