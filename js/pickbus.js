@@ -12,7 +12,7 @@ $(document).ready(function() {
 		var num_of_seats = $(this).data('num_of_seats');
 		var route_id     = $(this).data('route_id');
 		var fare         = $(this).data('fare');
-		var fare_id      = $(this).data('fare_id');
+		var trip_id      = $(this).data('trip_id');
 		var travel_date  = $(this).data('travel_date');
 
 		$.post('ajax/seating.php', {
@@ -20,14 +20,14 @@ $(document).ready(function() {
 			'num_of_seats':num_of_seats,
 			'route_id'    :route_id,
 			'fare'        :fare,
-			'fare_id'     :fare_id,
+			'trip_id'     :trip_id,
 			'travel_date' :travel_date
 		},
 			function(d) {
 				var height = '';
 				if (num_of_seats > 15) height = "280px";
 				else height = "+220px";
-				$('#show-seat_' + vehicle_type_id).css('display', 'block').animate({height: height}, function() {
+				$('#show-seat_' + trip_id).css('display', 'block').animate({height: height}, function() {
 					$(this).html(d);
 					$this.next('.loading').css('visibility', 'hidden');
 				});
@@ -73,7 +73,7 @@ $(document).ready(function() {
 
 		var boarding_vehicle_id, num_of_seats = null;
 		var fare        = $seating_parent.data('fare');
-		var fare_id     = $seating_parent.data('fare_id');
+		var trip_id     = $seating_parent.data('trip_id');
 		var vehicle_type_id = $seating_parent.data('vehicle_type_id');
 		var travel_date = $seating_parent.data('travel_date');
 		var seat_no     = $seating_parent.find('.picked_seat').text();
@@ -87,7 +87,7 @@ $(document).ready(function() {
 		$.post('ajax/hold_details.php', {
 			'vehicle_type_id': vehicle_type_id,
 			'fare'       : fare,
-			'fare_id'    : fare_id,
+			'trip_id'    : trip_id,
 			'seat_no'    : seat_no,
 			'travel_date': travel_date,
 			'num_of_seats': num_of_seats,

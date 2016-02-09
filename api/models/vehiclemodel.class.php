@@ -11,9 +11,10 @@ class VehicleModel extends Model {
 
 	function findVehicles($where, $route_id)
 	{
-		$sql = "SELECT f.id fare_id, vt.id vehicle_type_id, num_of_seats, name, fare, company_name, travel_id FROM fares f
-				JOIN vehicle_types vt ON f.vehicle_type_id = vt.id
-				JOIN travels t ON f.travel_id = t.id
+		$sql = "SELECT trips.id trip_id, vt.id vehicle_type_id, vt.num_of_seats num_of_seats, vt.name name, trips.fare fare, company_name, travel_id
+                FROM trips
+				JOIN vehicle_types vt ON trips.vehicle_type = vt.id
+				JOIN travels t ON trips.travel_id = t.id
 				{$where}";
 
 		self::$db->query($sql, array('route_id' => $route_id));

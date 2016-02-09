@@ -23,7 +23,7 @@ if (empty($_REQUEST['travel_date'])) {
 	$route_id = $route->getRouteId($origin_id, $destination_id);
 
 	// query part
-	$where = "WHERE f.route_id = :route_id AND fare > 0";
+	$where = "WHERE trips.route_id = :route_id AND fare > 0";
 
 	/*** Get buses [ types and amenities ] that run the selected route ***/
 	$bus = new VehicleModel();
@@ -219,7 +219,7 @@ label {
 			foreach ($bus_stmt AS $info) {
 				$fare = $info['fare'];
 
-				$btn = "<a class='display-seats btn btn-primary pull-right' href='details.php' data-fare='{$fare}' data-route_id='$route_id' data-travel_date='{$travel_date}' data-num_of_seats='{$info['num_of_seats']}' data-fare_id='{$info['fare_id']}' data-vehicle_type_id='{$info['vehicle_type_id']}'><span class='glyphicon glyphicon-list'></span> Pick a seat</a>";
+				$btn = "<a class='display-seats btn btn-primary pull-right' href='details.php' data-fare='{$fare}' data-route_id='$route_id' data-travel_date='{$travel_date}' data-num_of_seats='{$info['num_of_seats']}' data-trip_id='{$info['trip_id']}' data-vehicle_type_id='{$info['vehicle_type_id']}'><span class='glyphicon glyphicon-list'></span> Pick a seat</a>";
 
 				$html .= "<div class='vehicle col-md-12' data-vehicle-type-id='{$info['vehicle_type_id']}'>
 							<div class='pull-right text-right'>
@@ -235,7 +235,7 @@ label {
 							</div>
 							{$info['name']}: {$info['num_of_seats']} - Seater<br />
 					</div>
-					<div data-vehicle_type_id='{$info['vehicle_type_id']}' class='show-seat clearfix' id='show-seat_{$info['vehicle_type_id']}'></div>";
+					<div data-vehicle_type_id='{$info['vehicle_type_id']}' class='show-seat clearfix' id='show-seat_{$info['trip_id']}'></div>";
 				++$n;
 			}
 			echo $html;

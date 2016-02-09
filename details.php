@@ -5,7 +5,7 @@ require_once "includes/db_handle.php";
 require_once "api/models/bookingmodel.class.php";
 
 /*** Get ticket booking details ***/
-$fare_id      = $_SESSION['fare_id'];
+$fare_id      = $_SESSION['trip_id'];
 $travel_date = $_SESSION['travel_date'];
 $travel_date = date('D d M Y', strtotime($travel_date));
 

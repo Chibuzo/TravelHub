@@ -4,7 +4,7 @@ require_once "../api/models/model.class.php";
 class SeatPicker extends Model {
 	public $vehicle_id;
 	public $fare;
-	public $fare_id;
+	public $trip_id;
 	public $travel_date;
 	public $route_id;
 	public $num_of_seats;
@@ -16,7 +16,7 @@ class SeatPicker extends Model {
 
 	private $tbl = 'boarding_vehicle';
 
-	function __construct($route_id, $travel_date, $num_of_seats, $vehicle_id, $fare, $fare_id)
+	function __construct($route_id, $travel_date, $num_of_seats, $vehicle_id, $fare, $trip_id)
 	{
 		parent::__construct();
 
@@ -25,7 +25,7 @@ class SeatPicker extends Model {
 		$this->num_of_seats = $num_of_seats;
 		$this->vehicle_id = $vehicle_id;
 		$this->fare = $fare;
-		$this->fare_id = $fare_id;
+		$this->trip_id = $trip_id;
 	}
 
 
@@ -54,11 +54,11 @@ class SeatPicker extends Model {
 	function getBoardingVehicleDetails()
 	{
 		$sql = "SELECT id, booked_seats, seat_status FROM {$this->tbl}
-				WHERE fare_id = :fare_id
+				WHERE trip_id = :trip_id
 				AND travel_date = :travel_date";
 
 		$param = array(
-			'fare_id' => $this->fare_id,
+			'trip_id' => $this->trip_id,
 			'travel_date' => $this->travel_date
 		);
 
@@ -79,12 +79,12 @@ class SeatPicker extends Model {
 	{
 		// add vehicle for boarding
 		$sql = "INSERT INTO {$this->tbl}
-					(fare_id, travel_date)
+					(trip_id, travel_date)
 				VALUES
-					(:fare_id, :travel_date)";
+					(:trip_id, :travel_date)";
 
 		$param = array(
-			'fare_id' => $this->fare_id,
+			'trip_id' => $this->trip_id,
 			'travel_date' => $this->travel_date
 		);
 
@@ -246,7 +246,7 @@ class SeatPicker extends Model {
 
 	private function upperSittingDetails($width, $steering_pos)
 	{
-		return "<div class='seat_arrangement' style='width:$width' data-fare='{$this->fare}' data-route_id='{$this->route_id}' data-fare_id='{$this->fare_id}'
+		return "<div class='seat_arrangement' style='width:$width' data-fare='{$this->fare}' data-route_id='{$this->route_id}' data-trip_id='{$this->trip_id}'
 		data-boarding_vehicle_id='{$this->boarding_vehicle_id}' data-vehicle_id='{$this->vehicle_id}' data-travel_date='{$this->travel_date}'>
 		<span class='glyphicon glyphicon-remove pull-right'></span>
 		<p>Click on an available seat to select it. Click again to de-select it.</p><div class='seat_wrap'>

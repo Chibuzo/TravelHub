@@ -13,8 +13,8 @@ class BookingModel extends Model {
 	function reserveSeat($boarding_vehicle_id, $seat_no) {
 		// get the booked seats
 		$sql = "SELECT booked_seats, num_of_seats FROM boarding_vehicle bv
-				JOIN fares f ON bv.fare_id = f.id
-				JOIN vehicle_types vt ON f.vehicle_type_id = vt.id
+				JOIN trips t ON bv.trip_id = t.id
+				JOIN vehicle_types vt ON t.vehicle_type = vt.id
 				WHERE bv.id = :id";
 
 		self::$db->query($sql, array('id' => $boarding_vehicle_id));
@@ -93,15 +93,15 @@ class BookingModel extends Model {
 	}
 
 
-	public function getBookingDetails($fare_id)
+	public function getBookingDetails($trip_id)
 	{
-		$sql = "SELECT f.id fare_id, vt.name vehicle_type, num_of_seats, fare, route, company_name, park FROM fares f
-					JOIN vehicle_types vt ON f.vehicle_type_id = vt.id
-					JOIN routes r ON r.id = f.route_id
-					JOIN travels t ON f.travel_id = t.id
-					JOIN park_map pm ON f.park_map_id = pm.id
+		$sql = "SELECT trips.id trip_id, vt.name vehicle_type, num_of_seats, fare, route, company_name, park FROM trips
+					JOIN vehicle_types vt ON trips.vehicle_type = vt.id
+					JOIN routes r ON r.id = trips.route_id
+					JOIN travels t ON trips.travel_id = t.id
+					JOIN park_map pm ON trips.park_map_id = pm.id
 					JOIN parks p ON pm.destination = p.id
-				WHERE f.id = '$fare_id'";
+				WHERE trips.id = '$trip_id'";
 
 		self::$db->query($sql);
 		return self::$db->fetch('obj');
@@ -113,16 +113,16 @@ class BookingModel extends Model {
 		if ($limit != null) {
 			$limit = "LIMIT 0, 5";
 		}
-        $sql = "SELECT booking_details.*, boarding_vehicle.travel_date AS travel_date, customers.c_name, customers.phone_no, fares.fare, travels.company_name, CONCAT(op.park, ' - ', dp.park) AS route, vehicle_types.`name` AS vehicle_type
+        $sql = "SELECT booking_details.*, boarding_vehicle.travel_date AS travel_date, customers.c_name, customers.phone_no, trips.fare, travels.company_name, CONCAT(op.park, ' - ', dp.park) AS route, vehicle_types.`name` AS vehicle_type
                 FROM " . self::$db_tbl . "
                 INNER JOIN boarding_vehicle ON boarding_vehicle.id = booking_details.boarding_vehicle_id
-                INNER JOIN fares ON fares.id = boarding_vehicle.fare_id
-                INNER JOIN travels ON travels.id = fares.travel_id
+                INNER JOIN trips ON trips.id = boarding_vehicle.trip_id
+                INNER JOIN travels ON travels.id = trips.travel_id
                 INNER JOIN customers ON customers.id = booking_details.customer_id
-                INNER JOIN park_map pm ON pm.id = fares.park_map_id
+                INNER JOIN park_map pm ON pm.id = trips.park_map_id
                 INNER JOIN parks op ON pm.origin = op.id
                 INNER JOIN parks dp ON pm.destination = dp.id
-                INNER JOIN vehicle_types ON vehicle_types.id = fares.vehicle_type_id
+                INNER JOIN vehicle_types ON vehicle_types.id = trips.vehicle_type
                 {$limit}";
 
 		self::$db->query($sql);
@@ -134,17 +134,17 @@ class BookingModel extends Model {
         if ($limit != null) {
             $limit = "LIMIT 0, 5";
         }
-        $sql = "SELECT booking_details.*, boarding_vehicle.travel_date AS travel_date, customers.c_name, customers.phone_no, fares.fare, travels.company_name, CONCAT(op.park, ' - ', dp.park) AS route, vehicle_types.`name` AS vehicle_type
+        $sql = "SELECT booking_details.*, boarding_vehicle.travel_date AS travel_date, customers.c_name, customers.phone_no, trips.fare, travels.company_name, CONCAT(op.park, ' - ', dp.park) AS route, vehicle_types.`name` AS vehicle_type
                 FROM " . self::$db_tbl . "
                 INNER JOIN boarding_vehicle ON boarding_vehicle.id = booking_details.boarding_vehicle_id
-                INNER JOIN fares ON fares.id = boarding_vehicle.fare_id
-                INNER JOIN travels ON travels.id = fares.travel_id
+                INNER JOIN trips ON trips.id = boarding_vehicle.trip_id
+                INNER JOIN travels ON travels.id = trips.travel_id
                 INNER JOIN customers ON customers.id = booking_details.customer_id
-                INNER JOIN park_map pm ON pm.id = fares.park_map_id
+                INNER JOIN park_map pm ON pm.id = trips.park_map_id
                 INNER JOIN parks op ON pm.origin = op.id
                 INNER JOIN parks dp ON pm.destination = dp.id
-                INNER JOIN vehicle_types ON vehicle_types.id = fares.vehicle_type_id
-                WHERE fares.travel_id = :travel_id
+                INNER JOIN vehicle_types ON vehicle_types.id = trips.vehicle_type
+                WHERE trips.travel_id = :travel_id
                 {$limit}";
 
         self::$db->query($sql, array('travel_id' => $travel_id));
@@ -156,18 +156,18 @@ class BookingModel extends Model {
         if ($limit != null) {
             $limit = "LIMIT 0, 5";
         }
-        $sql = "SELECT booking_details.*, boarding_vehicle.travel_date AS travel_date, customers.c_name, customers.phone_no, fares.fare, travels.company_name, CONCAT(op.park, ' - ', dp.park) AS route, vehicle_types.`name` AS vehicle_type
+        $sql = "SELECT booking_details.*, boarding_vehicle.travel_date AS travel_date, customers.c_name, customers.phone_no, trips.fare, travels.company_name, CONCAT(op.park, ' - ', dp.park) AS route, vehicle_types.`name` AS vehicle_type
                 FROM " . self::$db_tbl . "
                 INNER JOIN boarding_vehicle ON boarding_vehicle.id = booking_details.boarding_vehicle_id
-                INNER JOIN fares ON fares.id = boarding_vehicle.fare_id
-                INNER JOIN travels ON travels.id = fares.travel_id
+                INNER JOIN trips ON trips.id = boarding_vehicle.trip_id
+                INNER JOIN travels ON travels.id = trips.travel_id
                 INNER JOIN customers ON customers.id = booking_details.customer_id
-                INNER JOIN park_map pm ON pm.id = fares.park_map_id
+                INNER JOIN park_map pm ON pm.id = trips.park_map_id
                 INNER JOIN parks op ON pm.origin = op.id
                 INNER JOIN parks dp ON pm.destination = dp.id
-                INNER JOIN vehicle_types ON vehicle_types.id = fares.vehicle_type_id
+                INNER JOIN vehicle_types ON vehicle_types.id = trips.vehicle_type
                 INNER JOIN states ON states.id = op.state_id
-                WHERE fares.travel_id = :travel_id AND states.id = :state_id
+                WHERE trips.travel_id = :travel_id AND states.id = :state_id
                 {$limit}";
 
         self::$db->query($sql, array('travel_id' => $travel_id, 'state_id' => $state_id));
