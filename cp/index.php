@@ -1,6 +1,7 @@
 <?php
 session_start();
 require "../api/models/user.class.php";
+require_once '../api/models/travel.class.php';
 
 if (isset($_POST['login'])) {
 	$user = new User();
@@ -8,16 +9,20 @@ if (isset($_POST['login'])) {
 	$status = $user->login($username, $password);
 	if ($status === true) {
         if ($_SESSION['user_type'] == 'travel_admin') {
-            require_once '../api/models/travel.class.php';
             $travel = (new Travel())->getTravelByUser($_SESSION['user_id']);
             $_SESSION['travel_id'] = $travel->id;
             header("Location: travel/dashboard.php");
         } elseif ($_SESSION['user_type'] == 'state_admin') {
-            require_once '../api/models/travel.class.php';
             $travel = (new Travel())->getTravelStateByUser($_SESSION['user_id']);
             $_SESSION['travel_id'] = $travel->travel_id;
             $_SESSION['state_id'] = $travel->state_id;
             header("Location: state/dashboard.php");
+        } elseif ($_SESSION['user_type'] == "park_admin") {
+            $travel = (new Travel())->getTravelStateByUser($_SESSION['user_id']);
+            $_SESSION['travel_id'] = $travel->travel_id;
+            $_SESSION['state_id'] = $travel->state_id;
+            $_SESSION['park'] = $travel->park_id;
+            header("Location: park/dashboard.php");
         } elseif ($_SESSION['user_type'] == 'admin') {
             header("Location: admin/dashboard.php");
         }
@@ -32,7 +37,7 @@ if (isset($_POST['login'])) {
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Autostar Travels | Log in</title>
+    <title>TravelHub | Log in</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- Bootstrap 3.3.2 -->
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -52,7 +57,7 @@ if (isset($_POST['login'])) {
   <body class="login-page">
     <div class="login-box">
       <div class="login-logo">
-        <a href=""><b>Autostar</b>Admin</a>
+        <a href=""><b>TravelHub</b>Admin</a>
       </div><!-- /.login-logo -->
       <div class="login-box-body">
         <p class="login-box-msg">Sign in to start your session</p>

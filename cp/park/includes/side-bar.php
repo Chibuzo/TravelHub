@@ -33,15 +33,8 @@
             </li>
 
             <li>
-                <a href="routes.php">
-                    <i class="fa fa-cogs"></i> <span>Route & Vehicles</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="parks.php">
-                    <i class="fa fa-road"></i>
-                    <span>Manage Parks</span>
+                <a href="travel-routes.php">
+                    <i class="fa fa-cogs"></i> <span>Routes</span>
                 </a>
             </li>
 
@@ -55,21 +48,21 @@
             <li>
                 <a href="bookings.php">
                     <i class="fa fa-car"></i>
-                    <span>Bookings</span>
+                    <span>Reservations</span>
                 </a>
             </li>
 
             <li>
-                <a href="travels.php">
-                    <i class="fa fa-random"></i>
-                    <span>Manage Travels</span>
+                <a href="bushire.php">
+                    <i class="fa fa-bus"></i>
+                    <span>Bus Hire</span>
                 </a>
             </li>
 
             <li>
-                <a href="users.php">
-                    <i class="fa fa-users"></i>
-                    <span>Manage Users</span>
+                <a href="travel-vehicles.php">
+                    <i class="fa fa-bus"></i>
+                    <span>Manage Vehicles</span>
                 </a>
             </li>
 

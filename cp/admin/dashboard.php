@@ -7,9 +7,9 @@ if (!isset($_SESSION['user_id'])) header("Location: index.php");
 
 $db = new Db(DB_NAME);
 // bus hire count
-$stmt = $db->query("SELECT COUNT(*) num FROM bus_charter");
+$stmt = $db->query("SELECT COUNT(*) num FROM customers");
 $result = $stmt->fetch();
-$bushire = $result['num'];
+$customers = $result['num'];
 
 // reservation count
 $stmt = $db->query("SELECT COUNT(*) num FROM booking_details WHERE status = '1'");
@@ -63,11 +63,11 @@ $booking = new BookingModel();
               <!-- small box -->
               <div class="small-box bg-yellow">
                 <div class="inner">
-                  <h3><?php echo $bushire; ?></h3>
-                  <p>Bus Hires</p>
+                  <h3><?php echo $customers; ?></h3>
+                  <p>Customers</p>
                 </div>
                 <div class="icon">
-                  <i class="fa fa-bus"></i>
+                  <i class="fa fa-users"></i>
                 </div>
                 <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
               </div>
@@ -142,46 +142,20 @@ $booking = new BookingModel();
 			</div>
 
 			<div class="col-md-5">
-              <!-- Calendar -->
-              <div class="box box-solid bg-olive">
-                <div class="box-header">
-                  <i class="fa fa-bar-chart"></i>
-                  <h3 class="box-title">Sales Chart</h3>
-                  <!-- tools box -->
-                  <div class="pull-right box-tools">
-                    <!-- button with a dropdown -->
-                    <div class="btn-group">
-                      <button class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bars"></i></button>
-                      <ul class="dropdown-menu pull-right" role="menu">
-                        <li><a href="#">Add new event</a></li>
-                        <li><a href="#">Clear events</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">View calendar</a></li>
-                      </ul>
+                <div class="box box-info">
+                    <div class="box-header">
+                        <h3 class="box-title">Line Chart</h3>
                     </div>
-                    <button class="btn btn-success btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                    <button class="btn btn-success btn-sm" data-widget="remove"><i class="fa fa-times"></i></button>
-                  </div><!-- /. tools -->
-                </div><!-- /.box-header -->
-                <div class="box-body no-padding">
-                  <!--The calendar -->
-                  
-                </div><!-- /.box-body -->
-              </div><!-- /.box -->
-			</div>
+                    <div class="box-body chart-responsive">
+                        <div class="chart" id="line-chart" style="height: 300px;"></div>
+                    </div>
+                </div>
+            </div>
 		  </div>
-
-          <!-- Main row -->
-          <div class="row">
-
-
-            </section><!-- right col -->
-          </div><!-- /.row (main row) -->
-
-        </section><!-- /.content -->
+        </section><!-- right col -->
       </div><!-- /.content-wrapper -->
       <footer class="main-footer">
-        <strong>Autostar Admin Dashboard
+        <strong>Autostar Admin Dashboard</strong>
       </footer>
     </div><!-- ./wrapper -->
 
@@ -197,7 +171,7 @@ $booking = new BookingModel();
     <script src="../bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
     <!-- Morris.js charts -->
     <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-    <script src="../plugins/morris/morris.min.js" type="text/javascript"></script>
+    <script src="../plugins/morris/morris.js" type="text/javascript"></script>
     <!-- Sparkline -->
     <script src="../plugins/sparkline/jquery.sparkline.min.js" type="text/javascript"></script>
     <!-- jvectormap -->
@@ -225,5 +199,33 @@ $booking = new BookingModel();
 
     <!-- AdminLTE for demo purposes -->
     <script src="../dist/js/demo.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            "use strict";
+
+            // LINE CHART
+            var line = new Morris.Line({
+                element: "line-chart",
+                resize: true,
+                data: [
+                    {y: '2011 Q1', item1: 2666},
+                    {y: '2011 Q2', item1: 2778},
+                    {y: '2011 Q3', item1: 4912},
+                    {y: '2011 Q4', item1: 3767},
+                    {y: '2012 Q1', item1: 6810},
+                    {y: '2012 Q2', item1: 5670},
+                    {y: '2012 Q3', item1: 4820},
+                    {y: '2012 Q4', item1: 15073},
+                    {y: '2013 Q1', item1: 10687},
+                    {y: '2013 Q2', item1: 8432}
+                ],
+                xkey: 'y',
+                ykeys: ['item1'],
+                labels: ['Item 1'],
+                lineColors: ['#3c8dbc'],
+                hideHover: 'auto'
+            });
+        });
+    </script>
   </body>
 </html>

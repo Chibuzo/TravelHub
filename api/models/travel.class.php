@@ -46,6 +46,18 @@ class Travel extends Model {
         return self::$db->fetch('obj');
     }
 
+    function getTravelParkByUser($user_id)
+    {
+        $sql = "SELECT travel_park.id, travel_park.travel_id AS travel_id, parks.park AS park, parks.id AS park_id, states.state_name, states.id as state_id, users.fullname, users.username, users.id AS user_id
+            FROM travel_park
+            INNER JOIN parks ON parks.id = travel_park.park_id
+            INNER JOIN states ON parks.state_id = states.id
+            INNER JOIN users ON travel_park.user_id = users.id
+            WHERE travel_park.user_id = :user_id";
+        self::$db->query($sql, array('user_id' => $user_id));
+        return self::$db->fetch('obj');
+    }
+
     function getTravelParks($travel_id)
     {
         $sql = "SELECT travel_park.id, travel_park.travel_id AS travel_id, parks.park, states.state_name AS state_name, states.id AS state_id, users.fullname, users.username, users.id AS user_id

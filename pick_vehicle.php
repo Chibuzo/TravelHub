@@ -235,7 +235,7 @@ select {
 								<div class='fare'>₦" . number_format($fare) . " </div>
 							</div>
 					</div>
-					<div data-vehicle_type_id='{$info['vehicle_type_id']}' class='show-seat clearfix' id='show-seat_{$info['vehicle_type_id']}'></div>";
+					<div data-vehicle_type_id='{$info['vehicle_type_id']}' class='show-seat clearfix' id='show-seat_{$info['trip_id']}'></div>";
 				++$n;
 			}
 			echo $html;

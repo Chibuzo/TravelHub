@@ -3,6 +3,13 @@
 require_once '../api/models/user.class.php';
 require_once '../api/models/travelparkmap.class.php';
 
+$user_types = array('admin' => "Administrator",
+    "user" => "User",
+    "travel_admin" => "Travel Administrator",
+    "account" => "Account",
+    "state_admin" => "State Manager",
+    "park_admin" => "Park Manager"
+);
 ?>
 <div>
     <button type="submit" data-target="#userModal" data-travel-id="<?php echo $id; ?>" data-toggle="modal" class="btn btn-primary"><i class='fa fa-plus'></i> Add Admin</button>
@@ -32,7 +39,7 @@ if (is_array($travel_admins) && count($travel_admins) > 0):
         <?php
         $i = 1;
         foreach ($travel_admins as $admin) {
-            printf("<tr><td>%d</td><td>%s</td><td>%s</td><td>%s</td></tr>", $i, $admin->fullname, $admin->username, $admin->user_type);
+            printf("<tr><td>%d</td><td>%s</td><td>%s</td><td>%s</td></tr>", $i, $admin->fullname, $admin->username, $user_types[$admin->user_type]);
             $i += 1;
         }
         ?>
