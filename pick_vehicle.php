@@ -22,12 +22,9 @@ if (empty($_REQUEST['travel_date'])) {
 	$travel_date = $_POST['travel_date'];
 	$route_id = $route->getRouteId($origin_id, $destination_id);
 
-	// query part
-	$where = "WHERE f.route_id = :route_id AND fare > 0";
-
 	/*** Get buses [ types and amenities ] that run the selected route ***/
-	$bus = new VehicleModel();
-	$bus_stmt = $bus->findVehicles($where, $route_id);
+	$vehicle = new VehicleModel();
+	$vehicles = $vehicle->findVehicles($route_id);
 
 	// map all origins for instant destination display
 	$routes = $route->getOriginsAndDestinations();
@@ -56,9 +53,15 @@ require_once "includes/banner.php";
 
 .vehicle {
 	/*border: #e0e0e0 solid thin;*/
-	padding: 14px;
-	margin: 5px 0;
-	background: #f3f3f3;
+	padding: 7px 0px;
+	margin: 1px 0;
+	/*background: #f3f3f3;*/
+	font-size: 13px;
+	border-top: #e7e7e7 solid thin;
+}
+
+.vehicle .fa_c {
+	color: #999;
 }
 
 select[name=boarding_point] {
@@ -88,41 +91,28 @@ select {
 	margin-left:10px;
 }
 
-.oya-popup {
-	position:absolute;
-	border:#ccc solid thin;
-	padding:6px 14px;
-	border-radius: 4px;
-	min-width:180px;
-	z-index: 10px;
-	background-color: #fff;
-	display: none;
-}
-
-label {
-	position: relative;
-	font: normal 11px Verdana;
-	top:3px;
-	display: inline;
-	margin-left: 4px;
-}
 
 .alert { font: 15px Tahoma; }
 
-.bg {
-	background-color: #f9f9f9;
-}
 
 .travel {
-	font-weight: bold;
+	font-weight: 700;
 }
 
 .parks {
-	font: normal 11px Verdana;
+	font: 400 11px 'Open Sans', san-seriff;
+}
+
+.parks div {
+	width: 50%;
+	font-weight: 700;
+	padding-bottom: 2px;
+	margin-bottom: 3px;
+	border-bottom: #999 dashed thin
 }
 
 .parks span {
-	font-weight: bold;
+	font-weight: 700;
 }
 
 .show-seat {
@@ -132,10 +122,13 @@ label {
 }
 
 .fare {
-	color: #cc3300;
+	clear: both;
+	color: #ff3b30;
 	font-weight: 400;
 	float:right;
 	margin-top: 6px;
+	margin-right: 15px;
+	font-size: 15px;
 }
 
 #btn-filter { display: none; padding-top: 8px; }
@@ -203,7 +196,7 @@ label {
 					</div>
 					<div class='col-md-3'>
 						<div class="form-group">
-							<button type="submit" name="search" type="submit" class="btn btn-danger btn-submit btn-block input-sm"><span class="glyphicon glyphicon-search"></span> Find bus</button>
+							<button type="submit" name="search" class="btn btn-danger btn-submit btn-block btn-round input-sm"><span class="glyphicon glyphicon-search"></span> Find bus</button>
 						</div>
 					</div>
 				</div>
@@ -216,24 +209,31 @@ label {
 		<?php
 			$n = 0; $html = "";
 			$_SESSION['travel_date'] = $travel_date;
-			foreach ($bus_stmt AS $info) {
+			foreach ($vehicles AS $info) {
 				$fare = $info['fare'];
 
-				$btn = "<a class='display-seats btn btn-primary pull-right' href='details.php' data-fare='{$fare}' data-route_id='$route_id' data-travel_date='{$travel_date}' data-num_of_seats='{$info['num_of_seats']}' data-fare_id='{$info['fare_id']}' data-vehicle_type_id='{$info['vehicle_type_id']}'><span class='glyphicon glyphicon-list'></span> Pick a seat</a>";
+				$btn = "<a class='display-seats btn btn-default btn-fill pull-right btnround btn-sm' href='details.php' data-fare='{$fare}' data-route_id='$route_id' data-travel_date='{$travel_date}' data-num_of_seats='{$info['num_of_seats']}' data-fare_id='{$info['fare_id']}' data-vehicle_type_id='{$info['vehicle_type_id']}'><span class='fa fa-list'></span> Pick a seat</a>";
 
-				$html .= "<div class='vehicle col-md-12' data-vehicle-type-id='{$info['vehicle_type_id']}'>
-							<div class='pull-right text-right'>
-								<br>$btn<br>
-								<span class='fare'>" . number_format($fare) . " NGN</span>
-								<div class='loading'><img src='images/progress-dots.gif' /></div>
+				$html .= "<div class='vehicle col-md-12 row' data-vehicle-type-id='{$info['vehicle_type_id']}'>
+							<div class='col-md-4'>
+								<div class='travel'>{$info['company_name']}</div>
+								{$info['name']}: {$info['num_of_seats']} - Seater<br />
 							</div>
 
-							<div class='travel'>{$info['company_name']}</div>
-							<div class='parks'>
-								<span>Departure park:&nbsp;</span>Maza maza
-								<br><span>Stopping park(s):</span>
+							<div class='col-md-3'>
+								<i class='fa fa-clock-o fa-lg fa_c'></i>&nbsp; Departure time
 							</div>
-							{$info['name']}: {$info['num_of_seats']} - Seater<br />
+
+							<div class='col-md-3 parks'>
+								<div><i class='fa fa-map-marker fa-lg fa_c'></i>&nbsp;&nbsp;TERMINALS:</div>
+								<span>Leaves from:&nbsp;</span>{$info['origin_park']}
+								<br><span>Stops at:&nbsp;</span>{$info['destination_park']}
+							</div>
+
+							<div class='col-md-2' text-right'>
+								$btn<br>
+								<div class='fare'>₦" . number_format($fare) . " </div>
+							</div>
 					</div>
 					<div data-vehicle_type_id='{$info['vehicle_type_id']}' class='show-seat clearfix' id='show-seat_{$info['vehicle_type_id']}'></div>";
 				++$n;

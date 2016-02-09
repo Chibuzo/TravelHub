@@ -1,19 +1,5 @@
-/*a.seats {
-	padding:4px 9px;
-	position:relative;
-	top:5px;
-	background-color:#333;
-	font:bold 12px Verdana;
-	color:#fff
-}
-
-a.seats:hover{
-	background-color:#000;
-	text-decoration:none
-}*/
-
 .seat_arrangement {
-	font:11px verdana;
+	font:normal 12px 'Open Sans', Tahoma;
 	color:#999;
 	padding:10px;
 	border:#ccc solid thin;
@@ -24,7 +10,7 @@ a.seats:hover{
 
 .seat {
 	width: 20px;
-	height: 18px;
+	height: 17px;
 	cursor: pointer;
 	margin: 7px;
 	background-image:url('../images/seat.gif');
@@ -61,17 +47,19 @@ a.seats:hover{
 
 .seat_wrap {
 	padding-right:18px;
+	padding-left: 12px;
 	background-color:#fff;
 	border:#ccc solid thin;
 	border-radius:2px;
-	margin-top:13px;
+	margin-top:24px;
 	margin-left:70px;
 	float:left;
 }
 
 #seat_tips {
 	float:right;
-	margin-right:20px
+	margin-right:20px;
+	margin-top:7px;
 }
 
 #seat_tips > ul {
@@ -80,17 +68,32 @@ a.seats:hover{
 	line-height:21px
 }
 
-#seat_tips > ul > li {line-height:24px}
+#seat_tips > ul > li {
+	line-height:24px
+}
 
-#available_seat, #selected_seat, #booked_seat {background-image:url(../images/seat.gif); background-repeat:no-repeat; background-position:0px 5px; padding-left:25px;}
+.available_seat {
+	background-image:url(../images/seat.gif);
+}
 
-#selected_seat {background-image:url(../images/selected_seat.gif);}
+.selected_seat {
+	background-image:url(../images/selected_seat.gif);
+}
+
+.booked-seat {
+	background-image:url(../images/booked_seat.gif);
+}
+
+.available_seat, .selected_seat, .booked-seat {
+	background-repeat:no-repeat;
+	background-position:0px 5px;
+	padding-left:25px;
+}
 
 .cols {
 	position:relative;
 	float:left;
 	width:20px;
-	padding:2px;
 	margin-right: 5px;
 	bottom:0;
 }
@@ -102,4 +105,40 @@ a.seats:hover{
 	background-position:bottom;
 }
 
-.seat_arrangement .glyphicon-remove { border: #ccc solid thin; padding: 3px; border-radius: 50%; color: #fff; background: #333; right: -5px; top: -5px; cursor: pointer; }
+.continue-btn {
+	top: 25px;
+	position: relative;
+	left: 101px;
+}
+
+/* mini-bus style 10, 14, 15 seats */
+.mini-bus {
+	width: 410px;
+	height: 200px;
+}
+
+.mini-bus .steering {
+	height:73px;
+}
+
+.mini-bus .seat-details, .sienna .seat-details {
+	width: 110px;
+	float: left;
+	text-align: left;
+	margin-top: 25px
+}
+
+/* Sienna bus 5 & 6 seats */
+.sienna {
+	width: 420px;
+	height: 200px;
+	overflow: auto;
+}
+
+.sienna .steering {
+	height:62px;
+}
+
+.seat_arrangement .glyphicon-remove {
+	cursor: pointer;
+}

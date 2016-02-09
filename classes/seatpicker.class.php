@@ -20,7 +20,6 @@ class SeatPicker extends Model {
 	{
 		parent::__construct();
 
-		//$this->route_id = $route_id;
 		$this->travel_date = $travel_date;
 		$this->num_of_seats = $num_of_seats;
 		$this->vehicle_id = $vehicle_id;
@@ -101,11 +100,7 @@ class SeatPicker extends Model {
 	function getBusSeats()
 	{
 		$booked_seats = $this->booked_seats;
-		$width = '410px';
-		$style = "width: 110px; float: left; text-align: left; margin-top: 25px";
-		$steering_pos = "height:78px"; // set steering position
-
-		$seat_arrangement = $this->upperSittingDetails($width, $steering_pos);
+		$seat_arrangement = $this->upperSittingDetails('mini-bus');
 
 		$counter = 0;
 		for ($i = 1; $i <= $this->num_of_seats; $i++) {
@@ -134,17 +129,13 @@ class SeatPicker extends Model {
 		if ($counter == 1) $seat_arrangement .= "</div>";
 		$seat_arrangement .= "\n</div>\n";
 
-		return $seat_arrangement .= $this->lowerSittingDetails($style);
+		return $seat_arrangement .= $this->lowerSittingDetails();
 	}
 
 
 	function getSiennaSeats() {
 		$booked_seats = $this->booked_seats;
-		$width = '420px';
-		$style = "width: 110px; float: left; margin-top: 25px";
-		$steering_pos = "height:62px"; // set steering position
-
-		$seat_arrangement = $this->upperSittingDetails($width, $steering_pos);
+		$seat_arrangement = $this->upperSittingDetails('sienna');
 
 		$counter = 0;
 		for ($i = 1; $i <= $this->num_of_seats; $i++) {
@@ -179,7 +170,7 @@ class SeatPicker extends Model {
 		//if ($counter == 1) $seat_arrangement .= "</div>";
 		$seat_arrangement .= "\n</div>\n";
 
-		return $seat_arrangement .= $this->lowerSittingDetails($style);
+		return $seat_arrangement .= $this->lowerSittingDetails();
 	}
 
 
@@ -244,30 +235,31 @@ class SeatPicker extends Model {
 	}
 
 
-	private function upperSittingDetails($width, $steering_pos)
+	private function upperSittingDetails($vehicle_type)
 	{
-		return "<div class='seat_arrangement' style='width:$width' data-fare='{$this->fare}' data-route_id='{$this->route_id}' data-fare_id='{$this->fare_id}'
+		return "<div class='seat_arrangement $vehicle_type' data-fare='{$this->fare}' data-route_id='{$this->route_id}' data-fare_id='{$this->fare_id}'
 		data-boarding_vehicle_id='{$this->boarding_vehicle_id}' data-vehicle_id='{$this->vehicle_id}' data-travel_date='{$this->travel_date}'>
 		<span class='glyphicon glyphicon-remove pull-right'></span>
-		<p>Click on an available seat to select it. Click again to de-select it.</p><div class='seat_wrap'>
-		<div class='cols steering' style='{$steering_pos}; left:9px'></div>";
+		<div>Click on an available seat to select it. Click again to de-select it.</div>
+		<div class='seat_wrap'>
+			<div class='cols steering'></div>";
 	}
 
 
-	private function lowerSittingDetails($style)
+	private function lowerSittingDetails()
 	{
 		return "\n<div id='seat_tips'>\n<ul>\n
-		\t<p><li id='available_seat'>Available Seat</li></p>\n
-		\t<p><li id='selected_seat'>Selected Seat</li></p>\n
-		\t<p><li id='booked_seat'>Booked Seat</li></p>\n
+		\t<p><li class='available_seat'>Available Seat</li></p>\n
+		\t<p><li class='selected_seat'>Selected Seat</li></p>\n
+		\t<p><li class='booked-seat'>Booked Seat</li></p>\n
 		</ul>\n</div>
-		<span style='{$style}' id='seat_details'>
+		<span id='seat_details' class='seat-details'>
 			Seat number: <span class='picked_seat'></span><br />
 			Fare: <span class='show_fare red'></span>
 		</span>
 
-		<div style='clear: both; position: relative; top: -25px; right: 15px;'>
-			<a href='' style='margin-top: -10px' class='continue btn btn-primary pull-right'>Continue</a>
+		<div class='continue-btn pull-right hdden'>
+			<a href='' class='continue btn btn-default btn-fill btn-sm pull-right'>Continue&nbsp;<i class='fa fa-angle-double-right'></i></a>
 		</div></div>";
 	}
 }

@@ -1,20 +1,19 @@
 html { min-height: 100%; position: relative; }
 
 body {
-	font: normal 15px 'Open Sans', sans-serif;
+	font: normal 16px 'Open Sans', sans-serif;
 	margin-bottom: 150px;
+	color: #333
 	/*background-color: #f7f7f7;*/
+	background-image: url('../images/bg1.png');
+	background-repeat: repeat;
 }
 
 header {
 	position: relative;
-	padding: 8px;
-	padding-bottom: 15px;
 	z-index: 3;
 	/*background-color:#e0e0e0;*/
 	background-color: #fff;
-	border-bottom: #ccc solid thin;
-	box-shadow: 2px 0px 6px 2px #ccc;
 }
 
 #logo-div {
@@ -31,31 +30,26 @@ header {
 .navbar {
 	border: none;
 	background: none;
-	/*height: 57px;*/
-	/*boxshadow: 2px 0px 6px 2px #ccc;*/
 }
-
-/*ul.nav {
-	float: right;
-}*/
 
 .nav-links { float: right; }
 
 ul.nav li a {
-	font: 400 17px "Lato",  sans-serif;
-	color: #e43725 !important;
-	margin-top: 15px;
+	font: 300 18px "Open Sans", sans-serif;
+	/*color: #e43725 !important;*/
+	margin-top: 19px;
 }
 
-ul.nav li a:hover { color: #fff !important; }
+ul.nav li a:hover { color: #999 !important; }
 
 
 h1, h2, h3, h4, b {
 	color: #333;
 }
 
-h1, h2 {
-	font-family: "Lato", sans-serif;
+h1, h2, h3 {
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 300;
 	margin-top: 8px;
 	margin-bottom: 2px;
 }
@@ -119,10 +113,10 @@ h1, h2 {
 
 footer {
 	position: absolute;
-	color: #999;
+	color: #666;
 	bottom: 0;
 	width: 100%;
-	background: rgba(0, 0, 0, 0.9);
+	background: #f0f0f0;
 	padding: 15px 0;
 	/*background: #333;*/
 	font-size: 14px;
@@ -162,7 +156,7 @@ footer a:hover {
 		z-index: -1;
 	}
 
-	.container { padding: 3px; }
+	/*.container { padding: 3px; }*/
 
 	.nav-links {
 		float: left;
