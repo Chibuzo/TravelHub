@@ -145,6 +145,7 @@ $travel_trips = $trip_model->getByStateTravel($_SESSION['state_id'], $_SESSION['
                                         <th>Order</th>
                                         <th>Amenities</th>
                                         <th>Fare</th>
+                                        <th>Vehicle Type</th>
                                         <th class="text-center">Edit</th>
                                     </tr>
                                 </thead>
@@ -159,6 +160,7 @@ $travel_trips = $trip_model->getByStateTravel($_SESSION['state_id'], $_SESSION['
                                     printf("<td>%s</td>", $trip->departure);
                                     printf("<td>%s</td>", $_amenities);
                                     printf("<td>%s</td>", $trip->fare);
+                                    printf("<td>%s</td>", $trip->vehicle_name);
                                     ?>
                                     <td class='text-center'>
                                         <a href='#' class='edit-trip' data-trip-id="<?php echo $trip->id; ?>" data-amenities="<?php echo $_amenities; ?>" data-fare="<?php echo $trip->fare; ?>" data-toggle="modal" data-target="#tripModal" >

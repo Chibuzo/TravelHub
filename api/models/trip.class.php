@@ -10,17 +10,17 @@ class Trip extends Model
         parent::__construct();
     }
 
-    public function addTrip($travel_park_map_id, $departure, $travel_id, $state_id, $route_id, $vehicle_type, $amenities, $departure_time, $fare)
+    public function addTrip($park_map_id, $departure, $travel_id, $state_id, $route_id, $vehicle_type, $amenities, $departure_time, $fare)
     {
-        if (is_numeric($this->verifyTrip($travel_park_map_id, $vehicle_type, $departure))) {
+        if (is_numeric($this->verifyTrip($park_map_id, $vehicle_type, $departure))) {
             return true;
         }
 
-        $sql = "INSERT INTO trips (travel_park_map_id, travel_id, state_id, departure, vehicle_type, route_id, amenities, departure_time, fare)
-            VALUES (:travel_park_map_id, :travel_id, :state_id, :departure, :vehicle_type, :route_id, :amenities, :departure_time, :fare)";
+        $sql = "INSERT INTO trips (park_map_id, travel_id, state_id, departure, vehicle_type, route_id, amenities, departure_time, fare)
+            VALUES (:park_map_id, :travel_id, :state_id, :departure, :vehicle_type, :route_id, :amenities, :departure_time, :fare)";
 
         $param = array(
-            "travel_park_map_id" => $travel_park_map_id,
+            "park_map_id" => $park_map_id,
             "travel_id" => $travel_id,
             'state_id' => $state_id,
             "departure" => $departure,
@@ -49,7 +49,7 @@ class Trip extends Model
     {
         $sql = "SELECT trips.*, po.park AS origin_name, pd.park AS destination_name
                 FROM trips 
-                JOIN park_map AS pm ON pm.id = trips.travel_park_map_id
+                JOIN park_map AS pm ON pm.id = trips.park_map_id
                 JOIN parks AS po ON po.id = pm.origin
                 JOIN parks AS pd ON pd.id = pm.destination
                 WHERE trips.state_id = :state_id";
@@ -59,11 +59,12 @@ class Trip extends Model
 
     public function getByStateTravel($state_id, $travel_id)
     {
-        $sql = "SELECT trips.*, po.park AS origin_name, pd.park AS destination_name
+        $sql = "SELECT trips.*, po.park AS origin_name, pd.park AS destination_name, vt.name AS vehicle_name
                 FROM trips 
-                JOIN park_map AS pm ON pm.id = trips.travel_park_map_id
+                JOIN park_map AS pm ON pm.id = trips.park_map_id
                 JOIN parks AS po ON po.id = pm.origin
                 JOIN parks AS pd ON pd.id = pm.destination
+                JOIN vehicle_types vt ON vt.id = trips.vehicle_type
                 WHERE trips.state_id = :state_id AND travel_id = :travel_id";
         self::$db->query($sql, array('state_id' => $state_id, 'travel_id' => $travel_id));
         return self::$db->fetchAll('obj');
@@ -76,11 +77,11 @@ class Trip extends Model
         return self::$db->fetchAll('obj');
     }
 
-    private function verifyTrip($travel_park_map_id, $vehicle_type, $departure)
+    private function verifyTrip($park_map_id, $vehicle_type, $departure)
     {
-        $sql = "SELECT id FROM trips WHERE travel_park_map_id = :travel_park_map_id AND vehicle_type = :vehicle_type AND departure = :departure";
+        $sql = "SELECT id FROM trips WHERE park_map_id = :park_map_id AND vehicle_type = :vehicle_type AND departure = :departure";
         $param = array(
-            'travel_park_map_id' => $travel_park_map_id,
+            'park_map_id' => $park_map_id,
             'vehicle_type' => $vehicle_type,
             'departure' => $departure
         );
