@@ -38,12 +38,12 @@
                 </a>
             </li>
 
-            <li>
+            <!--<li>
                 <a href="manage_fares.php">
                     <i class="fa fa-money"></i>
                     <span>Manage Fares</span>
                 </a>
-            </li>
+            </li>-->
 
             <li>
                 <a href="manage_trips.php">
@@ -52,12 +52,12 @@
                 </a>
             </li>
 
-            <li>
+            <!--<li>
                 <a href="bookings.php">
                     <i class="fa fa-car"></i>
                     <span>Reservations</span>
                 </a>
-            </li>
+            </li>-->
 
             <li>
                 <a href="bushire.php">

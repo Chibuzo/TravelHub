@@ -16,12 +16,15 @@ if (isset($_POST['add_state'])) {
     $user_model->createStateAdmin($_POST['full_name'], $_POST['username'], $_POST['password'], $_SESSION['travel_id'], $_POST['state']);
 }
 if (isset($_POST['update_state'])) {
-    //var_dump($_POST);
+    $user_id = $_POST['user_id'];
+    $full_name = trim($_POST['full_name']);
+    $username = trim($_POST['username']);
+    $password = strlen(trim($_POST['password'])) > 0 ? trim($_POST['password']) : null;
+
     $user_model = new User();
     $user = $user_model->getUserById($_POST['user_id']);
-    $user_model->updateUser($_POST['user_id'], $_POST['full_name'], $_POST['username'], 'state_admin');
-    /*var_dump($user, $_POST);
-    exit;*/
+
+    $user_model->updateUser($_POST['user_id'], $_POST['full_name'], $_POST['username'], 'state_admin', $password);
 }
 
 ?>
@@ -120,8 +123,8 @@ if (isset($_POST['update_state'])) {
 													<td>{$row->origin_name}</td>
 													<td>{$row->destination_name} ($row->destination_state)</td>
 													<td class='opt-icons text-center' id='{$row->id}'>
-														<a href='' class='edit-vehicle' title='Edit' data-toggle='tooltip'><i class='fa fa-pencil'></i></a>
-														<a href='' class='delete' title='Remove' data-toggle='tooltip'><i class='fa fa-trash-o'></i></a>
+														<!-- <a href='' class='edit-vehicle' title='Edit' data-toggle='tooltip'><i class='fa fa-pencil'></i></a>
+														<a href='' class='delete' title='Remove' data-toggle='tooltip'><i class='fa fa-trash-o'></i></a> -->
 													</td>
 												</tr>";
                                     }
@@ -240,6 +243,15 @@ $(document).ready(function() {
     $('#addState').on('submit', function(e) {
         var password = $('#password').val();
         var v_password = $('#v_password').val();
+
+        if (password !== v_password) {
+            e.preventDefault();
+            alert("Password do not match.");
+        }
+    });
+    $('#updateState').on('submit', function(e) {
+        var password = $('#u_password').val();
+        var v_password = $('#u_v_password').val();
 
         if (password !== v_password) {
             e.preventDefault();

@@ -114,20 +114,27 @@ class User extends Travel {
 	}
 
 
-	public function updateUser($id, $fullname, $username, $user_type)
+	public function updateUser($id, $fullname, $username, $user_type, $password = null)
 	{
+        $param = array(
+            'fullname' => $fullname,
+            'username' => $username,
+            'user_type' => $user_type,
+            'id'       => $id
+        );
+        $password_sql = "";
+        if ($password !== null) {
+            $salt     = base64_encode(mcrypt_create_iv(24, MCRYPT_DEV_URANDOM));
+            $password = hash('sha256', $password . $salt);
+            $param['password'] = $password;
+            $param['salt'] = $salt;
+            $password_sql = ", password = :password, salt = :salt";
+        }
 		$sql = "UPDATE users SET
 					fullname = :fullname,
 					username = :username,
-					user_type = :user_type
+					user_type = :user_type {$password_sql}
 				WHERE id = :id";
-
-		$param = array(
-				'fullname' => $fullname,
-				'username' => $username,
-				'user_type' => $user_type,
-				'id'       => $id
-		);
 
 		if (self::$db->query($sql, $param)) {
 			return true;
