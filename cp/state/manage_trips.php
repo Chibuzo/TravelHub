@@ -55,14 +55,14 @@ $travel_trips = $trip_model->getByStateTravel($_SESSION['state_id'], $_SESSION['
                     </div>
                     <div class="box-body">
                         <div>
-                            <form class="form-horizontal" action="" method="post">
+                            <form class="form-vertical" action="" method="post">
                                 <div class="box-body">
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label" for="route">Route</label>
+                                        <label class="hidden col-sm-2 control-label" for="route">Route</label>
 
-                                        <div class="col-sm-10">
+                                        <div clas="col-sm-12">
                                             <select name="route" id="route" class="form-control" required>
-                                                <option value="" selected>-- Route --</option>
+                                                <option value="" selected>-- Select Route --</option>
                                                 <?php
                                                 foreach ($park_maps as $park_map) {
                                                     printf("<option value='%s'>%s &#09; to %s (%s)</option>", $park_map->id, $park_map->origin_name, $park_map->destination_state, $park_map->destination_name);
@@ -72,9 +72,9 @@ $travel_trips = $trip_model->getByStateTravel($_SESSION['state_id'], $_SESSION['
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label" for="vehicle_types">Vehicle Type</label>
-                                        <div class="col-sm-4">
+                                    <div class="form-group row">
+                                        <label class="hidden col-sm-2 control-label" for="vehicle_types">Vehicle Type</label>
+                                        <div class="col-sm-6">
                                             <select name="vehicle_type" id="vehicle_types" class="form-control" required>
                                                 <option value="" selected>-- Vehicle Type --</option>
                                                 <?php
@@ -85,10 +85,10 @@ $travel_trips = $trip_model->getByStateTravel($_SESSION['state_id'], $_SESSION['
                                             </select>
                                         </div>
 
-                                        <label class="col-sm-2 control-label" for="depature">Departure</label>
-                                        <div class="col-sm-4">
+                                        <label class="hidden col-sm-2 control-label" for="depature">Departure</label>
+                                        <div class="col-sm-6">
                                             <select name="departure" id="departure" class="form-control" required>
-                                                <option value="" selected>-- Departure --</option>
+                                                <option value="" selected>-- Departure order --</option>
                                                 <option value="1"> First Bus</option>
                                                 <option value="2"> Second Bus </option>
                                                 <option value="3"> Third Bus</option>
@@ -97,16 +97,16 @@ $travel_trips = $trip_model->getByStateTravel($_SESSION['state_id'], $_SESSION['
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label" for="depature">Departure Time</label>
-                                        <div class="col-sm-10">
+                                        <label class="hidden col-sm-2 control-label" for="depature">Departure Time</label>
+                                        <div>
                                             <select name="departure_time" class="form-control" id="depature_time">
                                                 <option>-- Departure Time --</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label" for="inputEmail3">Amenities</label>
-                                        <div class="col-sm-10">
+                                        <label class="control-label" for="amenities">Vehicle Amenities</label>
+                                        <div class="">
                                             <select name="amenities[]" id="amenities" multiple="multiple" class="form-control">
                                                 <option value="A/C">A/C</option>
                                                 <option value="Food">Food</option>
@@ -120,7 +120,7 @@ $travel_trips = $trip_model->getByStateTravel($_SESSION['state_id'], $_SESSION['
                               <!-- /.box-body -->
                                 <div class="box-footer">
                                     <input type="hidden" name="op" value="create">
-                                    <button class="btn btn-info" type="submit">Save</button>
+                                    <button class="btn btn-info" type="submit"><i class='fa fa-save'></i> &nbsp;Save</button>
                                 </div>
                               <!-- /.box-footer -->
                             </form>
