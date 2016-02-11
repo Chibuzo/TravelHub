@@ -52,12 +52,12 @@
                 </a>
             </li>
 
-            <li>
+            <!--<li>
                 <a href="bushire.php">
                     <i class="fa fa-bus"></i>
                     <span>Bus Hire</span>
                 </a>
-            </li>
+            </li>-->
 
             <li>
                 <a href="travel-vehicles.php">

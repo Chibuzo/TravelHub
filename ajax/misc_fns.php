@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 
 if (isset($_REQUEST['op'])) {
 	if ($_POST['op'] == 'cancel-reservation')
@@ -115,6 +115,38 @@ if (isset($_REQUEST['op'])) {
         $reports = array();
         if ($type == "bookings") {
             $reports = $report_model->adminGetBooking($mode, $start_date, $end_date);
+        }
+
+        echo json_encode($reports);
+    }
+    elseif ($_POST['op'] == "travel-bookings-report")
+    {
+        require_once "../api/models/reportmodel.class.php";
+        $report_model = new Report();
+        $start_date = date('Y-m-d', strtotime($_POST['start_date']));
+        $end_date =  date('Y-m-d', strtotime($_POST['end_date']));
+        $mode = $_POST['mode'];
+        $type = $_POST['type'];
+        $travel_id = $_SESSION['travel_id'];
+        $reports = array();
+        if ($type == "bookings") {
+            $reports = $report_model->travelGetBooking($travel_id, $mode, $start_date, $end_date);
+        }
+
+        echo json_encode($reports);
+    }
+    elseif ($_POST['op'] == "state-bookings-report")
+    {
+        require_once "../api/models/reportmodel.class.php";
+        $report_model = new Report();
+        $start_date = date('Y-m-d', strtotime($_POST['start_date']));
+        $end_date =  date('Y-m-d', strtotime($_POST['end_date']));
+        $mode = $_POST['mode'];
+        $type = $_POST['type'];
+        $state_id = $_SESSION['state_id'];
+        $reports = array();
+        if ($type == "bookings") {
+            $reports = $report_model->stateGetBooking($state_id, $mode, $start_date, $end_date);
         }
 
         echo json_encode($reports);

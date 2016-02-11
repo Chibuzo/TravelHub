@@ -145,9 +145,6 @@ $travel_vehicle_types = $travel_vehicle_model->getAllVehicleTypes($_SESSION['tra
                             ?>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <p>TODO: Design amenities</p>
-                    </div>
                     <input type="hidden" name="add_travel_vehicle_type" value="yes" />
                 </div>
                 <div class="modal-footer">

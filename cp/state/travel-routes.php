@@ -9,14 +9,22 @@ require_once "../../api/models/travelparkmap.class.php";
 
 $travel_park_map = new TravelParkMap();
 
-if (isset($_POST['add_state'])) {
+if (isset($_POST['add_park'])) {
     $user_model = new User();
     $user_model->createParkAdmin($_POST['full_name'], $_POST['username'], $_POST['password'], $_SESSION['travel_id'], $_POST['park']);
 }
 if (isset($_POST['park_map'])) {
     $travel_park_map->addParkMap($_POST['origin'], $_POST['destination_park'], $_SESSION['travel_id']);
 }
+if (isset($_POST['update_park'])) {
+    $user_id = $_POST['user_id'];
+    $full_name = trim($_POST['full_name']);
+    $username = trim($_POST['username']);
+    $password = strlen(trim($_POST['password'])) > 0 ? trim($_POST['password']) : null;
 
+    $user_model = new User();
+    $user_model->updateUser($_POST['user_id'], $_POST['full_name'], $_POST['username'], 'state_admin', $password);
+}
 ?>
 <style>
 .opt-icons .fa { color: #666; font-size: 17px; margin-left: 6px; }
@@ -70,7 +78,10 @@ if (isset($_POST['park_map'])) {
 													<td class='text-right'>$n</td>
 													<td>{$row->park} {$row->state_name}</td>
 													<td>{$row->fullname} ({$row->username})</td>
-													<td class='opt-icons text-center' id='{$row->park_id}'>
+													<td class='opt-icons text-center' id='{$row->park_id}' data-row-id='{$row->id}' data-userid='{$row->user_id}' data-fullname='{$row->fullname}' data-username='{$row->username}' data-state-id='{$row->park_id}'>
+													    <span data-toggle='tooltip' title='Edit'>
+                                                            <a href='#' class='edit-park' data-toggle='modal' rel='tooltip' data-target='#editPark'><i class='fa fa-pencil'></i></a>
+                                                        </span>
 														<a href='' class='remove-state' title='Remove' data-toggle='tooltip'><i class='fa fa-trash-o'></i></a>
 													</td>
 												</tr>";
@@ -191,6 +202,12 @@ if (isset($_POST['park_map'])) {
 		</div>
 	</section>
 </div>
+<?php
+$parks = "";
+foreach ($db->query("SELECT * FROM parks WHERE state_id = '". (int)$_SESSION['state_id'] . "' ORDER BY park") AS $st) {
+    $parks .= "<option value='{$st['id']}'>{$st['park']}</option>";
+}
+?>
 <!-- Modal -->
 <div class="modal fade" id="parkModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
@@ -206,10 +223,6 @@ if (isset($_POST['park_map'])) {
                         <select name="park" class="form-control" required>
                             <option value="">-- Parks --</option>
                             <?php
-                            $states = '';
-                            foreach ($db->query("SELECT * FROM parks WHERE state_id = '". (int)$_SESSION['state_id'] . "' ORDER BY park") AS $st) {
-                                $parks .= "<option value='{$st['id']}'>{$st['park']}</option>";
-                            }
                             echo $parks;
                             ?>
                         </select>
@@ -230,8 +243,47 @@ if (isset($_POST['park_map'])) {
                         <label>Verify Password</label>
                         <input class="form-control" type="password" placeholder="Verify Password" name="v_password" id="v_password" required>
                     </div>
-                    <input type="hidden" name="add_state" value="yes" />
+                    <input type="hidden" name="add_park" value="yes" />
                 </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<!-- Update Modal -->
+<div class="modal fade" id="editPark" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Add Park Manager</h4>
+            </div>
+            <form action="" method="post" id="update_park">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input class="form-control" type="text" placeholder="Full Name" name="full_name" id="u_full_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input class="form-control" type="text" placeholder="Username" name="username" id="u_username" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input class="form-control" type="password" placeholder="Password" name="password" id="u_password" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Verify Password</label>
+                        <input class="form-control" type="password" placeholder="Verify Password" name="v_password" id="u_v_password" required>
+                    </div>
+                    <input type="hidden" name="update_park" value="yes" />
+                </div>
+                <input type="hidden" id="user_id" name="user_id" value="" />
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">Save</button>
@@ -271,6 +323,23 @@ $(document).ready(function() {
             e.preventDefault();
             alert("Destination must be different from origin");
         }
+    });
+
+    $('#update_park').on('submit', function(e) {
+        var password = $('#u_password').val();
+        var v_password = $('#u_v_password').val();
+
+        if (password !== v_password) {
+            e.preventDefault();
+            alert("Password do not match.");
+        }
+    });
+
+    $('.edit-park').on('click', function() {
+        var $thisTr = $(this).parents('td');
+        $('#user_id').val($thisTr.data('userid'));
+        $('#u_full_name').val($thisTr.data('fullname'));
+        $('#u_username').val($thisTr.data('username'));
     });
 
 });
