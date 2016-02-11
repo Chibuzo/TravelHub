@@ -32,7 +32,7 @@ $details = $db->fetch('obj');
 
 <div class='container'><br />
 	<div class="row">
-		<h1>Offline Payment Options</h1>
+		<h2>Offline Payment Details</h2>
 		<br />
 
 		<div class="alert alert-info">
@@ -40,8 +40,8 @@ $details = $db->fetch('obj');
 			To confirm your seat and receive your mobile ticket, pay through one of the following options.
 		</div>
 
-		<p>&nbsp;&nbsp;<input type="radio" class="payment" name="method" id="bank_payment" checked="checked" /> <span style="margin-left: 8px; position:relative; top:4px">Bank deposit</span></p>
-		<p>&nbsp;&nbsp;<input type="radio" class="payment" name="method" id="pay_later" value="Pay later" /> <span style="margin-left: 8px; position:relative; top:4px">Pay later</span></p>
+		<p>&nbsp;&nbsp;<input type="radio" class="payment" name="method" id="bank_payment" checked="checked" /> <span style="margin-left: 8px; position:relative; top:4px">Pay in the Bank</span></p>
+		<p>&nbsp;&nbsp;<input type="radio" class="payment" name="method" id="pay_later" value="Pay later" /> <span style="margin-left: 8px; position:relative; top:4px">Pay at any ATM nearest to you</span></p>
 			</form>
 		<div id="bank-payment-opt" class="payment-opt"><br />
 			After checkout, please deposit the total amount into the following account with your ticket number as a reference.

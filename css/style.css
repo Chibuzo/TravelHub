@@ -26,6 +26,11 @@ header {
 	top: -20px;
 }
 
+.navbar-brand {
+	margin-top: 10px !important;
+	font: bold 26px Sans-serif !important;
+}
+
 
 .navbar {
 	border: none;
@@ -116,37 +121,37 @@ footer {
 	color: #666;
 	bottom: 0;
 	width: 100%;
-	background: #f0f0f0;
+	/*background: #f0f0f0;*/
 	padding: 15px 0;
 	/*background: #333;*/
-	font-size: 14px;
+	font-size: 13px;
 }
 
-.f-head {
-	font-size: 18px;
-	margin-bottom: 10px;
+footer .container {
+	border-top: #c0c0c0 solid thin;
+	padding-top: 14px;
 }
 
-.f-block {
-	margin-left: 150px;
+.footer-nav {
+	list-style-type: none;
+	float: left;
+	margin-left: -20px;
 }
 
-footer a {
-	display: block;
-	color: #ccc;
+.footer-nav li {
+	float: left;
+	margin-left: 15px;
 }
 
-footer .socials a {
-	display: inline;
+footer .socials {
+	margin-top: 7px;
 }
 
-footer a:hover {
-	color: #ccc;
+footer .socials .fa {
+	margin-right: 10px;
 }
 
-.footer-links a {
-	color: #e0e0e0;
-}
+
 
 @media screen and (min-width: 320px) and (max-width: 600px) {
 

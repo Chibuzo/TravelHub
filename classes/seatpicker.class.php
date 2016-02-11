@@ -237,7 +237,7 @@ class SeatPicker extends Model {
 
 	private function upperSittingDetails($vehicle_type)
 	{
-		return "<div class='seat_arrangement $vehicle_type' data-fare='{$this->fare}' data-route_id='{$this->route_id}' data-fare_id='{$this->fare_id}'
+		return "<div class='seat_arrangement $vehicle_type' data-fare='{$this->fare}' data-route_id='{$this->route_id}' data-trip_id='{$this->trip_id}'
 		data-boarding_vehicle_id='{$this->boarding_vehicle_id}' data-vehicle_id='{$this->vehicle_id}' data-travel_date='{$this->travel_date}'>
 		<span class='glyphicon glyphicon-remove pull-right'></span>
 		<div>Click on an available seat to select it. Click again to de-select it.</div>

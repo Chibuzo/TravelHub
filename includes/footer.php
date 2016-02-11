@@ -1,29 +1,38 @@
 <footer>
 	<div class="container">
-		<div class="pull-right socials">
-			<div class="f-head">Follow us on:</div>
+		<div class="row">
+			<div class="pull-right hidden socials">
+				<div class="f-head">Follow us:</div>
+			</div>
+
+			<div class="col-md-6">
+				<span class='pull-left'>&copy <?php echo date('Y'); ?> TravelHub</span>
+				<span>
+					<ul class="footer-nav">
+						<li><a href="#<?php echo BASE_URL . 'about.php'; ?>">About</a></li>
+						<li class="hidden"><a href="#<?php echo BASE_URL . 'howitworks.php'; ?>">Services</a></li>
+						<li><a href="#<?php echo BASE_URL . 'contactus.php'; ?>">Contact</a></li>
+					</ul>
+				</span>
+
+			</div>
+
+			<div class="col-md-6 text-right">
+				<div class="">
+					<ul class="footer-nav pull-right">
+						<li><a href='#'>FAQ</a></li>
+						<li><a href='#'>Terms</a></li>
+						<li><a href='#'>Policy</a></li>
+					</ul>
+				</div>
+			</div>
 		</div>
-
-		<div class="pull-left">
-			<div class="f-head">TravelHub</div>
-			<a href="#<?php echo BASE_URL . 'about.php'; ?>">About Us</a>
-			<a href="#<?php echo BASE_URL . 'howitworks.php'; ?>">Services</a>
-			<a href="#<?php echo BASE_URL . 'contactus.php'; ?>">Contact Us</a>
-		</div>
-
-		<div class="f-block pull-left">
-			<div class="f-head">Payment options</div>
-
-		</div>
-
-		<div class="footer-links pull-right hidden">
-			<a href='#'>FAQ</a>
-			<a href='#'>Terms And Conditions</a>
-			<a href='#'>Contact Us</a>
-		</div>
-
-		<div class="copyright hide"><br />
-			Copyright  &copy <?php echo date('Y'); ?>
+		<div class="row">
+			<div class="col-md-12 text-right socials">
+				<a href="#"><i class="fa fa-facebook fa-lg"></i></a>
+				<a href="#"><i class="fa fa-twitter fa-lg"></i></a>
+				<a href="#"><i class="fa fa-instagram fa-lg"></i></a>
+			</div>
 		</div>
 	</div>
 

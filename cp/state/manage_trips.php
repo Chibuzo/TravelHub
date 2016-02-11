@@ -58,21 +58,6 @@ $travel_trips = $trip_model->getByStateTravel($_SESSION['state_id'], $_SESSION['
                             <form class="form-horizontal" action="" method="post">
                                 <div class="box-body">
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label" for="depature">Departure</label>
-                                        <div class="col-sm-4">
-                                            <select name="departure" id="departure" class="form-control" required>
-                                                <option value="" selected>-- Departure --</option>
-                                                <option value="1"> First Bus</option>
-                                                <option value="2"> Second Bus </option>
-                                                <option value="3"> Third Bus</option>
-                                            </select>
-                                        </div>
-                                        <label class="col-sm-2 control-label" for="depature">Departure Time</label>
-                                        <div class="col-sm-4">
-                                            <input type="text" name="departure_time" class="form-control" id="depature_time" placeholder="Departure Time" />
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
                                         <label class="col-sm-2 control-label" for="route">Route</label>
 
                                         <div class="col-sm-10">
@@ -86,6 +71,7 @@ $travel_trips = $trip_model->getByStateTravel($_SESSION['state_id'], $_SESSION['
                                             </select>
                                         </div>
                                     </div>
+
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label" for="vehicle_types">Vehicle Type</label>
                                         <div class="col-sm-4">
@@ -98,15 +84,30 @@ $travel_trips = $trip_model->getByStateTravel($_SESSION['state_id'], $_SESSION['
                                                 ?>
                                             </select>
                                         </div>
-                                        <label class="col-sm-2 control-label" for="fare">Fare</label>
+
+                                        <label class="col-sm-2 control-label" for="depature">Departure</label>
                                         <div class="col-sm-4">
-                                            <input type="text" name="fare" class="form-control" id="fare" placeholder="Fare" />
+                                            <select name="departure" id="departure" class="form-control" required>
+                                                <option value="" selected>-- Departure --</option>
+                                                <option value="1"> First Bus</option>
+                                                <option value="2"> Second Bus </option>
+                                                <option value="3"> Third Bus</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label" for="depature">Departure Time</label>
+                                        <div class="col-sm-10">
+                                            <select name="departure_time" class="form-control" id="depature_time">
+                                                <option>-- Departure Time --</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label" for="inputEmail3">Amenities</label>
                                         <div class="col-sm-10">
-                                            <select data-placeholder="-- Select Amenities --" name="amenities[]" id="amenities" multiple="" class="form-control" tabindex="-1" aria-hidden="true">
+                                            <select name="amenities[]" id="amenities" multiple="multiple" class="form-control">
                                                 <option value="A/C">A/C</option>
                                                 <option value="Food">Food</option>
                                                 <option value="TV">TV</option>
@@ -196,7 +197,7 @@ $travel_trips = $trip_model->getByStateTravel($_SESSION['state_id'], $_SESSION['
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Amenities</label>
-                        <select data-placeholder="-- Select Amenities --" name="edit_amenities[]" id="edit_amenities" multiple="" class="form-control" tabindex="-1" aria-hidden="true">
+                        <select data-placeholder="-- Select Amenities --" name="edit_amenities[]" id="edit_amenities" multiple="multiple" class="form-control" tabindex="-1" aria-hidden="true">
                             <option value="A/C">A/C</option>
                             <option value="Food">Food</option>
                             <option value="TV">TV</option>
@@ -221,7 +222,7 @@ $travel_trips = $trip_model->getByStateTravel($_SESSION['state_id'], $_SESSION['
     </div>
 </div>
 <?php include_once "includes/footer.html"; ?>
-
+<script type="text/javascript" src="../bootstrap/js/jquery.multi-select.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
     $('.edit-trip').on('click', function(e) {
@@ -234,6 +235,8 @@ $(document).ready(function() {
         $.each(amenities.split(", "), function(i, e){
             $("#edit_amenities option[value='" + e + "']").prop("selected", true);
         });
-    })
+    });
+
+    $('#amenities').multiSelect();
 });
 </script>

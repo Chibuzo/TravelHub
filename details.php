@@ -5,20 +5,20 @@ require_once "includes/db_handle.php";
 require_once "api/models/bookingmodel.class.php";
 
 /*** Get ticket booking details ***/
-$fare_id      = $_SESSION['trip_id'];
+$trip_id      = $_SESSION['trip_id'];
 $travel_date = $_SESSION['travel_date'];
 $travel_date = date('D d M Y', strtotime($travel_date));
 
 $booking = new BookingModel();
-$vehicle = $booking->getBookingDetails($fare_id);
+$vehicle = $booking->getBookingDetails($trip_id);
 ?>
 <style>
 .ticket-details {
 	position: relative;
 	padding: 15px;
-	line-height: 25px;
+	line-height: 27px;
 	margin: auto 15px;
-	margin-top: 70px;
+	margin-top: 80px;
 	margin-bottom: 70px;
 	border: #e0e0e0 solid thin;
 	background-color: #f8f8f8;
@@ -31,16 +31,8 @@ $vehicle = $booking->getBookingDetails($fare_id);
 	margin-left: 40px;
 }
 
-.form-group {
-	margin-left: 15px;
-}
-
-#payment-btn {
-	margin-left: 10px;
-}
-
 @media screen and (min-width: 320px) and (max-width: 600px) {
-	.form-group, #payment-btn { margin-left: 0; }
+	/*.form-group, #payment-btn { margin-left: 0; }*/
 }
 
 </style>
@@ -48,8 +40,8 @@ $vehicle = $booking->getBookingDetails($fare_id);
 <div class="container"><br />
 	<div class="row">
 	<div class="col-md-6">
-		<h1>&nbsp;Personal Details</h1><hr />
-		<form method="post" id="customer_info" action="" role="form">
+		<h2>Personal Details</h2><br />
+		<form method="post" id="customer_info" action="" role="form" class="form-vertical">
 			<div class="alert alert-error" style="display: none"></div>
 			<div class="form-group">
 				<label for="customer_name">Name</label>
@@ -83,7 +75,7 @@ $vehicle = $booking->getBookingDetails($fare_id);
 				</label>
 			</div>
 
-			<input type="submit" class="btn btn-primary btn-block btn-lg" id="payment-btn" value="Proceed to payment" />
+			<input type="submit" class="btn btn-danger btn-round btn-block btnlg" id="payment-btn" value="Proceed to payment" />
 		</form>
 	</div>
 

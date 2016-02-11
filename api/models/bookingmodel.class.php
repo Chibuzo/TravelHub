@@ -96,7 +96,7 @@ class BookingModel extends Model {
 	public function getBookingDetails($trip_id)
 	{
 		$sql = "SELECT trips.id trip_id, vt.name vehicle_type, num_of_seats, fare, route, company_name, park FROM trips
-					JOIN vehicle_types vt ON trips.vehicle_type = vt.id
+					JOIN vehicle_types vt ON trips.vehicle_type_id = vt.id
 					JOIN routes r ON r.id = trips.route_id
 					JOIN travels t ON trips.travel_id = t.id
 					JOIN park_map pm ON trips.park_map_id = pm.id
@@ -122,7 +122,7 @@ class BookingModel extends Model {
                 INNER JOIN park_map pm ON pm.id = trips.park_map_id
                 INNER JOIN parks op ON pm.origin = op.id
                 INNER JOIN parks dp ON pm.destination = dp.id
-                INNER JOIN vehicle_types ON vehicle_types.id = trips.vehicle_type
+                INNER JOIN vehicle_types ON vehicle_types.id = trips.vehicle_type_id
                 {$limit}";
 
 		self::$db->query($sql);

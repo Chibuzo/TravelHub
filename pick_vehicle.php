@@ -52,12 +52,16 @@ require_once "includes/banner.php";
 }
 
 .vehicle {
-	/*border: #e0e0e0 solid thin;*/
+	cursor: pointer;
 	padding: 7px 0px;
 	margin: 1px 0;
 	/*background: #f3f3f3;*/
 	font-size: 13px;
 	border-top: #e7e7e7 solid thin;
+}
+
+.vehicle:hover {
+	background-color: #f7f7f7;
 }
 
 .vehicle .fa_c {
@@ -94,25 +98,43 @@ select {
 
 .alert { font: 15px Tahoma; }
 
+.bold {
+	font-weight: 700;;
+}
 
-.travel {
+
+.travel div {
 	font-weight: 700;
+}
+
+.travel span {
+	padding-left: 15px;
 }
 
 .parks {
-	font: 400 11px 'Open Sans', san-seriff;
+	font: 400 12px 'Open Sans', san-seriff;
 }
 
 .parks div {
-	width: 50%;
+	width: 60%;
 	font-weight: 700;
-	padding-bottom: 2px;
-	margin-bottom: 3px;
+	padding-bottom: 4px;
+	margin-bottom: 4px;
+	margin-left: -13px;
 	border-bottom: #999 dashed thin
 }
 
 .parks span {
 	font-weight: 700;
+}
+
+.departure-time {
+	padding-top: 5px;
+	font-weight: 700;
+}
+
+.display-seats {
+	margin-top: 17px;
 }
 
 .show-seat {
@@ -212,20 +234,23 @@ select {
 			foreach ($vehicles AS $info) {
 				$fare = $info['fare'];
 
-				$btn = "<a class='display-seats btn btn-default btn-fill pull-right btnround btn-sm' href='details.php' data-fare='{$fare}' data-route_id='$route_id' data-travel_date='{$travel_date}' data-num_of_seats='{$info['num_of_seats']}' data-fare_id='{$info['fare_id']}' data-vehicle_type_id='{$info['vehicle_type_id']}'><span class='fa fa-list'></span> Pick a seat</a>";
+				$btn = "<a class='display-seats btn btn-default btn-fill pull-right btn-sm' href='details.php' data-fare='{$fare}' data-route_id='$route_id' data-travel_date='{$travel_date}' data-num_of_seats='{$info['num_of_seats']}' data-trip_id='{$info['trip_id']}' data-vehicle_type_id='{$info['vehicle_type_id']}'><span class='fa fa-list'></span> Pick a seat</a>";
 
 				$html .= "<div class='vehicle col-md-12 row' data-vehicle-type-id='{$info['vehicle_type_id']}'>
-							<div class='col-md-4'>
-								<div class='travel'>{$info['company_name']}</div>
-								{$info['name']}: {$info['num_of_seats']} - Seater<br />
+							<div class='col-md-4 travel'>
+								<div><i class='fa fa-bus fa_c'></i>&nbsp{$info['company_name']}</div>
+								<span>{$info['name']}: {$info['num_of_seats']} - Seater</span><br />
+								<div class='departure-time'><i class='fa fa-clock-o fa_c'></i>&nbsp;Departure time</div>
+								<span>{$info['departure_time']}</span>
 							</div>
 
-							<div class='col-md-3'>
-								<i class='fa fa-clock-o fa-lg fa_c'></i>&nbsp; Departure time
+							<div class='col-md-3 amenities'>
+								<div class='bold'>Amenities</div>
+								<span>" . implode(", ", explode(">", $info['amenities'])) . "</span>
 							</div>
 
 							<div class='col-md-3 parks'>
-								<div><i class='fa fa-map-marker fa-lg fa_c'></i>&nbsp;&nbsp;TERMINALS:</div>
+								<div><i class='fa fa-map-marker fa_c'></i>&nbsp; TERMINALS:</div>
 								<span>Leaves from:&nbsp;</span>{$info['origin_park']}
 								<br><span>Stops at:&nbsp;</span>{$info['destination_park']}
 							</div>

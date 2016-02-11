@@ -19,8 +19,7 @@ class DBConnection {
 				self::$instance = new PDO($dsn, DB_USERNAME, DB_PASSWORD, $options);
 				self::$instance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			} catch (PDOException $e) {
-				echo $e->getMessage();
-				exit;
+				return $e->getMessage();
 			}
 		}
 		return self::$instance;
@@ -43,25 +42,29 @@ class db extends DBConnection {
 	 */
 	public function query($sql, $param=null)
 	{
-		try {
-			$this->prepare($sql);
-			$this->execute($param);
-			return $this->stmt; 	// Return PDO result statment
-		} catch (PDOException $e) {
-			echo "Something bad happened - " . $e->getMessage();
-			return false;
-		}
+		$this->prepare($sql);
+		$this->execute($param);
+		return $this->stmt; 	// Return PDO result statment
 	}
 
 	function prepare($sql)
 	{
-		$this->stmt = $this->dbh->prepare($sql);
+		try {
+			$this->stmt = $this->dbh->prepare($sql);
+		} catch (Exception $e) {
+			return $e->getMessage();
+		}
 	}
 
 
 	function execute($param)
 	{
-		$this->stmt->execute($param);
+		try {
+			$this->stmt->execute($param);
+		} catch (Exception $e) {
+			return $e->getMessage();
+		}
+
 	}
 
 

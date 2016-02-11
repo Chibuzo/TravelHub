@@ -36,14 +36,23 @@ if (isset($_POST['bus_charter'])) {
 <style>
 /*body { background-image:url('../images/bg.png'); background-repeat: repeat;}*/
 
+#search-wrap {
+	background-color: #f0f0f0;
+	margin-top: -20px;
+}
+
 #bus_search {
-	margin-top: 10px;
 	padding: 10px;
+}
+
+#bus_search .btn-danger {
+	background-color: #fff !important;
 }
 
 h1 {
 	font: 300 38px 'Open Sans', San-serif, Helvetica Neue, Tahoma;
-	margin-bottom: 20px;
+	margin: 15px 0;
+	margin-bottom: 25px;
 	text-align: center;
 }
 
@@ -134,7 +143,8 @@ h1 {
 <link href="css/datepicker.css" rel="stylesheet" />
 <link href="css/datepicker3.css" rel="stylesheet" />
 
-<div class="container">
+<div class="container-fluid" id="search-wrap">
+	<div class="container">
 	<div class="row">
 		<div id="bus_search">
 			<h1>Where are you going?</h1>
@@ -184,6 +194,7 @@ h1 {
 				</div>
 			</form>
 		</div>
+	</div>
 	</div>
 </div>
 

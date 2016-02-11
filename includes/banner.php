@@ -12,13 +12,13 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="">TravelHub</a>
+					<a class="navbar-brand" href="<?php echo BASE_URL; ?>">TravelHub</a>
 					<!--<a class="navbar-brand" href="<?php /*echo BASE_URL; */?>"><img src="<?php /*echo BASE_URL; */?>images/logo.png" id="logo" /></a>-->
 				</div>
 
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav nav-links">
-						<li><a href="<?php echo BASE_URL; ?>smsticket.php">SMS Ticket</a></li>
+						<li><a href="#<?php echo BASE_URL; ?>smsticket.php">SMS Ticket</a></li>
 						<li><a href="#<?php echo BASE_URL; ?>cancelTicket.php">Cancel Ticket</a></li>
 					</ul>
 				</div>
