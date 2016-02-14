@@ -2,8 +2,20 @@
 require "includes/head.php";
 require "includes/side-bar.php";
 require_once "../../api/models/bookingmodel.class.php";
+require_once "../../api/models/parkmodel.class.php";
 
 $booking = new BookingModel();
+$park_model = new ParkModel();
+
+if (!isset($_GET['m'])) {
+    $mode = $_state = "all";
+    $_class = "hidden";
+} else {
+    $mode = $_GET['m'];
+    $_class = ($mode == "all") ? "hidden" : "";
+    $_state = (isset($_GET['s'])) ? $_GET['s'] : "all";
+}
+$states = $park_model->getStates();
 ?>
 <link href="../plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
 <style>
@@ -29,9 +41,21 @@ $booking = new BookingModel();
 				<div class="box box-warning">
 					<div class="box-header with-border">
 						<h2 style='font-size: 18px' class="box-title"><i class="fa fa-car"></i> &nbsp;Seat Reservations</h2>
-						<div class="box-tools pull-right">
-							<button data-toggle="modal" data-target="#hotelModal" class="btn bg-olive hidden"><i class="fa fa-plus"></i> New Route</button>
-						</div>
+                        <form class="form-inline pull-right">
+                            <select id="mode" class="form-control">
+                                <option value="all">All</option>
+                                <option value="state">State</option>
+                            </select>
+                            <select id="state" class="form-control <?php echo $_class; ?>">
+                                <option value="all">-- Select State --</option>
+                                <?php
+                                foreach ($states as $state) {
+                                    printf("<option value='%d'>%s</option>", $state->id, $state->state_name);
+                                }
+                                ?>
+                            </select>
+                        </form>
+
 					</div>
 					<div class="box-body">
 						<div>
@@ -54,7 +78,12 @@ $booking = new BookingModel();
 								<tbody>
 									<?php
 										$n = 0;
-										foreach ($booking->getBookings() AS $book) {
+                                        if (isset($_state) && $_state != "all") {
+                                            $bookings = $booking->getByTravelState($_SESSION['travel_id'], $_state);
+                                        } else {
+                                            $bookings = $booking->getBookings();
+                                        }
+										foreach ($bookings AS $book) {
 											$n++;
 											echo "<tr>
 													<td class='text-right'>$n</td>
@@ -102,17 +131,35 @@ $(document).ready(function() {
 			});
 		}
 	});
+
+    $("#mode")
+        .val("<?php echo $mode; ?>")
+        .on("change", function(e) {
+            if ($(this).val() == "state") {
+                $("#state").removeClass("hidden");
+            } else {
+                window.location = window.location.pathname;
+            }
+        });
+
+    $("#state")
+        .val("<?php echo $_state; ?>")
+        .on("change", function(e) {
+            if ($(this).val() == "all") {
+                window.location = window.location.pathname;
+            } else {
+                var query = "&m=" + $("#mode").val();
+                window.location.search = query + "&s=" + $(this).val();
+            }
+    });
+
+    $('#dataTable').dataTable({
+        "bPaginate": true,
+        "bLengthChange": false,
+        "bFilter": true,
+        "bSort": true,
+        "bInfo": false,
+        "bAutoWidth": false
+    });
 });
-
-
-	$(function () {
-	  $('#dataTable').dataTable({
-		"bPaginate": true,
-		"bLengthChange": false,
-		"bFilter": true,
-		"bSort": true,
-		"bInfo": false,
-		"bAutoWidth": false
-	  });
-	});
 </script>

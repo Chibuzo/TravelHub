@@ -5,6 +5,7 @@ require_once "../../api/models/fare.class.php";
 require_once "../../api/models/travelparkmap.class.php";
 require_once "../../api/models/travelvehicle.class.php";
 require_once "../../api/models/trip.class.php";
+require_once "../helpers/utils.php";
 
 $fare_mapper = new Fare();
 $travel_park_map = new TravelParkMap();
@@ -84,26 +85,24 @@ $travel_trips = $trip_model->getByStateTravel($_SESSION['state_id'], $_SESSION['
                                                 ?>
                                             </select>
                                         </div>
-
-                                        <label class="hidden col-sm-2 control-label" for="depature">Departure</label>
                                         <div class="col-sm-6">
-                                            <select name="departure" id="departure" class="form-control" required>
-                                                <option value="" selected>-- Departure order --</option>
-                                                <option value="1"> First Bus</option>
-                                                <option value="2"> Second Bus </option>
-                                                <option value="3"> Third Bus</option>
-                                            </select>
+                                            <input class="form-control" type="number" min="100" step="100" max="100000" name="fare" id="fare" placeholder="Fare" required/>
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label class="hidden col-sm-2 control-label" for="depature">Departure Time</label>
-                                        <div>
-                                            <select name="departure_time" class="form-control" id="depature_time">
-                                                <option>-- Departure Time --</option>
-                                            </select>
+                                    <div class="form-group row">
+                                        <label class="hidden col-sm-2 control-label" for="departure">Departure Order</label>
+                                        <div class="col-sm-6">
+                                            <input class="form-control" type="number" name="departure" id="departure" placeholder="Departure Order" required/>
+                                        </div>
+                                        <label class="hidden col-sm-2 control-label" for="departure_time">Departure Time</label>
+                                        <div class="col-sm-6">
+                                             <div class="input-group bootstrap-timepicker timepicker col-sm-12">
+                                                <input id="departure_time" name="departure_time" readonly type="text" class="form-control input-small">
+                                             </div>
                                         </div>
                                     </div>
+
                                     <div class="form-group">
                                         <label class="control-label" for="amenities">Vehicle Amenities</label>
                                         <div class="">
@@ -146,7 +145,6 @@ $travel_trips = $trip_model->getByStateTravel($_SESSION['state_id'], $_SESSION['
                                         <th>Order</th>
                                         <th>Amenities</th>
                                         <th>Fare</th>
-                                        <th>Vehicle Type</th>
                                         <th class="text-center">Edit</th>
                                     </tr>
                                 </thead>
@@ -154,14 +152,14 @@ $travel_trips = $trip_model->getByStateTravel($_SESSION['state_id'], $_SESSION['
                                 <?php
                                 $i = 1;
                                 foreach ($travel_trips as $trip) {
-                                    $_amenities = preg_replace("/>/", ", ", $trip->amenities);
+                                    $_amenities = preg_replace("/>/", ",", $trip->amenities);
+                                    $table_amenities = preg_replace("/>/", ", ", $trip->amenities);
                                     echo "<tr>";
                                     printf("<td>%s</td>", $i);
                                     printf("<td>%s</td>", $trip->origin_name . " to " . $trip->destination_name);
-                                    printf("<td>%s</td>", $trip->departure);
-                                    printf("<td>%s</td>", $_amenities);
-                                    printf("<td>%s</td>", $trip->fare);
-                                    printf("<td>%s</td>", $trip->vehicle_name);
+                                    printf("<td>%s %s</td>", ordinal($trip->departure), $trip->vehicle_name);
+                                    printf("<td>%s</td>", $table_amenities);
+                                    printf("<td>%s</td>", number_format($trip->fare));
                                     ?>
                                     <td class='text-center'>
                                         <a href='#' class='edit-trip' data-trip-id="<?php echo $trip->id; ?>" data-amenities="<?php echo $_amenities; ?>" data-fare="<?php echo $trip->fare; ?>" data-toggle="modal" data-target="#tripModal" >
@@ -197,7 +195,7 @@ $travel_trips = $trip_model->getByStateTravel($_SESSION['state_id'], $_SESSION['
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Amenities</label>
-                        <select data-placeholder="-- Select Amenities --" name="edit_amenities[]" id="edit_amenities" multiple="multiple" class="form-control" tabindex="-1" aria-hidden="true">
+                        <select name="edit_amenities[]" id="edit_amenities" multiple="multiple" class="form-control">
                             <option value="A/C">A/C</option>
                             <option value="Food">Food</option>
                             <option value="TV">TV</option>
@@ -207,7 +205,7 @@ $travel_trips = $trip_model->getByStateTravel($_SESSION['state_id'], $_SESSION['
                     </div>
                     <div class="form-group">
                         <label>Fare</label>
-                        <input type="text" name="edit_fare" class="form-control" id="edit_fare" placeholder="Fare" />
+                        <input type="number" min="100" step="100" max="100000" name="edit_fare" class="form-control" id="edit_fare" placeholder="Fare" />
                     </div>
                 </div>
                 <input type="hidden" name="op" value="edit">
@@ -223,6 +221,7 @@ $travel_trips = $trip_model->getByStateTravel($_SESSION['state_id'], $_SESSION['
 </div>
 <?php include_once "includes/footer.html"; ?>
 <script type="text/javascript" src="../bootstrap/js/jquery.multi-select.js"></script>
+<script type="text/javascript" src="../plugins/timepicker/bootstrap-timepicker.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
     $('.edit-trip').on('click', function(e) {
@@ -232,11 +231,13 @@ $(document).ready(function() {
         var trip_id = $(this).data('trip-id');
         $('#edit_fare').val(fare);
         $('#edit_trip_id').val(trip_id);
-        $.each(amenities.split(", "), function(i, e){
-            $("#edit_amenities option[value='" + e + "']").prop("selected", true);
-        });
+        var data_amenities = amenities.split(",");
+        $("#edit_amenities").val(data_amenities);
+        $("#edit_amenities").multiSelect("refresh");
     });
 
     $('#amenities').multiSelect();
+    $('#edit_amenities').multiSelect();
+    $('#departure_time').timepicker();
 });
 </script>

@@ -143,7 +143,7 @@ class BookingModel extends Model {
                 INNER JOIN park_map pm ON pm.id = trips.park_map_id
                 INNER JOIN parks op ON pm.origin = op.id
                 INNER JOIN parks dp ON pm.destination = dp.id
-                INNER JOIN vehicle_types ON vehicle_types.id = trips.vehicle_type
+                INNER JOIN vehicle_types ON vehicle_types.id = trips.vehicle_type_id
                 WHERE trips.travel_id = :travel_id
                 {$limit}";
 
@@ -165,7 +165,7 @@ class BookingModel extends Model {
                 INNER JOIN park_map pm ON pm.id = trips.park_map_id
                 INNER JOIN parks op ON pm.origin = op.id
                 INNER JOIN parks dp ON pm.destination = dp.id
-                INNER JOIN vehicle_types ON vehicle_types.id = trips.vehicle_type
+                INNER JOIN vehicle_types ON vehicle_types.id = trips.vehicle_type_id
                 INNER JOIN states ON states.id = op.state_id
                 WHERE trips.travel_id = :travel_id AND states.id = :state_id
                 {$limit}";

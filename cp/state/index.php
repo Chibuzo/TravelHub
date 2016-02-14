@@ -6,5 +6,5 @@
  * Time:    5:06 AM
  */
 
-header("Location: dashboard.php");
+header("Location: ../index.php");
 exit;

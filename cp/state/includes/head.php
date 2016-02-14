@@ -32,6 +32,7 @@ if (!isset($_SESSION['username'])) {
         <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
     <link href="../bootstrap/css/multi-select.css" rel="stylesheet" type="text/css" />
+    <link href="../plugins/timepicker/bootstrap-timepicker.min.css" rel="stylesheet" type="text/css" />
   </head>
   <body class="skin-blue">
     <div class="wrapper">
