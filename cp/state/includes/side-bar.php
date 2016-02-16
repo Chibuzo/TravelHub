@@ -38,17 +38,17 @@
                 </a>
             </li>
 
-            <!--<li>
-                <a href="manage_fares.php">
-                    <i class="fa fa-money"></i>
-                    <span>Manage Fares</span>
-                </a>
-            </li>-->
-
             <li>
                 <a href="manage_trips.php">
                     <i class="fa fa-road"></i>
                     <span>Trips</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="manage_fares.php">
+                    <i class="fa fa-money"></i>
+                    <span>Manage Fares</span>
                 </a>
             </li>
 

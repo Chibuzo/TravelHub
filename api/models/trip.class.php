@@ -65,8 +65,23 @@ class Trip extends Model
                 JOIN parks AS po ON po.id = pm.origin
                 JOIN parks AS pd ON pd.id = pm.destination
                 JOIN vehicle_types vt ON vt.id = trips.vehicle_type_id
-                WHERE trips.state_id = :state_id AND travel_id = :travel_id";
+                WHERE trips.state_id = :state_id AND travel_id = :travel_id
+                ORDER BY vehicle_name";
         self::$db->query($sql, array('state_id' => $state_id, 'travel_id' => $travel_id));
+        return self::$db->fetchAll('obj');
+    }
+
+    public function getByStateTravelParkMap($state_id, $travel_id, $park_map_id)
+    {
+        $sql = "SELECT trips.*, po.park AS origin_name, pd.park AS destination_name, vt.name AS vehicle_name
+                FROM trips
+                JOIN park_map AS pm ON pm.id = trips.park_map_id
+                JOIN parks AS po ON po.id = pm.origin
+                JOIN parks AS pd ON pd.id = pm.destination
+                JOIN vehicle_types vt ON vt.id = trips.vehicle_type_id
+                WHERE trips.state_id = :state_id AND travel_id = :travel_id AND pm.id = :park_map_id
+                ORDER BY vehicle_name";
+        self::$db->query($sql, array('state_id' => $state_id, 'travel_id' => $travel_id, 'park_map_id' => $park_map_id));
         return self::$db->fetchAll('obj');
     }
 
