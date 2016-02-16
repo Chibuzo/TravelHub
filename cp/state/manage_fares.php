@@ -4,16 +4,20 @@ require "includes/side-bar.php";
 require_once "../../api/models/fare.class.php";
 require_once "../../api/models/travelparkmap.class.php";
 require_once "../../api/models/travelvehicle.class.php";
+require_once "../../api/models/trip.class.php";
+require_once "../helpers/utils.php";
 
 $fare = new Fare();
 $travel_park_map = new TravelParkMap();
 $travel_vehicle_model = new TravelVehicle();
+$trip_model = new Trip();
+$travel_trips = $trip_model->getByStateTravel($_SESSION['state_id'], $_SESSION['travel_id']);
 
 // Effect price modification
-if (isset($_POST['change_fare'])) {
+/*if (isset($_POST['change_fare'])) {
     $_POST['travel_id'] = $_SESSION['travel_id'];
     $fare->editFare($_POST);
-}
+}*/
 ?>
 <div class="content-wrapper">
     <section class="content-header">
@@ -43,49 +47,53 @@ if (isset($_POST['change_fare'])) {
                                         <th style="width: 10px">S/no</th>
                                         <th>Route</th>
                                         <?php
-                                            $travel_vehicle_types = $travel_vehicle_model->getAllVehicleTypes($_SESSION['travel_id']);
-                                            $vehicle_types = array();
-                                            foreach ($travel_vehicle_types as $_vehicles) {
-                                                echo "<th class='text-right'>{$_vehicles->vehicle_name} ( ₦ )</th>";
-                                                $vehicle_types['name'][] = $_vehicles->vehicle_name;
-                                                $vehicle_types['id'][] = $_vehicles->id;
+                                        $travel_vehicle_types = $travel_vehicle_model->getAllVehicleTypes($_SESSION['travel_id']);
+                                        $vehicle_types = array('name' => array(), 'id' => array(), 'order' => array());
+                                        foreach ($travel_trips as $travel_trip) {
+                                            if (!in_array($travel_trip->vehicle_type_id, $vehicle_types['id']) || !in_array($travel_trip->departure, $vehicle_types['order'])) {
+                                                printf("<th class='text-right'>%s %s ( ₦ )</th>", ordinal($travel_trip->departure), $travel_trip->vehicle_name);
+                                                $vehicle_types['name'][] = $travel_trip->vehicle_name;
+                                                $vehicle_types['id'][] = $travel_trip->vehicle_type_id;
+                                                $vehicle_types['order'][] = $travel_trip->departure;
                                             }
+                                        }
                                         ?>
                                         <th style='text-align:center'>Edit</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 <?php
-                                    $park_maps = $travel_park_map->getTravelStateParkMaps($_SESSION['travel_id'], $_SESSION['state_id']);
+                                $park_maps = $travel_park_map->getTravelStateParkMaps($_SESSION['travel_id'], $_SESSION['state_id']);
 
-                                    $n = 1;
-                                    foreach ($park_maps as $park_map) {
-                                        echo "<tr data-park-map-id='{$park_map->id}' data-route-id='{$travel_park_map->getRoute($park_map->id)->id}'><td>$n</td>
-                                                <td>{$park_map->origin_name} - {$park_map->destination_name} &nbsp; ({$park_map->destination_state})</td>";
-
-                                        $fares = $fare->getFareByParkMapId($park_map->id, $_SESSION['travel_id']);
-
-                                        if (count($fares) > 0) {
-                                            if (count($vehicle_types) > 0) {
-                                                for ($i = 0; $i < count($vehicle_types['id']); $i++) {
-                                                    $ffare = (is_numeric($fares[$i]->fare) && $fares[$i]->fare > 0) ? number_format($fares[$i]->fare) : '';
-                                                    echo "<td class='text-right' data-fare='{$fares[$i]->fare}'>$ffare</td>";
+                                $n = 1;
+                                foreach ($park_maps as $park_map) {
+                                    printf("<tr><td>%d</td>", $n);
+                                    printf("<td>%s - %s (%s)</td>", $park_map->origin_name, $park_map->destination_name, $park_map->destination_state);
+                                    $_trips = $trip_model->getByStateTravelParkMap($_SESSION['state_id'], $_SESSION['travel_id'], $park_map->id);
+                                    for($i = 0; $i < count($vehicle_types['id']); $i++) {
+                                        $fare = $ffare = "";
+                                        if (count($_trips) > 0) {
+                                            for($j = 0; $j < count($_trips); $j++) {
+                                                if ($_trips[$j]->vehicle_type_id == $vehicle_types['id'][$i] && $_trips[$j]->departure == $vehicle_types['order'][$i]) {
+                                                    $ffare = (is_numeric($_trips[$j]->fare) && $_trips[$j]->fare > 0) ? number_format($_trips[$j]->fare) : '';
+                                                    printf("<td class='text-right' data-fare='%s'>%s</td>", $_trips[$j]->fare, $ffare);
+                                                } else {
+                                                    printf("<td class='text-right' data-fare='%s'>%s</td>", $fare, $ffare);
                                                 }
                                             }
                                         } else {
-                                            if (count($vehicle_types) > 0) {
-                                                for ($l = 0; $l < count($vehicle_types['id']); $l++) {
-                                                    echo "<td data-fare=''></td>";
-                                                }
-                                            }
+                                            printf("<td class='text-right' data-fare='%s'>%s</td>", $fare, $ffare);
                                         }
-                                        echo "<td class='text-center'>
-                                                    <a href='' class='edit-route-info' data-toggle='modal' data-target='#myModal' data-fare_id=''>
-                                                    <i class='fa fa-pencil' title='Edit fare' data-toggle='tooltip'></i></a>
-                                                </td>
-                                            </tr>";
-                                        $n++;
+
                                     }
+                                    echo "<td class='text-center'>
+                                                <a href='' class='edit-route-info' data-toggle='modal' data-target='#myModal' data-fare_id=''>
+                                                <i class='fa fa-pencil' title='Edit fare' data-toggle='tooltip'></i></a>
+                                            </td>
+                                        </tr>";
+                                    printf("</tr>");
+                                    $n++;
+                                }
                                 ?>
                                 </tbody>
                             </table>
@@ -115,19 +123,20 @@ if (isset($_POST['change_fare'])) {
                 <div id='route' class='small_head'></div>
                 <?php
                     for ($i = 0; $i < count($vehicle_types['id']); $i = $i + 2) {
-                        echo "<div class='form-group'>
-                                <div class='row'>
-                                    <div class='col-md-6'>
-                                        <label>{$vehicle_types['name'][$i]} Fare</label>
-                                        <input type='text' name='{$vehicle_types['id'][$i]}' value='' class='form-control' />
-                                    </div>";
-
-                                    if (isset($vehicle_types['id'][$i + 1])) {
-                                        echo "<div class='col-md-6'>
-                                                <label>" . $vehicle_types['name'][$i + 1] . " Fare</label>
-                                                <input type='text' name='" . $vehicle_types['id'][$i + 1] . "' value='' class='form-control' />
-                                            </div>";
-                                    }
+                        ?>
+                        <div class='form-group'>
+                            <div class='row'>
+                                <div class='col-md-6'>
+                                    <label><?php echo ordinal($vehicle_types['order'][$i]) ." ". $vehicle_types['name'][$i] ?> Fare</label>
+                                    <input type='text' name='<?php echo $vehicle_types['id'][$i]; ?>' value='' class='form-control' />
+                                </div>
+                                <?php
+                                if (isset($vehicle_types['id'][$i + 1])) {
+                                    echo "<div class='col-md-6'>
+                                            <label>" . ordinal($vehicle_types['order'][$i + 1]) ." ". $vehicle_types['name'][$i + 1] . " Fare</label>
+                                            <input type='text' name='" . $vehicle_types['id'][$i + 1] . "' value='' class='form-control' />
+                                        </div>";
+                                }
                         echo "</div></div>";
                     }
                 ?>
