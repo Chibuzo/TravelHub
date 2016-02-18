@@ -86,7 +86,7 @@ $travel_trips = $trip_model->getByStateTravel($_SESSION['state_id'], $_SESSION['
                                             </select>
                                         </div>
                                         <div class="col-sm-6">
-                                            <input class="form-control" type="number" min="100" step="100" max="100000" name="fare" id="fare" placeholder="Fare" required/>
+                                            <input class="form-control" type="number" min="100" step="100" max="100000" name="fare" id="fare" placeholder="Fare" />
                                         </div>
                                     </div>
 

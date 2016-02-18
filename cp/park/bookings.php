@@ -54,7 +54,7 @@ $booking = new BookingModel();
 								<tbody>
 									<?php
 										$n = 0;
-										foreach ($booking->getByTravelState($_SESSION['travel_id'], $_SESSION['state_id']) AS $book) {
+										foreach ($booking->getByTravelPark($_SESSION['travel_id'], $_SESSION['park_id']) AS $book) {
 											$n++;
 											echo "<tr>
 													<td class='text-right'>$n</td>

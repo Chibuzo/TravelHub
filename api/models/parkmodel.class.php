@@ -54,6 +54,16 @@ class ParkModel extends Model {
         return self::$db->fetch('obj');
     }
 
+    function getParkById($id)
+    {
+        $sql = "SELECT parks.id AS id, parks.park AS park, states.id AS state_id, states.state_name AS state_name
+                FROM parks
+                INNER JOIN states ON parks.state_id = states.id
+                WHERE parks.id = :id";
+        self::$db->query($sql, array('id' => $id));
+        return self::$db->fetch('obj');
+    }
+
     function getParkByName($park_name, $state_id)
     {
         $sql = "SELECT parks.id AS id, parks.park AS park, states.id AS state_id, states.state_name AS state_name
@@ -106,6 +116,18 @@ class ParkModel extends Model {
                 WHERE travel_park.travel_id = :travel_id AND parks.state_id = :state_id";
         self::$db->query($sql, array('travel_id' => $travel_id, 'state_id' => $state_id));
         return self::$db->fetchAll('obj');
+    }
+
+    function getTravelParksByPark($travel_id, $park_id)
+    {
+        $sql = "SELECT travel_park.id, travel_park.travel_id AS travel_id, parks.park, parks.id AS park_id, users.fullname, users.username, users.id AS user_id, states.state_name AS state_name
+                FROM travel_park
+                INNER JOIN parks ON travel_park.park_id = parks.id
+                INNER JOIN users ON travel_park.user_id = users.id
+                INNER JOIN states ON parks.state_id = states.id
+                WHERE travel_park.travel_id = :travel_id AND parks.id = :park_id";
+        self::$db->query($sql, array('travel_id' => $travel_id, 'park_id' => $park_id));
+        return self::$db->fetch('obj');
     }
 
 	public function checkParkMapExist($origin, $destination)

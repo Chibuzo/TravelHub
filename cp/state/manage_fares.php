@@ -48,15 +48,24 @@ $travel_trips = $trip_model->getByStateTravel($_SESSION['state_id'], $_SESSION['
                                         <th>Route</th>
                                         <?php
                                         $travel_vehicle_types = $travel_vehicle_model->getAllVehicleTypes($_SESSION['travel_id']);
-                                        $vehicle_types = array('name' => array(), 'id' => array(), 'order' => array());
+                                        $vehicle_types = array('name' => array(), 'id' => array(), 'order' => array(), 'check' => array());
                                         foreach ($travel_trips as $travel_trip) {
+                                            if (!in_array($travel_trip->departure.">".$travel_trip->vehicle_type_id, $vehicle_types['check'])) {
+                                                printf("<th class='text-right'>%s %s ( ₦ )</th>", ordinal($travel_trip->departure), $travel_trip->vehicle_name);
+                                                $vehicle_types['name'][] = $travel_trip->vehicle_name;
+                                                $vehicle_types['id'][] = $travel_trip->vehicle_type_id;
+                                                $vehicle_types['order'][] = $travel_trip->departure;
+                                                $vehicle_types['check'][] = $travel_trip->departure.">".$travel_trip->vehicle_type_id;
+                                            }
+                                        }
+                                        /*foreach ($travel_trips as $travel_trip) {
                                             if (!in_array($travel_trip->vehicle_type_id, $vehicle_types['id']) || !in_array($travel_trip->departure, $vehicle_types['order'])) {
                                                 printf("<th class='text-right'>%s %s ( ₦ )</th>", ordinal($travel_trip->departure), $travel_trip->vehicle_name);
                                                 $vehicle_types['name'][] = $travel_trip->vehicle_name;
                                                 $vehicle_types['id'][] = $travel_trip->vehicle_type_id;
                                                 $vehicle_types['order'][] = $travel_trip->departure;
                                             }
-                                        }
+                                        }*/
                                         ?>
                                         <th style='text-align:center'>Edit</th>
                                     </tr>
@@ -74,17 +83,16 @@ $travel_trips = $trip_model->getByStateTravel($_SESSION['state_id'], $_SESSION['
                                         $fare = $ffare = "";
                                         if (count($_trips) > 0) {
                                             for($j = 0; $j < count($_trips); $j++) {
-                                                if ($_trips[$j]->vehicle_type_id == $vehicle_types['id'][$i] && $_trips[$j]->departure == $vehicle_types['order'][$i]) {
+                                                if ($_trips[$j]->departure.">".$_trips[$j]->vehicle_type_id == $vehicle_types['check'][$i]) {
                                                     $ffare = (is_numeric($_trips[$j]->fare) && $_trips[$j]->fare > 0) ? number_format($_trips[$j]->fare) : '';
                                                     printf("<td class='text-right' data-fare='%s'>%s</td>", $_trips[$j]->fare, $ffare);
                                                 } else {
-                                                    printf("<td class='text-right' data-fare='%s'>%s</td>", $fare, $ffare);
+                                                    printf("<td class='text-right' data-fare='%s'>%s</td>", $fare, 0);
                                                 }
                                             }
                                         } else {
-                                            printf("<td class='text-right' data-fare='%s'>%s</td>", $fare, $ffare);
+                                            printf("<td class='text-right' data-fare='%s'>%s</td>", $fare, "x");
                                         }
-
                                     }
                                     echo "<td class='text-center'>
                                                 <a href='' class='edit-route-info' data-toggle='modal' data-target='#myModal' data-fare_id=''>

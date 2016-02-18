@@ -174,6 +174,29 @@ class BookingModel extends Model {
         return self::$db->fetchAll('obj');
     }
 
+    public function getByTravelPark($travel_id, $park_id, $limit = null)
+    {
+        if ($limit != null) {
+            $limit = "LIMIT 0, 5";
+        }
+        $sql = "SELECT booking_details.*, boarding_vehicle.travel_date AS travel_date, customers.c_name, customers.phone_no, trips.fare, travels.company_name, CONCAT(op.park, ' - ', dp.park) AS route, vehicle_types.`name` AS vehicle_type
+                FROM " . self::$db_tbl . "
+                INNER JOIN boarding_vehicle ON boarding_vehicle.id = booking_details.boarding_vehicle_id
+                INNER JOIN trips ON trips.id = boarding_vehicle.trip_id
+                INNER JOIN travels ON travels.id = trips.travel_id
+                INNER JOIN customers ON customers.id = booking_details.customer_id
+                INNER JOIN park_map pm ON pm.id = trips.park_map_id
+                INNER JOIN parks op ON pm.origin = op.id
+                INNER JOIN parks dp ON pm.destination = dp.id
+                INNER JOIN vehicle_types ON vehicle_types.id = trips.vehicle_type_id
+                INNER JOIN states ON states.id = op.state_id
+                WHERE trips.travel_id = :travel_id AND op.id = :park_id
+                {$limit}";
+
+        self::$db->query($sql, array('travel_id' => $travel_id, 'park_id' => $park_id));
+        return self::$db->fetchAll('obj');
+    }
+
 	function cancelBooking($id = null, $travel_date = null, $ref_no = null)
 	{
 		if ($id != null) {

@@ -18,10 +18,10 @@ if (isset($_POST['login'])) {
             $_SESSION['state_id'] = $travel->state_id;
             header("Location: state/dashboard.php");
         } elseif ($_SESSION['user_type'] == "park_admin") {
-            $travel = (new Travel())->getTravelStateByUser($_SESSION['user_id']);
+            $travel = (new Travel())->getTravelParkByUser($_SESSION['user_id']);
             $_SESSION['travel_id'] = $travel->travel_id;
             $_SESSION['state_id'] = $travel->state_id;
-            $_SESSION['park'] = $travel->park_id;
+            $_SESSION['park_id'] = $travel->park_id;
             header("Location: park/dashboard.php");
         } elseif ($_SESSION['user_type'] == 'admin') {
             header("Location: admin/dashboard.php");

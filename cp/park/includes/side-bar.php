@@ -52,7 +52,7 @@
                 </a>
             </li>
 
-            <li>
+            <!--<li>
                 <a href="bushire.php">
                     <i class="fa fa-bus"></i>
                     <span>Bus Hire</span>
@@ -64,7 +64,7 @@
                     <i class="fa fa-bus"></i>
                     <span>Manage Vehicles</span>
                 </a>
-            </li>
+            </li>-->
 
             <li>
                 <a href="view_reports.php">

@@ -73,6 +73,26 @@ class TravelParkMap extends ParkModel
         return self::$db->fetchAll('obj');
     }
 
+    /**
+     * Returns all park_maps from an originating state for a particular travel
+     *
+     * @param $travel_id
+     * @param $park_id - state_id for originating state
+     * @return mixed
+     */
+    public function getTravelParkParkMaps($travel_id, $park_id)
+    {
+        $sql = "SELECT pm.*, d.park AS destination_name, o.park AS origin_name, state.state_name as origin_state, d_s.state_name as destination_state
+                FROM park_map AS pm
+                INNER JOIN travel_park_map ON travel_park_map.park_map_id = pm.id
+                INNER JOIN parks AS d ON pm.destination = d.id
+                INNER JOIN parks AS o ON pm.origin = o.id
+                INNER JOIN states AS state ON o.state_id = state.id
+                INNER JOIN states AS d_s ON d.state_id = d_s.id
+                WHERE travel_park_map.travel_id = :travel_id AND travel_park_map.status = '0' AND o.id = :park_id";
+        self::$db->query($sql, array('travel_id' => $travel_id, 'park_id'=> $park_id));
+        return self::$db->fetchAll('obj');
+    }
 
     /**
      * Returns all the park_maps for a route

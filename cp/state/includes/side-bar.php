@@ -52,19 +52,19 @@
                 </a>
             </li>
 
-            <!--<li>
+            <li>
                 <a href="bookings.php">
                     <i class="fa fa-car"></i>
                     <span>Reservations</span>
                 </a>
-            </li>-->
+            </li>
 
-            <li>
+            <!--<li>
                 <a href="bushire.php">
                     <i class="fa fa-bus"></i>
                     <span>Bus Hire</span>
                 </a>
-            </li>
+            </li>-->
 
             <li>
                 <a href="view_reports.php">
