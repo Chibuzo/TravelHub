@@ -58,14 +58,6 @@ $travel_trips = $trip_model->getByStateTravel($_SESSION['state_id'], $_SESSION['
                                                 $vehicle_types['check'][] = $travel_trip->departure.">".$travel_trip->vehicle_type_id;
                                             }
                                         }
-                                        /*foreach ($travel_trips as $travel_trip) {
-                                            if (!in_array($travel_trip->vehicle_type_id, $vehicle_types['id']) || !in_array($travel_trip->departure, $vehicle_types['order'])) {
-                                                printf("<th class='text-right'>%s %s ( ₦ )</th>", ordinal($travel_trip->departure), $travel_trip->vehicle_name);
-                                                $vehicle_types['name'][] = $travel_trip->vehicle_name;
-                                                $vehicle_types['id'][] = $travel_trip->vehicle_type_id;
-                                                $vehicle_types['order'][] = $travel_trip->departure;
-                                            }
-                                        }*/
                                         ?>
                                         <th style='text-align:center'>Edit</th>
                                     </tr>
@@ -74,10 +66,8 @@ $travel_trips = $trip_model->getByStateTravel($_SESSION['state_id'], $_SESSION['
                                 <?php
                                 $park_maps = $travel_park_map->getTravelStateParkMaps($_SESSION['travel_id'], $_SESSION['state_id']);
 
-                                $n = 1;
+                                $_travel_trips = array();
                                 foreach ($park_maps as $park_map) {
-                                    printf("<tr><td>%d</td>", $n);
-                                    printf("<td>%s - %s (%s)</td>", $park_map->origin_name, $park_map->destination_name, $park_map->destination_state);
                                     $_trips = $trip_model->getByStateTravelParkMap($_SESSION['state_id'], $_SESSION['travel_id'], $park_map->id);
                                     for($i = 0; $i < count($vehicle_types['id']); $i++) {
                                         $fare = $ffare = "";
@@ -85,21 +75,33 @@ $travel_trips = $trip_model->getByStateTravel($_SESSION['state_id'], $_SESSION['
                                             for($j = 0; $j < count($_trips); $j++) {
                                                 if ($_trips[$j]->departure.">".$_trips[$j]->vehicle_type_id == $vehicle_types['check'][$i]) {
                                                     $ffare = (is_numeric($_trips[$j]->fare) && $_trips[$j]->fare > 0) ? number_format($_trips[$j]->fare) : '';
-                                                    printf("<td class='text-right' data-fare='%s'>%s</td>", $_trips[$j]->fare, $ffare);
-                                                } else {
-                                                    printf("<td class='text-right' data-fare='%s'>%s</td>", $fare, 0);
+                                                    $_travel_trips[$park_map->id][$vehicle_types['check'][$i]]['fare'] = $_trips[$j]->fare;
+                                                    $_travel_trips[$park_map->id][$vehicle_types['check'][$i]]['trip_id'] = $_trips[$j]->id;
                                                 }
                                             }
+                                        }
+                                    }
+                                }
+
+                                $n = 1;
+                                foreach ($park_maps as $park_map) {
+                                    printf("<tr><td>%d</td>", $n);
+                                    printf("<td>%s - %s (%s)</td>", $park_map->origin_name, $park_map->destination_name, $park_map->destination_state);
+                                    for($i = 0; $i < count($vehicle_types['id']); $i++) {
+                                        if (isset($_travel_trips[$park_map->id][$vehicle_types['check'][$i]])) {
+                                            $travel_trip = $_travel_trips[$park_map->id][$vehicle_types['check'][$i]];
+                                            printf("<td class='text-right' data-tripid='%d' data-fare='%s'>%s</td>", $travel_trip['trip_id'], $travel_trip['fare'], number_format($travel_trip['fare']));
                                         } else {
-                                            printf("<td class='text-right' data-fare='%s'>%s</td>", $fare, "x");
+                                            echo "<td></td>";
                                         }
                                     }
                                     echo "<td class='text-center'>
-                                                <a href='' class='edit-route-info' data-toggle='modal' data-target='#myModal' data-fare_id=''>
-                                                <i class='fa fa-pencil' title='Edit fare' data-toggle='tooltip'></i></a>
+                                                <a href='' class='edit-fare'>
+                                                    <i class='fa fa-pencil' title='Edit fare' data-toggle='tooltip'></i>
+                                                </a>
                                             </td>
                                         </tr>";
-                                    printf("</tr>");
+                                    echo "</tr>";
                                     $n++;
                                 }
                                 ?>
@@ -116,68 +118,61 @@ $travel_trips = $trip_model->getByStateTravel($_SESSION['state_id'], $_SESSION['
     </section>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                    &times;
-                </button>
-                <h4 class="modal-title">Change Fare</h4>
-            </div>
-            <form method="post" action="" id="form-fare">
-              <div class="modal-body">
-                <div id='route' class='small_head'></div>
-                <?php
-                    for ($i = 0; $i < count($vehicle_types['id']); $i = $i + 2) {
-                        ?>
-                        <div class='form-group'>
-                            <div class='row'>
-                                <div class='col-md-6'>
-                                    <label><?php echo ordinal($vehicle_types['order'][$i]) ." ". $vehicle_types['name'][$i] ?> Fare</label>
-                                    <input type='text' name='<?php echo $vehicle_types['id'][$i]; ?>' value='' class='form-control' />
-                                </div>
-                                <?php
-                                if (isset($vehicle_types['id'][$i + 1])) {
-                                    echo "<div class='col-md-6'>
-                                            <label>" . ordinal($vehicle_types['order'][$i + 1]) ." ". $vehicle_types['name'][$i + 1] . " Fare</label>
-                                            <input type='text' name='" . $vehicle_types['id'][$i + 1] . "' value='' class='form-control' />
-                                        </div>";
-                                }
-                        echo "</div></div>";
-                    }
-                ?>
-                </div>
-                <input type="hidden" name="park_map_id" id="park_map_id" value="" />
-                <input type="hidden" name="route_id" id="route_id" value="" />
-
-                <div class="modal-footer">
-                  <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-                  <input type="submit" class="btn btn-primary" name="change_fare" value="Save changes" />
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
 <?php include_once "includes/footer.html"; ?>
 
 <script type="text/javascript">
 $(document).ready(function() {
-    $('.edit-route-info').click(function(e) {
+
+    $(document.body).on('click', '.edit-fare', function(e) {
         e.preventDefault();
         var $thisTr = $(this).parents('tr');
-        var park_map_id = $thisTr.data("park-map-id");
-        var route_id = $thisTr.data("route-id");
-        $("#park_map_id").val(park_map_id);
-        $("#route_id").val(route_id);
+        var check = false;
 
-        var fare = 0;
-        $('#form-fare').find("input[type='text']").each(function(i, input) {
-            fare = $thisTr.find("td:nth-child(" + (i + 3) + ")").data("fare");
-            input.value = fare;
+        $($thisTr).find('td').each(function() {
+            var fare = $(this).data('fare');
+            var trip_id = $(this).data('tripid');
+            if (undefined != trip_id) {
+                check = true;
+                $(this).html(
+                    $('<input />')
+                        .data('trip_id', trip_id)
+                        .val(fare)
+                        .addClass('form-control')
+                )
+            }
         });
+        if (check) {
+            $(this).removeClass("edit-fare").html("<i class='fa fa-save'></i>").addClass('save-fares');
+        }
+    });
+
+    $(document.body).on("click", ".save-fares", function(e) {
+        e.preventDefault();
+        var $thisTr = $(this).parents('tr');
+        var fares = [];
+
+        $($thisTr).find('td').each(function() {
+            $txtBox = $(this).find('input');
+            var fare = $txtBox.val();
+            var trip_id = $txtBox.data('trip_id');
+            if (undefined != trip_id) {
+                var _fare = {'fare': fare, 'trip_id': trip_id};
+                fares.push(_fare);
+            }
+        });
+        $.post("../../ajax/misc_fns.php", {"op": "update-fare", "trips": fares}, function(d) {
+            if (d.trim() == "Done") {
+                $($thisTr).find('td').each(function() {
+                    $txtBox = $(this).find('input');
+                    var fare = $txtBox.val();
+                    $txtBox.remove();
+                    if (undefined != fare) {
+                        $(this).text(parseInt(fare).toLocaleString('en-US'));
+                    }
+                });
+            }
+        });
+        $(this).removeClass('save-fares').html("<i class='fa fa-pencil'></i>").addClass("edit-fare");
     });
 });
 </script>

@@ -45,6 +45,16 @@ class Trip extends Model
         return false;
     }
 
+    public function updateFare($trip_id, $fare)
+    {
+        $sql = "UPDATE trips SET fare = :fare WHERE id = :id";
+        $result = self::$db->query($sql, array('fare' => $fare, 'id' => $trip_id));
+        if ($result !== false) {
+            return true;
+        }
+        return false;
+    }
+
     public function getByState($state_id)
     {
         $sql = "SELECT trips.*, po.park AS origin_name, pd.park AS destination_name

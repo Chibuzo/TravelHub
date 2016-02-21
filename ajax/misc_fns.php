@@ -167,4 +167,15 @@ if (isset($_REQUEST['op'])) {
 
         echo json_encode($reports);
     }
+    elseif ($_POST['op'] == "update-fare")
+    {
+        require_once "../api/models/trip.class.php";
+        $trip_model = new Trip();
+
+        $trips_data = $_POST['trips'];
+        foreach ($trips_data as $trip_data) {
+            $trip_model->updateFare($trip_data['trip_id'], $trip_data['fare']);
+        }
+        echo "Done";
+    }
 }
