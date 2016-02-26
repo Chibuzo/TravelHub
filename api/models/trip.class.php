@@ -20,20 +20,37 @@ class Trip extends Model
             VALUES (:park_map_id, :travel_id, :state_id, :departure, :vehicle_type_id, :route_id, :amenities, :departure_time, :fare)";
 
         $param = array(
-            "park_map_id" => $park_map_id,
-            "travel_id" => $travel_id,
+            'park_map_id' => $park_map_id,
+            'travel_id' => $travel_id,
             'state_id' => $state_id,
-            "departure" => $departure,
-            "route_id" => $route_id,
+            'departure' => $departure,
+            'route_id' => $route_id,
             'vehicle_type_id' => $vehicle_type_id,
-            "amenities" => $amenities,
-            "departure_time" => $departure_time,
-            "fare" => $fare,
+            'amenities' => $amenities,
+            'departure_time' => $departure_time,
+            'fare' => $fare
         );
-        if (self::$db->query($sql, $param)) {
-            return self::$db->getLastInsertId();
-        }
+
+        self::$db->query($sql, $param);
+        return self::$db->getLastInsertId();
     }
+
+
+    /* for ticketing office */
+    public function getDailyTrips($vehicle_type_id, $route_id)
+    {
+        $sql = "SELECT id trip_id, fare, departure FROM trips
+				WHERE vehicle_type_id = :vehicle_type AND route_id = :route_id";
+
+        $param = array(
+            'vehicle_type' => $vehicle_type_id,
+            'route_id' => $route_id
+        );
+
+        self::$db->query($sql, $param);
+        return self::$db->fetchAll('obj');
+    }
+
 
     public function updateTrip($trip_id, $amenities, $fare)
     {
@@ -44,6 +61,22 @@ class Trip extends Model
         }
         return false;
     }
+
+
+    public function getTripsByRoute($route_id)
+    {
+        $sql = "SELECT tr.id trip_id, vt.id vehicle_type_id, num_of_seats, name, fare, amenities, departure_time, company_name, po.park origin_park, pd.park destination_park, travel_id FROM trips tr
+				JOIN vehicle_types vt ON tr.vehicle_type_id = vt.id
+				JOIN park_map pm ON tr.park_map_id = pm.id
+				JOIN parks po ON pm.origin = po.id
+				JOIN parks pd ON pm.destination = pd.id
+				JOIN travels t ON tr.travel_id = t.id
+				WHERE tr.route_id = :route_id AND fare > 0 ";
+
+        self::$db->query($sql, array('route_id' => $route_id));
+        return self::$db->fetchAll();
+    }
+
 
     public function getByState($state_id)
     {

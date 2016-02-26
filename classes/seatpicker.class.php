@@ -1,5 +1,6 @@
 <?php
 require_once "../api/models/model.class.php";
+require_once "../api/models/vehiclemodel.class.php";
 
 class SeatPicker extends Model {
 	public $vehicle_id;
@@ -16,7 +17,7 @@ class SeatPicker extends Model {
 
 	private $tbl = 'boarding_vehicle';
 
-	function __construct($route_id, $travel_date, $num_of_seats, $vehicle_id, $fare, $trip_id)
+	function __construct($route_id, $travel_date, $num_of_seats, $vehicle_id, $fare, $trip_id, $departure_order = 0)
 	{
 		parent::__construct();
 
@@ -25,6 +26,7 @@ class SeatPicker extends Model {
 		$this->vehicle_id = $vehicle_id;
 		$this->fare = $fare;
 		$this->trip_id = $trip_id;
+		$this->route_id = $route_id;
 	}
 
 
@@ -67,14 +69,22 @@ class SeatPicker extends Model {
 			$this->booked_seats = explode(',', $vehicle->booked_seats);
 			$this->seat_status =  $vehicle->seat_status;
 		} else {
-			$this->boarding_vehicle_id = $this->insertVehicleForBoarding();
+			//$this->boarding_vehicle_id = $this->insertVehicleForBoarding();
+			$this->boarding_vehicle_id = $this->setDailyTrips();
 			$this->booked_seats = array();
 			$this->seat_status = 'Not full';
 		}
 	}
 
 
-	private function insertVehicleForBoarding()
+	public function setDailyTrips()
+	{
+		$vehicle = new VehicleModel();
+		$vehicle->fixBoardingVehicles($this->vehicle_id, $this->route_id, $this->travel_date);
+	}
+
+
+	/*private function insertVehicleForBoarding()
 	{
 		// add vehicle for boarding
 		$sql = "INSERT INTO {$this->tbl}
@@ -89,7 +99,7 @@ class SeatPicker extends Model {
 
 		if (self::$db->query($sql, $param))
 			return self::$db->getLastInsertId();
-	}
+	}*/
 
 
 	/**

@@ -38,12 +38,19 @@
                 </a>
             </li>
 
-            <!--<li>
+            <li>
+                <a href="manage_trips.php">
+                    <i class="fa fa-road"></i>
+                    <span>Manage Trips</span>
+                </a>
+            </li>
+
+            <li>
                 <a href="manage_fares.php">
                     <i class="fa fa-money"></i>
                     <span>Manage Fares</span>
                 </a>
-            </li>-->
+            </li>
 
             <li>
                 <a href="bookings.php">
@@ -57,19 +64,19 @@
                     <i class="fa fa-bus"></i>
                     <span>Bus Hire</span>
                 </a>
-            </li>
-
-            <li>
-                <a href="travel-vehicles.php">
-                    <i class="fa fa-bus"></i>
-                    <span>Manage Vehicles</span>
-                </a>
             </li>-->
 
             <li>
                 <a href="view_reports.php">
                     <i class="fa fa-book"></i>
                     <span>Reports</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="users.php">
+                    <i class="fa fa-group"></i>
+                    <span>Manage Users</span>
                 </a>
             </li>
 

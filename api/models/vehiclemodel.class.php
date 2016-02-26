@@ -1,26 +1,21 @@
 <?php
 require_once "model.class.php";
+require_once "trip.class.php";
 
 class VehicleModel extends Model {
+	private $trip = null;
 
 	function __construct()
 	{
 		parent::__construct();
+
+		$this->trip = new Trip();
 	}
 
 
 	function findVehicles($route_id)
 	{
-		$sql = "SELECT tr.id trip_id, vt.id vehicle_type_id, num_of_seats, name, fare, amenities, departure_time, company_name, po.park origin_park, pd.park destination_park, travel_id FROM trips tr
-				JOIN vehicle_types vt ON tr.vehicle_type_id = vt.id
-				JOIN park_map pm ON tr.park_map_id = pm.id
-				JOIN parks po ON pm.origin = po.id
-				JOIN parks pd ON pm.destination = pd.id
-				JOIN travels t ON tr.travel_id = t.id
-				WHERE tr.route_id = :route_id AND fare > 0 ";
-
-		self::$db->query($sql, array('route_id' => $route_id));
-		return self::$db->fetchAll();
+		return $this->trip->getTripsByRoute($route_id);
 	}
 
 
@@ -48,6 +43,49 @@ class VehicleModel extends Model {
 		);
 		if (self::$db->query($sql, $param)) {
 			return true;
+		}
+	}
+
+
+	public function findBoardingVehicle($travel_id, $vehicle_type_id, $route_id, $departure_order, $travel_date)
+	{
+		$query = "";
+		if (is_numeric($departure_order)) {
+			$query = "AND departure = '$departure_order'";
+		}
+		$sql = "SELECT tr.id trip_id, tr.fare FROM trips tr
+				WHERE travel_id = :travel_id AND vehicle_type_id = :vehicle_type AND route_id = :route_id $query
+				ORDER BY departure DESC LIMIT 0, 1";
+
+		$param = array(
+			'travel_id' => $travel_id,
+			'vehicle_type' => $vehicle_type_id,
+			'route_id' => $route_id
+		);
+		self::$db->query($sql, $param);
+		if ($vehicle = self::$db->fetch('obj')) {
+			return $vehicle;
+		} else {
+			return false; // no boarding vehicle
+		}
+	}
+
+
+	public function fixBoardingVehicles($vehicle_type_id, $route_id, $travel_date)
+	{
+		$vehicles = $this->trip->getDailyTrips($vehicle_type_id, $route_id);
+
+		//$sql = "SELECT id FROM boarding_vehicles WHERE travel_date"
+		$sql = "INSERT INTO boarding_vehicle (trip_id, fare, departure_order, travel_date) VALUES (:trip_id, :fare, :departure_order, :travel_date)";
+		self::$db->prepare($sql);
+		foreach ($vehicles AS $vehicle) {
+			$param = array(
+				'trip_id' => $vehicle->trip_id,
+				'fare' => $vehicle->fare,
+				'departure_order' => $vehicle->departure,
+				'travel_date' => $travel_date
+			);
+			self::$db->execute($param);
 		}
 	}
 

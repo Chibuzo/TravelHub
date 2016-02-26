@@ -102,11 +102,6 @@ select {
 	font-weight: 700;;
 }
 
-
-.travel div {
-	font-weight: 700;
-}
-
 .travel span {
 	padding-left: 15px;
 }
@@ -130,7 +125,7 @@ select {
 
 .departure-time {
 	padding-top: 5px;
-	font-weight: 700;
+	font-weight: 400;
 }
 
 .display-seats {
@@ -237,11 +232,11 @@ select {
 				$btn = "<a class='display-seats btn btn-default btn-fill pull-right btn-sm' href='details.php' data-fare='{$fare}' data-route_id='$route_id' data-travel_date='{$travel_date}' data-num_of_seats='{$info['num_of_seats']}' data-trip_id='{$info['trip_id']}' data-vehicle_type_id='{$info['vehicle_type_id']}'><span class='fa fa-list'></span> Pick a seat</a>";
 
 				$html .= "<div class='vehicle col-md-12 row' data-vehicle-type-id='{$info['vehicle_type_id']}'>
-							<div class='col-md-4 travel'>
-								<div><i class='fa fa-bus fa_c'></i>&nbsp{$info['company_name']}</div>
+							<div class='col-md-4'>
+								<div class='bold'><i class='fa fa-bus fa_c'></i>&nbsp{$info['company_name']}</div>
 								<span>{$info['name']}: {$info['num_of_seats']} - Seater</span><br />
-								<div class='departure-time'><i class='fa fa-clock-o fa_c'></i>&nbsp;Departure time</div>
-								<span>{$info['departure_time']}</span>
+								<div class='departure-time'><i class='fa fa-clock-o fa_c'></i>&nbsp;{$info['departure_time']}</div>
+								<span></span>
 							</div>
 
 							<div class='col-md-3 amenities'>
