@@ -143,10 +143,10 @@ if (isset($_REQUEST['op'])) {
         $end_date =  date('Y-m-d', strtotime($_POST['end_date']));
         $mode = $_POST['mode'];
         $type = $_POST['type'];
-        $park_id = $_SESSION['state_id'];
+        $state_id = $_SESSION['state_id'];
         $reports = array();
         if ($type == "bookings") {
-            $reports = $report_model->stateGetBooking($park_id, $mode, $start_date, $end_date);
+            $reports = $report_model->stateGetBooking($_SESSION['travel_id'], $state_id, $mode, $start_date, $end_date);
         }
 
         echo json_encode($reports);
@@ -162,7 +162,7 @@ if (isset($_REQUEST['op'])) {
         $park_id = $_SESSION['park_id'];
         $reports = array();
         if ($type == "bookings") {
-            $reports = $report_model->stateGetBooking($park_id, $mode, $start_date, $end_date);
+            $reports = $report_model->parkGetBooking($_SESSION['travel_id'], $park_id, $mode, $start_date, $end_date);
         }
 
         echo json_encode($reports);

@@ -201,7 +201,7 @@ $(function () {
 
 
   /* BOX REFRESH PLUGIN EXAMPLE (usage with morris charts) */
-  $("#loading-example").boxRefresh({
+  /*$("#loading-example").boxRefresh({
     source: "ajax/dashboard-boxrefresh-demo.php",
     onLoadDone: function (box) {
       bar = new Morris.Bar({
@@ -223,7 +223,7 @@ $(function () {
         hideHover: 'auto'
       });
     }
-  });
+  });*/
 
   /* The todo list plugin */
   $(".todo-list").todolist({

@@ -2,6 +2,7 @@
 require "includes/head.php";
 require "includes/side-bar.php";
 require_once "../../api/models/bookingmodel.class.php";
+require_once "../../api/models/reportmodel.class.php";
 
 if (!isset($_SESSION['user_id'])) header("Location: index.php");
 
@@ -25,6 +26,11 @@ $routes = $result['num'];
 $stmt = $db->query("SELECT COUNT(*) num FROM vehicle_types");
 $result = $stmt->fetch();
 $bustypes = $result['num'];
+
+// data for chart
+$report_model = new Report();
+$reports = $report_model->adminGetBooking("MONTH", date('Y-01-01'), date('Y-m-d'));
+$chart_data = json_encode($reports, true);
 
 $booking = new BookingModel();
 ?>
@@ -144,7 +150,7 @@ $booking = new BookingModel();
 			<div class="col-md-5">
                 <div class="box box-info">
                     <div class="box-header">
-                        <h3 class="box-title">Line Chart</h3>
+                        <h3 class="box-title">Bookings</h3>
                     </div>
                     <div class="box-body chart-responsive">
                         <div class="chart" id="line-chart" style="height: 300px;"></div>
@@ -195,7 +201,7 @@ $booking = new BookingModel();
     <script src="../dist/js/app.min.js" type="text/javascript"></script>
 
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-    <script src="../dist/js/pages/dashboard.js" type="text/javascript"></script>
+    <!--<script src="../dist/js/pages/dashboard.js" type="text/javascript"></script>-->
 
     <!-- AdminLTE for demo purposes -->
     <script src="../dist/js/demo.js" type="text/javascript"></script>
@@ -207,23 +213,11 @@ $booking = new BookingModel();
             var line = new Morris.Line({
                 element: "line-chart",
                 resize: true,
-                data: [
-                    {y: '2011 Q1', item1: 2666},
-                    {y: '2011 Q2', item1: 2778},
-                    {y: '2011 Q3', item1: 4912},
-                    {y: '2011 Q4', item1: 3767},
-                    {y: '2012 Q1', item1: 6810},
-                    {y: '2012 Q2', item1: 5670},
-                    {y: '2012 Q3', item1: 4820},
-                    {y: '2012 Q4', item1: 15073},
-                    {y: '2013 Q1', item1: 10687},
-                    {y: '2013 Q2', item1: 8432}
-                ],
-                xkey: 'y',
-                ykeys: ['item1'],
-                labels: ['Item 1'],
-                lineColors: ['#3c8dbc'],
-                hideHover: 'auto'
+                data: <?php echo $chart_data; ?>,
+                xkey: 'sort',
+                ykeys: ['numb'],
+                labels: ['value'],
+                parseTime: false
             });
         });
     </script>
