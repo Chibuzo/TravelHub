@@ -1,10 +1,11 @@
 .seat_arrangement {
+	display: block;
 	font:normal 12px 'Open Sans', Tahoma;
 	color:#999;
 	padding:10px;
 	border:#ccc solid thin;
 	border-radius:1px;
-	margin: auto;
+	margin: 15px auto;
 	/*position:absolute;*/
 }
 
@@ -132,13 +133,89 @@
 .sienna {
 	width: 420px;
 	height: 200px;
-	overflow: auto;
+	overflow: hidden;
 }
 
 .sienna .steering {
 	height:62px;
 }
 
+.sienna .push-seat {
+	margin-top: 20px !important;
+}
+
+.sienna .seat_wrap {
+	margin-top: 27px;
+	margin-left: 90px;
+	padding: 2px 13px !important;
+}
+
+.sienna .seat-details {
+	margin-top: 30px;
+}
+
+.sienna .continue-btn {
+	margin-top: 1px;
+}
+
 .seat_arrangement .glyphicon-remove {
 	cursor: pointer;
+}
+
+
+@media screen and (min-width: 320px) and (max-width: 600px) {
+
+	.seat_arrangement {
+		color: #666;
+	}
+
+	.seat-tips {
+		margin-top: -4px;
+	}
+
+	.seat-tips ul {
+		list-style-type: none;
+		margin-left: -50px;
+	}
+
+	.seat-tips ul li {
+		float: left;
+		margin-left: 15px;
+		line-height: 21px;
+	}
+
+	.seat_wrap {
+		margin-top: 12px;
+	}
+
+	.continue-btn {
+		top: 10px;
+		position: relative;
+		left: 0px;
+	}
+
+	.seat_arrangement .glyphicon-remove {
+		display: none;
+	}
+
+	 /*sienna*/
+	.sienna .continue-btn {
+		margin-right: 60px;
+	}
+
+	.sienna .seat_wrap {
+		margin-top: 23px;
+	}
+
+	.mini-bus .seat-details, .sienna .seat-details {
+		clear: both;
+		width: 110px;
+		float: left;
+		text-align: left;
+		margin-top: 10px
+	}
+
+	.mini-bus .continue-btn {
+		margin-right: 60px;
+	}
 }

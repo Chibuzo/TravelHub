@@ -1,6 +1,6 @@
 <?php
 require_once "includes/banner.php";
-require_once "includes/db_handle.php";
+//require_once "includes/db_handle.php";
 require "api/models/routemodel.class.php";
 
 $route = new RouteModel();
@@ -75,7 +75,7 @@ h1 {
 
 #services {
 	text-align: center;
-	margin-top: 40px;
+	margin-top: 50px;
 }
 
 #services .row div {
@@ -104,24 +104,34 @@ h1 {
 	box-shadow: 4px 0px 5px -4px #ccc;
 }
 
+.operators {
+	background: #2f353e;
+	margin-top: 50px;
+	padding: 10px;
+}
+
+.operators h3 {
+	color: #999;
+	margin-bottom: 6px;
+}
+
 
 @media screen and (min-width: 200px) and (max-width: 600px) {
-	#bussearch {
-		width: auto;
-		margin: auto !important;
-		top: 0px !important;
-		padding: 5px;
+	#bus_search h1 {
+		font-size: 28px;
+	}
+
+	#services .row div {
+		padding: 10px 5px;
+		font-weight: 300;
+		font-size:15px;
+		line-height: 22px;
 	}
 }
 
 /* TABLETS PORTRAIT */
 @media screen and (min-width: 600px) and (max-width: 768px) {
-	#bussearch {
-		width: auto;
-		margin: auto !important;
-		top: 0px !important;
-		padding: 5px;
-	}
+
 }
 
 
@@ -222,6 +232,28 @@ h1 {
 				TravelHub has a caring and friendly crew that are willing to receive your calls and answer all your questions concerning
 				intra-city travels in Nigeria. We can also help you make reservations without any service charge.
 			</div>
+		</div>
+	</div>
+</div>
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-5 th-desktop"></div>
+		<div class="col-md-5 col-xs-12 text-right"><br>
+			<h3 class="text-right">Call us: (0700) XXXX XXX</h3>
+		</div>
+		<div class="col-md-2 th-desktop text-right">
+			<img src="images/callus.jpg"  style="width: 80%" />
+		</div>
+	</div>
+</div>
+
+<div class="container-fluid operators">
+	<div class="container">
+		<div class="row">
+			<h3>Available operators</h3><br>
+			<button class="btn btn-default">Coming soon...</button>
+			<br><br>
 		</div>
 	</div>
 </div>

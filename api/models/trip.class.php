@@ -37,14 +37,15 @@ class Trip extends Model
 
 
     /* for ticketing office */
-    public function getDailyTrips($vehicle_type_id, $route_id)
+    public function getDailyTrips($vehicle_type_id, $park_map_id, $travel_id)
     {
-        $sql = "SELECT id trip_id, fare, departure FROM trips
-				WHERE vehicle_type_id = :vehicle_type AND route_id = :route_id";
+        $sql = "SELECT id trip_id, fare, park_map_id, travel_id, departure FROM trips
+				WHERE vehicle_type_id = :vehicle_type AND park_map_id = :park_map_id AND travel_id = :travel_id";
 
         $param = array(
             'vehicle_type' => $vehicle_type_id,
-            'route_id' => $route_id
+            'park_map_id' => $park_map_id,
+            'travel_id' => $travel_id
         );
 
         self::$db->query($sql, $param);
@@ -65,7 +66,7 @@ class Trip extends Model
 
     public function getTripsByRoute($route_id)
     {
-        $sql = "SELECT tr.id trip_id, vt.id vehicle_type_id, num_of_seats, name, fare, amenities, departure_time, company_name, po.park origin_park, pd.park destination_park, travel_id FROM trips tr
+        $sql = "SELECT tr.id trip_id, vt.id vehicle_type_id, num_of_seats, name, fare, amenities, departure_time, departure, company_name, po.park origin_park, pd.park destination_park, tr.travel_id, tr.park_map_id FROM trips tr
 				JOIN vehicle_types vt ON tr.vehicle_type_id = vt.id
 				JOIN park_map pm ON tr.park_map_id = pm.id
 				JOIN parks po ON pm.origin = po.id

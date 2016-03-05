@@ -10,11 +10,19 @@ class BookingModel extends Model {
 	}
 
 
+	public function getTicketRefNo($ticket_id)
+	{
+		$sql = "SELECT ticket_no FROM booking_details WHERE id = :ticket_id";
+		self::$db->query($sql, array('ticket_id' => $ticket_id));
+		return self::$db->fetch('obj');
+	}
+
+
 	function reserveSeat($boarding_vehicle_id, $seat_no) {
 		// get the booked seats
 		$sql = "SELECT booked_seats, num_of_seats FROM boarding_vehicle bv
 				JOIN trips t ON bv.trip_id = t.id
-				JOIN vehicle_types vt ON t.vehicle_type = vt.id
+				JOIN vehicle_types vt ON t.vehicle_type_id = vt.id
 				WHERE bv.id = :id";
 
 		self::$db->query($sql, array('id' => $boarding_vehicle_id));
@@ -26,7 +34,7 @@ class BookingModel extends Model {
 			/*** Make sure no seat number repeats itself, and that the selected seat ($seat_no) has not already been booked ***/
 			$booked_seats = array_unique($booked_seats);
 			if (in_array($seat_no, $booked_seats)) {
-				return "02"; // Error code 02 - Seat number no longer available;
+				throw new Exception("Seat $seat_no is no longer available.", "02");
 			}
 
 			# If there is any empty seat/array, remove it
@@ -86,9 +94,10 @@ class BookingModel extends Model {
 
 			$_SESSION['ticket_id'] = $bd_id;
 
-			return '{"msg" : "' . $bd_id . '"}';
+			//return $bd_id;
+			return true;
 		} else {
-			return '{"msg" : "03"}'; // Booking wasn't successful
+			return "03"; // Booking wasn't successful
 		}
 	}
 

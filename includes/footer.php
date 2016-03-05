@@ -17,7 +17,7 @@
 
 			</div>
 
-			<div class="col-md-6 text-right">
+			<div class="col-md-6">
 				<div class="">
 					<ul class="footer-nav pull-right">
 						<li><a href='#'>FAQ</a></li>
@@ -28,10 +28,10 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-12 text-right socials">
-				<a href="#"><i class="fa fa-facebook fa-lg"></i></a>
+			<div class="col-md-12 socials">
+				<a href="https://www.facebook.com/travelhubb/"><i class="fa fa-facebook fa-lg"></i></a>
 				<a href="#"><i class="fa fa-twitter fa-lg"></i></a>
-				<a href="#"><i class="fa fa-instagram fa-lg"></i></a>
+				<a href="https://www.instagram.com/travelhub.ng/"><i class="fa fa-instagram fa-lg"></i></a>
 			</div>
 		</div>
 	</div>

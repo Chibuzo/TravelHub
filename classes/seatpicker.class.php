@@ -3,30 +3,36 @@ require_once "../api/models/model.class.php";
 require_once "../api/models/vehiclemodel.class.php";
 
 class SeatPicker extends Model {
-	public $vehicle_id;
+	public $vehicle_type_id;
 	public $fare;
 	public $trip_id;
 	public $travel_date;
-	public $route_id;
+	//public $route_id;
+	public $park_map_id;
+	public $travel_id;
 	public $num_of_seats;
-	public $boarding_vehicle_id = null;
+	public $boarding_vehicle_type_id = null;
 	public $booked_seats;
 	public $seat_status;
+	public $departure_order = 0;
 	public $departure_time = '';
 	//public $departure_order = 1;
 
 	private $tbl = 'boarding_vehicle';
 
-	function __construct($route_id, $travel_date, $num_of_seats, $vehicle_id, $fare, $trip_id, $departure_order = 0)
+	function __construct($park_map_id, $travel_date, $num_of_seats, $vehicle_type_id, $fare, $trip_id, $travel_id, $departure_order = 0)
 	{
 		parent::__construct();
 
 		$this->travel_date = $travel_date;
 		$this->num_of_seats = $num_of_seats;
-		$this->vehicle_id = $vehicle_id;
+		$this->vehicle_type_id = $vehicle_type_id;
 		$this->fare = $fare;
 		$this->trip_id = $trip_id;
-		$this->route_id = $route_id;
+		//$this->route_id = $route_id;
+		$this->park_map_id = $park_map_id;
+		$this->travel_id = $travel_id;
+		$this->departure_order = $departure_order;
 	}
 
 
@@ -52,7 +58,7 @@ class SeatPicker extends Model {
 	}
 
 
-	function getBoardingVehicleDetails()
+	function findBoardingVehicle()
 	{
 		$sql = "SELECT id, booked_seats, seat_status FROM {$this->tbl}
 				WHERE trip_id = :trip_id
@@ -65,41 +71,30 @@ class SeatPicker extends Model {
 
 		self::$db->query($sql, $param);
 		if ($vehicle = self::$db->fetch('obj')) {
-			$this->boarding_vehicle_id = $vehicle->id;
-			$this->booked_seats = explode(',', $vehicle->booked_seats);
-			$this->seat_status =  $vehicle->seat_status;
+			return $vehicle;
 		} else {
-			//$this->boarding_vehicle_id = $this->insertVehicleForBoarding();
-			$this->boarding_vehicle_id = $this->setDailyTrips();
-			$this->booked_seats = array();
-			$this->seat_status = 'Not full';
+			return false;
 		}
 	}
 
 
-	public function setDailyTrips()
+	function getBoardingVehicleDetails()
 	{
-		$vehicle = new VehicleModel();
-		$vehicle->fixBoardingVehicles($this->vehicle_id, $this->route_id, $this->travel_date);
+		$data = $this->findBoardingVehicle();
+		if ($data != false) {
+			$this->boarding_vehicle_id = $data->id;
+			$this->booked_seats = explode(',', $data->booked_seats);
+			$this->seat_status =  $data->seat_status;
+		} else {
+			$vehicle = new VehicleModel();
+			$vehicle->fixBoardingVehicles($this->vehicle_type_id, $this->park_map_id, $this->travel_date, $this->travel_id);
+			$data = $this->findBoardingVehicle();
+
+			$this->booked_seats = array();
+			$this->boarding_vehicle_id = $data->id;
+			$this->seat_status = 'Not full';
+		}
 	}
-
-
-	/*private function insertVehicleForBoarding()
-	{
-		// add vehicle for boarding
-		$sql = "INSERT INTO {$this->tbl}
-					(trip_id, travel_date)
-				VALUES
-					(:trip_id, :travel_date)";
-
-		$param = array(
-			'trip_id' => $this->trip_id,
-			'travel_date' => $this->travel_date
-		);
-
-		if (self::$db->query($sql, $param))
-			return self::$db->getLastInsertId();
-	}*/
 
 
 	/**
@@ -192,7 +187,7 @@ class SeatPicker extends Model {
 		$counter = 0; $counter2 = 0;
 
 		$seat_arrangement = "<div class='seat_arrangement' style='width:{$width}' data-fare='{$this->fare}' data-route_id='$this->route_id'
-		data-num_of_seats='{$this->num_of_seats}' data-boarding_vehicle_id='$this->boarding_vehicle_id' data-travel_date='{$this->travel_date}'>
+		data-num_of_seats='{$this->num_of_seats}' data-boarding_vehicle_type_id='$this->boarding_vehicle_type_id' data-travel_date='{$this->travel_date}'>
 		<span class='glyphicon glyphicon-remove pull-right'></span>
 		<p>Click on an available seat to select it. Click again to de-select it.</p>
 		<div class='seat_wrap' style='margin-left:30px; display:inline'>
@@ -207,7 +202,7 @@ class SeatPicker extends Model {
 				if ($i % 2 == 1) $seat = $i + 1;
 				else $seat = $i - 1;
 				if (in_array($seat, $this->booked_seats)) $class = "class='booked_seat'";
-				$seat_arrangement .= "\t<div {$class} data-vehicle_id='{$this->vehicle_id}' data-hidden='no' title='Seat {$seat}' id='{$seat}'></div>";
+				$seat_arrangement .= "\t<div {$class} data-vehicle_type_id='{$this->vehicle_type_id}' data-hidden='no' title='Seat {$seat}' id='{$seat}'></div>";
 				++$counter;
 				if ($counter == 2) $seat_arrangement .= "</div>"; // Close cols
 				if ($i != $this->num_of_seats) { continue; }
@@ -229,7 +224,7 @@ class SeatPicker extends Model {
 				//if ($this->num_of_seats == 59 && $seat == 60) $seat = 59;		// Fixes a bug that makes the last seat 60 instead of 59 due to the rearrangement
 				if ($counter == 0) $seat_arrangement .= "<div class='cols'>";
 				if (in_array($seat, $this->booked_seats)) $class = "class='booked_seat'";
-				$seat_arrangement .= "\t<div {$class} data-vehicle_id='{$this->vehicle_id}' data-hidden='no' title='Seat {$seat}' id='{$seat}'></div>";
+				$seat_arrangement .= "\t<div {$class} data-vehicle_type_id='{$this->vehicle_type_id}' data-hidden='no' title='Seat {$seat}' id='{$seat}'></div>";
 				++$counter;
 				if ($counter == 2) {
 					// Close cols
@@ -247,10 +242,17 @@ class SeatPicker extends Model {
 
 	private function upperSittingDetails($vehicle_type)
 	{
-		return "<div class='seat_arrangement $vehicle_type' data-fare='{$this->fare}' data-route_id='{$this->route_id}' data-trip_id='{$this->trip_id}'
-		data-boarding_vehicle_id='{$this->boarding_vehicle_id}' data-vehicle_id='{$this->vehicle_id}' data-travel_date='{$this->travel_date}'>
+		return "<div class='seat_arrangement $vehicle_type' data-fare='{$this->fare}' data-park_map_id='{$this->park_map_id}' data-trip_id='{$this->trip_id}'
+		data-boarding_vehicle_id='{$this->boarding_vehicle_id}' data-vehicle_type_id='{$this->vehicle_type_id}' data-travel_date='{$this->travel_date}'>
 		<span class='glyphicon glyphicon-remove pull-right'></span>
 		<div>Click on an available seat to select it. Click again to de-select it.</div>
+		<div class='th-mobile seat-tips'>\n
+			<ul>\n
+				\t<li class='available_seat'>Available Seat</li>\n
+				\t<li class='selected_seat'>Selected Seat</li>\n
+				\t<li class='booked-seat'>Booked Seat</li>\n
+			</ul>\n
+		</div>
 		<div class='seat_wrap'>
 			<div class='cols steering'></div>";
 	}
@@ -258,7 +260,7 @@ class SeatPicker extends Model {
 
 	private function lowerSittingDetails()
 	{
-		return "\n<div id='seat_tips'>\n<ul>\n
+		return "\n<div id='seat_tips' class='th-desktop'>\n<ul>\n
 		\t<p><li class='available_seat'>Available Seat</li></p>\n
 		\t<p><li class='selected_seat'>Selected Seat</li></p>\n
 		\t<p><li class='booked-seat'>Booked Seat</li></p>\n
@@ -268,9 +270,9 @@ class SeatPicker extends Model {
 			Fare: <span class='show_fare red'></span>
 		</span>
 
-		<div class='continue-btn pull-right hdden'>
-			<a href='' class='continue btn btn-default btn-fill btn-sm pull-right'>Continue&nbsp;<i class='fa fa-angle-double-right'></i></a>
-		</div></div>";
+		<span class='continue-btn pull-right'>
+			<button class='continue btn btn-primary btn-fill btn-sm pull-right'>Continue&nbsp;<i class='fa fa-angle-double-right'></i></button>
+		</span></div>";
 	}
 }
 ?>

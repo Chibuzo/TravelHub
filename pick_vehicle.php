@@ -48,14 +48,12 @@ require_once "includes/banner.php";
 <style>
 .vehicles {
 	padding: 10px;
-	marginbottom: 120px;
 }
 
 .vehicle {
 	cursor: pointer;
 	padding: 7px 0px;
 	margin: 1px 0;
-	/*background: #f3f3f3;*/
 	font-size: 13px;
 	border-top: #e7e7e7 solid thin;
 }
@@ -106,17 +104,16 @@ select {
 	padding-left: 15px;
 }
 
-.parks {
+.paks {
 	font: 400 12px 'Open Sans', san-seriff;
 }
 
 .parks div {
 	width: 60%;
 	font-weight: 700;
-	padding-bottom: 4px;
-	margin-bottom: 4px;
-	margin-left: -13px;
-	border-bottom: #999 dashed thin
+	/*padding-bottom: 4px;
+	margin-bottom: 4px;*/
+	margin-left: -3px;
 }
 
 .parks span {
@@ -133,47 +130,54 @@ select {
 }
 
 .show-seat {
-	border-top-color: #ff000;
-	display: block;
-	border: #fff solid thin;
+	clear: both !important;
+	overflow-y: hidden !important;
 }
 
 .fare {
 	clear: both;
-	color: #ff3b30;
-	font-weight: 400;
+	/*color: #ff3b30;*/
+	color: #cc0000;
+	font-weight: 400 !important;
 	float:right;
 	margin-top: 6px;
 	margin-right: 15px;
 	font-size: 15px;
 }
 
+
 #btn-filter { display: none; padding-top: 8px; }
 
 @media screen and (min-width: 200px) and (max-width: 600px) {
+	
 	#btn-filter { display: block; }
+
+	.vehicles {
+		padding: 10px 0px;
+		position: relative;
+		overflow-x: auto;
+	}
+
+	.vehicle {
+		font-size: 11px;
+	}
 
 	#find-bus { display: none; }
 
-	.seat_arrangement {
-		-webkit-transform: rotate(90deg);
-		-moz-transform: rotate(90deg);
-		-o-transform: rotate(90deg);
-		-ms-transform: rotate(90deg);
-		transform: rotate(90deg);
+	.show-seat {
+		overflow-y: hidden;
 	}
 }
 
 </style>
 <link rel="stylesheet" type="text/css" href='css/seats.css' />
-<div class='container'><br />
+<div class='container'>
 	<div class="row">
-		<div class="text-info col-md-5">
-			<br />
+		<div class="textinfo col-md-5">
 			<?php echo "{$origin} - {$destination} | " . date('D, d M Y', strtotime($travel_date)); ?>
 		</div>
 
-		<div class="col-md-6" id="btn-filter"><button class="btn btn-danger btn-block" id="btn_filter">Change search info</button></div>
+		<div class="col-md-6" id="btn-filter"><button class="btn btn-primary btn-block" id="btn_filter">Change search info</button></div>
 		<div class="col-md-7 text-right" id="find-bus" style="padding-top: 15px">
 			<form action="pick_vehicle.php" method="post" role="form">
 				<div class="row">
@@ -229,44 +233,61 @@ select {
 			foreach ($vehicles AS $info) {
 				$fare = $info['fare'];
 
-				$btn = "<a class='display-seats btn btn-default btn-fill pull-right btn-sm' href='details.php' data-fare='{$fare}' data-route_id='$route_id' data-travel_date='{$travel_date}' data-num_of_seats='{$info['num_of_seats']}' data-trip_id='{$info['trip_id']}' data-vehicle_type_id='{$info['vehicle_type_id']}'><span class='fa fa-list'></span> Pick a seat</a>";
+				$btn = "<button class='display-seats btn btn-primary btn-fill pull-right btn-sm' data-fare='{$fare}' data-departure_order='{$info['departure']}' data-park_map_id='{$info['park_map_id']}' data-travel_date='{$travel_date}' data-num_of_seats='{$info['num_of_seats']}' data-trip_id='{$info['trip_id']}' data-travel_id='{$info['travel_id']}' data-vehicle_type_id='{$info['vehicle_type_id']}'><span class='fa fa-list'></span> Pick a seat</button>";
 
 				$html .= "<div class='vehicle col-md-12 row' data-vehicle-type-id='{$info['vehicle_type_id']}'>
-							<div class='col-md-4'>
+							<div class='col-md-4 col-xs-6'>
 								<div class='bold'><i class='fa fa-bus fa_c'></i>&nbsp{$info['company_name']}</div>
 								<span>{$info['name']}: {$info['num_of_seats']} - Seater</span><br />
+								<span class='th-mobile'>" . implode(", ", explode(">", $info['amenities'])) . "</span>
 								<div class='departure-time'><i class='fa fa-clock-o fa_c'></i>&nbsp;{$info['departure_time']}</div>
 								<span></span>
 							</div>
 
-							<div class='col-md-3 amenities'>
+							<div class='col-md-3 col-xs-6 amenities th-desktop'><br>
 								<div class='bold'>Amenities</div>
 								<span>" . implode(", ", explode(">", $info['amenities'])) . "</span>
 							</div>
 
-							<div class='col-md-3 parks'>
-								<div><i class='fa fa-map-marker fa_c'></i>&nbsp; TERMINALS:</div>
-								<span>Leaves from:&nbsp;</span>{$info['origin_park']}
-								<br><span>Stops at:&nbsp;</span>{$info['destination_park']}
+							<div class='col-md-3 parks th-desktop'><br>
+								<i class='fa fa-map-marker fa_c'></i>&nbsp; {$info['origin_park']} - {$info['destination_park']}
 							</div>
 
-							<div class='col-md-2' text-right'>
+							<div class='col-md-2 text-right th-desktop'>
 								$btn<br>
 								<div class='fare'>₦" . number_format($fare) . " </div>
 							</div>
+
+							<div class='col-xs-6 parks th-mobile text-right'><br>
+								<i class='fa fa-map-marker fa_c'></i>&nbsp; {$info['origin_park']} - {$info['destination_park']}<br>
+								<div class='fare'>₦" . number_format($fare) . " </div>
+							</div>
 					</div>
-					<div data-vehicle_type_id='{$info['vehicle_type_id']}' class='show-seat clearfix' id='show-seat_{$info['trip_id']}'></div>";
+					<div data-vehicle_type_id='{$info['vehicle_type_id']}' class='show-seat nice clearfix' id='show-seat_{$info['trip_id']}'></div>";
 				++$n;
 			}
+		if ($n > 0) {
 			echo $html;
+		} else {
+			echo "<br><div class='alert alert-info'><i class='fa fa-exclamation-circle fa-lg'></i> &nbsp;Sorry!!! No vehicle was found for the selected route.</div>";
+		}
+
 		?>
 	</div>
 	<div class='hidden' id='picked_seat'></div>
 </div>
 <div class="clearfix"></div>
 <?php require_once "includes/footer.php"; ?>
+<script type="text/javascript" src="js/plugins/jquery.nicescroll.min.js"></script>
 <script>
 $(document).ready(function() {
+
+	$(".nice").niceScroll({
+		cursorcolor: "#ddd",
+		autohidemode: false,
+		cursorwidth: "10px"
+	});
+
 	var destination_ids = [<?php echo $str_destination_ids; ?>];
 	var destinations = ['<?php echo $str_destinations; ?>'];
 	var destination = [];

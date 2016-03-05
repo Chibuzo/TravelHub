@@ -12,8 +12,8 @@ body {
 header {
 	position: relative;
 	z-index: 3;
-	/*background-color:#e0e0e0;*/
-	background-color: #fff;
+	background-color:#2f353e;
+	/*height: 50px;*/
 }
 
 #logo-div {
@@ -27,21 +27,26 @@ header {
 }
 
 .navbar-brand {
-	margin-top: 10px !important;
-	font: bold 26px Sans-serif !important;
+	margin-top: 0px !important;
+	font: bold 31px 'Verdana', Sans-serif !important;
+	color: #ccc !important;
 }
 
 
 .navbar {
 	border: none;
-	background: none;
+	/*background: none;*/
+}
+
+.navbar-default {
+	background-color:#2f353e !important;
 }
 
 .nav-links { float: right; }
 
 ul.nav li a {
 	font: 300 18px "Open Sans", sans-serif;
-	/*color: #e43725 !important;*/
+	color: #ccc !important;
 	margin-top: 19px;
 }
 
@@ -57,6 +62,10 @@ h1, h2, h3 {
 	font-weight: 300;
 	margin-top: 8px;
 	margin-bottom: 2px;
+}
+
+a:link, a:visited {
+	color: #666;
 }
 
 .alert {
@@ -107,6 +116,14 @@ h1, h2, h3 {
   margin-top: 5px;
 }
 
+.th-mobile {
+	display: none;
+}
+
+.th-desktop {
+	display: block;
+}
+
 .transparent {
 	position:relative;
 	-moz-opacity:0.5 !important;
@@ -121,15 +138,16 @@ footer {
 	color: #666;
 	bottom: 0;
 	width: 100%;
-	/*background: #f0f0f0;*/
+	height: 151px;
+    background-image:url('../images/bg.png'); background-repeat: repeat;
 	padding: 15px 0;
 	/*background: #333;*/
 	font-size: 13px;
 }
 
 footer .container {
-	border-top: #c0c0c0 solid thin;
-	padding-top: 14px;
+	/*border-top: #c0c0c0 solid thin;*/
+	padding-top: 25px;
 }
 
 .footer-nav {
@@ -145,6 +163,7 @@ footer .container {
 
 footer .socials {
 	margin-top: 7px;
+	text-align: right;
 }
 
 footer .socials .fa {
@@ -154,6 +173,9 @@ footer .socials .fa {
 
 
 @media screen and (min-width: 320px) and (max-width: 600px) {
+	body {
+		font-size: 11px !important;
+	}
 
 	#logo {
 		position: relative;
@@ -161,15 +183,27 @@ footer .socials .fa {
 		z-index: -1;
 	}
 
-	/*.container { padding: 3px; }*/
-
-	.nav-links {
-		float: left;
+	.th-mobile {
+		display: block;
 	}
 
-	.navbar-header { height: 50px !important }
+	.th-desktop {
+		display: none;
+	}
 
-	.navbar-collapse { margin-top: 38px; border: none; }
+	.nav-links {
+		float: left !important;
+	}
+
+	.navbar-collapse {
+		border: none;
+		float: left;
+		text-align: left;
+	}
+
+	footer .socials {
+		text-align: center;
+	}
 
 	h1 { font-size: 30px; }
 
