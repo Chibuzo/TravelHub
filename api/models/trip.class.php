@@ -130,10 +130,17 @@ class Trip extends Model
         return self::$db->fetchAll('obj');
     }
 
-    public function getByPark($park_id)
+    public function getByParkTravel($park_id, $travel_id)
     {
-        $sql = "";
-        self::$db->query($sql, array('park_id' => $park_id));
+        $sql = "SELECT trips.*, po.park AS origin_name, pd.park AS destination_name, vt.name AS vehicle_name
+                FROM trips
+                JOIN park_map AS pm ON pm.id = trips.park_map_id
+                JOIN parks AS po ON po.id = pm.origin
+                JOIN parks AS pd ON pd.id = pm.destination
+                JOIN vehicle_types vt ON vt.id = trips.vehicle_type_id
+                WHERE po.id = :park_id AND travel_id = :travel_id
+                ORDER BY vehicle_name";
+        self::$db->query($sql, array('park_id' => $park_id, 'travel_id' => $travel_id));
         return self::$db->fetchAll('obj');
     }
 

@@ -2,6 +2,7 @@
 require "includes/head.php";
 require "includes/side-bar.php";
 require_once "../../api/models/bookingmodel.class.php";
+require_once "../../api/models/reportmodel.class.php";
 
 if (!isset($_SESSION['user_id'])) header("Location: index.php");
 
@@ -28,6 +29,12 @@ $bustypes = $result['num'];
 
 $booking = new BookingModel();
 $bookings = $booking->getByTravelState($_SESSION['travel_id'], $_SESSION['state_id']);
+
+// data for chart
+$report_model = new Report();
+$reports = $report_model->stateGetBooking($_SESSION['travel_id'], $_SESSION['state_id'], "MONTH", date('Y-01-01'), date('Y-m-d'));
+$chart_data = json_encode($reports, true);
+
 ?>
       <!-- Right side column. Contains the navbar and content of the page -->
       <div class="content-wrapper">
@@ -143,34 +150,15 @@ $bookings = $booking->getByTravelState($_SESSION['travel_id'], $_SESSION['state_
 			</div>
 
 			<div class="col-md-5">
-              <!-- Calendar -->
-              <div class="box box-solid bg-olive">
-                <div class="box-header">
-                  <i class="fa fa-calendar"></i>
-                  <h3 class="box-title">Calendar</h3>
-                  <!-- tools box -->
-                  <div class="pull-right box-tools">
-                    <!-- button with a dropdown -->
-                    <div class="btn-group">
-                      <button class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bars"></i></button>
-                      <ul class="dropdown-menu pull-right" role="menu">
-                        <li><a href="#">Add new event</a></li>
-                        <li><a href="#">Clear events</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">View calendar</a></li>
-                      </ul>
+                <div class="box box-info">
+                    <div class="box-header">
+                        <h3 class="box-title">Bookings</h3>
                     </div>
-                    <button class="btn btn-success btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                    <button class="btn btn-success btn-sm" data-widget="remove"><i class="fa fa-times"></i></button>
-                  </div><!-- /. tools -->
-                </div><!-- /.box-header -->
-                <div class="box-body no-padding">
-                  <!--The calendar -->
-                  <div id="calendar" style="width: 100%"></div>
-                </div><!-- /.box-body -->
-              </div><!-- /.box -->
-			</div>
-		  </div>
+                    <div class="box-body chart-responsive">
+                        <div class="chart" id="line-chart" style="height: 300px;"></div>
+                    </div>
+                </div>
+		    </div>
 
           <!-- Main row -->
           <div class="row">
@@ -222,9 +210,26 @@ $bookings = $booking->getByTravelState($_SESSION['travel_id'], $_SESSION['state_
     <script src="../dist/js/app.min.js" type="text/javascript"></script>
 
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-    <script src="../dist/js/pages/dashboard.js" type="text/javascript"></script>
+    <!--<script src="../dist/js/pages/dashboard.js" type="text/javascript"></script>-->
 
     <!-- AdminLTE for demo purposes -->
     <script src="../dist/js/demo.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            "use strict";
+
+            // LINE CHART
+            var line = new Morris.Line({
+                element: "line-chart",
+                resize: true,
+                data: <?php echo $chart_data; ?>,
+                xkey: 'sort',
+                ykeys: ['numb'],
+                labels: ['value'],
+                parseTime: false
+            });
+        });
+    </script>
   </body>
 </html>
