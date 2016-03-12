@@ -10,6 +10,7 @@ if (isset($_POST['add_travel'])) {
     $params['company_name'] = $_POST['company_name'];
     $params['online_charge'] = $_POST['online_charge'];
     $params['offline_charge'] = $_POST['offline_charge'];
+    $params['account_number'] = $_POST['account_number'];
     try {
         $result = $travel_model->saveTravel($params);
         if ($result == false) {
@@ -51,9 +52,15 @@ if (isset($_POST['add_travel'])) {
                             <div id="route-div">
                                 <form method="post">
                                     <div class="row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-11">
                                             <div class="form-group" id="origin">
                                                 <input type="text" class="form-control" placeholder="Company Name" name="company_name" id="company_name" required="required" />
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="form-group" id="destination">
+                                                <input type="text" class="form-control" placeholder="Account Number" name="account_number" id="account_number" required="required" />
                                             </div>
                                         </div>
 
@@ -68,6 +75,7 @@ if (isset($_POST['add_travel'])) {
                                                 <input type="text" class="form-control" placeholder="Offline Charge" name="offline_charge" id="offline_charge" required="required" />
                                             </div>
                                         </div>
+
                                         <input type="hidden" name="add_travel" value="yes" />
 
                                         <div class="col-md-1">
@@ -84,6 +92,7 @@ if (isset($_POST['add_travel'])) {
                                     <th>Company Name</th>
                                     <th>Online Charge</th>
                                     <th>Offline Charge</th>
+                                    <th>Account Number</th>
                                     <th></th>
                                 </tr>
                                 </thead>
@@ -97,6 +106,7 @@ if (isset($_POST['add_travel'])) {
 													<td>{$travel->company_name}</td>
 													<td>{$travel->online_charge}</td>
 													<td>{$travel->offline_charge}</td>
+													<td>{$travel->account_number}</td>
 													<td class='opt-icons text-center' id='{$travel->id}'>
 														<a href='' class='edit-travel' title='Edit' data-toggle='tooltip'><i class='fa fa-pencil'></i></a>
 														<a href='' class='remove-travel hidden' title='Remove' data-toggle='tooltip'><i class='fa fa-trash-o'></i></a>
@@ -180,14 +190,17 @@ if (isset($_POST['add_travel'])) {
             var comapny_name = parentTr.find("td:nth-child(2)").text();
             var online_charge = parentTr.find("td:nth-child(3)").text();
             var offline_charge = parentTr.find("td:nth-child(4)").text();
+            var account_number = parentTr.find("td:nth-child(5)").text();
 
             var nameInput = "<input type='text class='form-control' name='company_name' value='" + comapny_name + "' />";
             var onlineInput = "<input type='text class='form-control' name='online_charge' value='" + online_charge + "' style='width: 35px' />";
             var offlineInput = "<input type='text class='form-control' name='offline_charge' value='" + offline_charge + "' style='width: 35px' />";
+            var accountNumber = "<input type='text class='form-control' name='account_number' value='" + account_number + "' />";
 
             parentTr.find("td:nth-child(2)").html(nameInput);
             parentTr.find("td:nth-child(3)").html(onlineInput);
             parentTr.find("td:nth-child(4)").html(offlineInput);
+            parentTr.find("td:nth-child(5)").html(accountNumber);
 
              $(this).removeClass('edit-travel').html("<i class='fa fa-save'></i>").addClass("save-travel");
         });
@@ -200,14 +213,16 @@ if (isset($_POST['add_travel'])) {
             var company_name = parentTr.find("input[name=company_name]").val();
             var online_charge = parentTr.find("input[name=online_charge]").val();
             var offline_charge = parentTr.find("input[name=offline_charge]").val();
+            var account_number = parentTr.find("input[name=account_number]").val();
 
-            $.post("../../ajax/misc_fns.php", {"op": "update-travel", "company_name": company_name, "online_charge": online_charge, "offline_charge": offline_charge, "id": id}, function(d) {
+            $.post("../../ajax/misc_fns.php", {"op": "update-travel", "company_name": company_name, "online_charge": online_charge, "offline_charge": offline_charge, "account_number": account_number, "id": id}, function(d) {
                 if (d.trim() == "Done") {
                 }
             });
             parentTr.find("td:nth-child(2)").text(company_name);
             parentTr.find("td:nth-child(3)").text(online_charge);
             parentTr.find("td:nth-child(4)").text(offline_charge);
+            parentTr.find("td:nth-child(5)").text(account_number);
             $(this).removeClass('save-travel').html("<i class='fa fa-pencil'></i>").addClass("edit-travel");
         });
 

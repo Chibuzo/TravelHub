@@ -50,6 +50,7 @@ if (isset($_REQUEST['op'])) {
         $params['company_name'] = $_POST['company_name'];
         $params['online_charge'] = $_POST['online_charge'];
         $params['offline_charge'] = $_POST['offline_charge'];
+        $params['account_number'] = $_POST['account_number'];
         try {
             $result = $travel_model->saveTravel($params);
             if ($result == false) {
