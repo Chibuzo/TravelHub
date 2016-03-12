@@ -1,26 +1,21 @@
 <?php
 require_once "model.class.php";
+require_once "trip.class.php";
 
 class VehicleModel extends Model {
+	private $trip = null;
 
 	function __construct()
 	{
 		parent::__construct();
+
+		$this->trip = new Trip();
 	}
 
 
 	function findVehicles($route_id)
 	{
-		$sql = "SELECT tr.id trip_id, vt.id vehicle_type_id, num_of_seats, name, fare, amenities, departure_time, company_name, po.park origin_park, pd.park destination_park, travel_id FROM trips tr
-				JOIN vehicle_types vt ON tr.vehicle_type_id = vt.id
-				JOIN park_map pm ON tr.park_map_id = pm.id
-				JOIN parks po ON pm.origin = po.id
-				JOIN parks pd ON pm.destination = pd.id
-				JOIN travels t ON tr.travel_id = t.id
-				WHERE tr.route_id = :route_id AND fare > 0 ";
-
-		self::$db->query($sql, array('route_id' => $route_id));
-		return self::$db->fetchAll();
+		return $this->trip->getTripsByRoute($route_id);
 	}
 
 
@@ -52,6 +47,56 @@ class VehicleModel extends Model {
 	}
 
 
+	public function findBoardingVehicle($park_map_id, $vehicle_type_id, $travel_id, $departure_order, $travel_date)
+	{
+		$query = "";
+		if ($departure_order > 0) {
+			$query = "AND departure_order = '$departure_order'";
+		}
+		$sql = "SELECT id, booked_seats, fare, trip_id, seat_status FROM boarding_vehicle
+				WHERE park_map_id = :park_map_id AND vehicle_type_id = :vehicle_type_id AND travel_id = :travel_id
+				AND travel_date = :travel_date AND seat_status = 'Not full' $query
+				ORDER BY departure_order ASC LIMIT 0, 1";
+
+		$param = array(
+				'park_map_id' => $park_map_id,
+				'vehicle_type_id' => $vehicle_type_id,
+				'travel_id' => $travel_id,
+				'travel_date' => $travel_date
+		);
+
+		self::$db->query($sql, $param);
+		if ($vehicle = self::$db->fetch('obj')) {
+			return $vehicle;
+		} else {
+			return false;
+		}
+	}
+
+
+	public function fixBoardingVehicles($vehicle_type_id, $park_map_id, $travel_date, $travel_id)
+	{
+		$vehicles = $this->trip->getDailyTrips($vehicle_type_id, $park_map_id, $travel_id);
+
+		$sql = "INSERT INTO boarding_vehicle (trip_id, park_map_id, vehicle_type_id, fare, departure_order, travel_date, travel_id)
+				VALUES (:trip_id, :park_map_id, :vehicle_type_id, :fare, :departure_order, :travel_date, :travel_id)";
+
+		self::$db->prepare($sql);
+		foreach ($vehicles AS $vehicle) {
+			$param = array(
+				'trip_id' => $vehicle->trip_id,
+				'park_map_id' => $vehicle->park_map_id,
+				'vehicle_type_id' => $vehicle_type_id,
+				'fare' => $vehicle->fare,
+				'departure_order' => $vehicle->departure,
+				'travel_date' => $travel_date,
+				'travel_id' => $vehicle->travel_id
+			);
+			self::$db->execute($param);
+		}
+	}
+
+
 	public function getAllVehicleTypes()
 	{
 		$sql = "SELECT * FROM vehicle_types WHERE removed = '0' ORDER BY name";
@@ -60,7 +105,7 @@ class VehicleModel extends Model {
 	}
 
 
-	function charterVehicle()
+	/*function charterVehicle()
 	{
 		$sql = "INSERT INTO vehicle_charter
 				(customer_name, customer_phone, next_of_kin, email, departure_location, destination, date_of_travel, date_chartered)
@@ -79,7 +124,7 @@ class VehicleModel extends Model {
 
 		if (self::$db->query($sql, $param))
 			return true;
-	}
+	}*/
 
 
 	public function removeVehicle($id)

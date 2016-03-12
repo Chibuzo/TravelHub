@@ -1,7 +1,6 @@
 <?php
 session_start();
 require_once "includes/banner.php";
-require_once "includes/db_handle.php";
 require_once "api/models/bookingmodel.class.php";
 
 /*** Get ticket booking details ***/

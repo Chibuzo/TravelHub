@@ -160,7 +160,7 @@ class ParkModel extends Model {
 	}
 
 
-	public function getAllRoutes()
+	/*public function getAllRoutes()
 	{
 		return parent::getManyById('routes', 'status', 1, 'route');
 	}
@@ -186,7 +186,7 @@ class ParkModel extends Model {
 		if (self::$db->query($sql, $param)) {
 			return true;
 		}
-	}
+	}*/
 
 	public function removeParkMap($id)
 	{

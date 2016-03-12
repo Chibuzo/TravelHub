@@ -94,7 +94,7 @@ if (isset($_POST['update_park'])) {
                             <?php else: ?>
                                 <div>
                                     <div class="callout callout-warning">
-                                        <p>No park has been created for your Travel.</p>
+                                        <p> park has been added for your state.</p>
                                     </div>
                                 </div>
                                 <hr />

@@ -1,6 +1,7 @@
 <?php require_once "header.php"; ?>
 <body>
 	<header>
+		<div class="alert alert-info text-center"><strong><i class="fa fa-exclamation-circle fa-lg"></i> &nbsp;This website and the ticketing service is currently undergoing testing. DO NOT USE IT YET!</strong></div>
 		<!--- top menu starts here-->
 		<nav class="navbar navbar-default" role="navigation">
 			<div class="container">
@@ -13,7 +14,7 @@
 						<span class="icon-bar"></span>
 					</button>
 					<a class="navbar-brand" href="<?php echo BASE_URL; ?>">TravelHub</a>
-					<!--<a class="navbar-brand" href="<?php /*echo BASE_URL; */?>"><img src="<?php /*echo BASE_URL; */?>images/logo.png" id="logo" /></a>-->
+					<!--<a class="navbar-brand" href="<?php /*echo BASE_URL; */?>"><img src="<?php /*echo BASE_URL; */?>images/travelhub-logo.gif" id="logo" /></a>-->
 				</div>
 
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">

@@ -4,8 +4,8 @@ session_start();
 require_once "../api/models/bookingmodel.class.php";
 require_once "../api/models/customer.class.php";
 
+extract($_POST);
 if (isset($_POST['customer_name'], $_POST['next_of_kin_phone'], $_POST['customer_phone'])) {
-	extract($_POST);
 
 	// handle customer
 	$customer = new Customer();
@@ -18,19 +18,19 @@ if (isset($_POST['customer_name'], $_POST['next_of_kin_phone'], $_POST['customer
 		);
 		$customer_id = $customer->addNew($param);
 	}
-} else {
-	echo '{"msg" : "04"}';
-	exit;
 }
 
 // record booking details
 $booking = new BookingModel();
-$_SESSION['seat_no'] = $booking->reserveSeat($boarding_vehicle_id, $seat_no);
 
-// check for discount eligibilty
-//if ($booking->countUserTickets() == 2) {
-//	echo "10"; // give discount
-//	exit;
-//}
-echo $booking->book($_SESSION['boarding_vehicle_id'], $seat_no, $payment_opt, $customer_id);
+if ($_REQUEST['op'] == 'reserve-seat')
+{
+	try {
+		$_SESSION['seat_no'] = $booking->reserveSeat($boarding_vehicle_id, $seat_no);
+	} catch (Exception $e) {
+		echo $e->getCode();
+	}
+} else {
+	$booking->book($_SESSION['boarding_vehicle_id'], $seat_no, $payment_opt, $customer_id);
+}
 

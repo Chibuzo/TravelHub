@@ -1,12 +1,11 @@
 <?php
 session_start();
 require_once "includes/banner.php";
-require_once "includes/db_handle.php";
+require_once "api/models/bookingmodel.class.php";
 
 // get ticket ref number
-$sql = "SELECT ticket_no FROM booking_details WHERE id = :ticket_id";
-$db->query($sql, array('ticket_id' => $_SESSION['ticket_id']));
-$details = $db->fetch('obj');
+$booking = new BookingModel();
+$details = $booking->getTicketRefNo($_SESSION['ticket_id']);
 ?>
 
 <style>
@@ -48,16 +47,16 @@ $details = $db->fetch('obj');
 			Your mobile ticket will be sent through SMS, as soon as your transaction reflects in our account.
 			<br /><br />
 			<p>
-			<b>Bank:</b> Fidelity Bank<br />
-			<b>Account Name:</b> Autostar travels and tourism Ltd<br />
-			<b>Account Number:</b> 4010934844<br />
+			<b>Bank:</b> xxxxxxx Bank<br />
+			<b>Account Name:</b> xxxxxx operator<br />
+			<b>Account Number:</b> xxxxxxxxxx<br />
 			<b>Type of Account:</b> Current Account
 			</p>
 
 			<p>
-			<b>Bank:</b> Diamond Bank<br />
-			<b>Account Name:</b> Autostar travels and tourism Ltd<br />
-			<b>Account Number:</b> 0022534018<br />
+			<b>Bank:</b> xxxxxxx Bank<br />
+			<b>Account Name:</b> xxxxxxx operator<br />
+			<b>Account Number:</b> xxxxxxxxxx<br />
 			<b>Type of Account:</b> Current Account
 			</p>
 		</div>

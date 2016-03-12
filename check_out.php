@@ -21,7 +21,7 @@ if ($_REQUEST['q'] == '1') {
 }
 
 echo "<div id='content'><br />
-		<h1>&nbsp;$title</h1><hr />
+		<h2>$title</h2><br />
 		<blockquote>
 			<p>$msg</p>
 		</blockquote>

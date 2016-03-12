@@ -1,13 +1,13 @@
 <?php
 require "includes/head.php";
 require "includes/side-bar.php";
-//require_once "../../api/models/fare.class.php";
+require_once "../../api/models/fare.class.php";
 require_once "../../api/models/travelparkmap.class.php";
 require_once "../../api/models/travelvehicle.class.php";
 require_once "../../api/models/trip.class.php";
 require_once "../helpers/utils.php";
 
-//$fare_mapper = new Fare();
+$fare_mapper = new Fare();
 $travel_park_map = new TravelParkMap();
 $travel_vehicle_model = new TravelVehicle();
 $trip_model = new Trip();
@@ -21,12 +21,7 @@ if (isset($_POST['op'])) {
         $amenities = implode($amenities, ">");
         $_route = $travel_park_map->getRoute($route);
 
-        $result = $trip_model->addTrip($route, $departure, $_SESSION['travel_id'], $_SESSION['state_id'], $_route->id, $vehicle_type, $amenities, $departure_time, $fare);
-        /*if (!is_numeric($result)) {
-            echo $result;
-        } else {
-            die ("Good!!!");
-        }*/
+        $rslt = $trip_model->addTrip($route, $departure, $_SESSION['travel_id'], $_SESSION['state_id'], $_route->id, $vehicle_type, $amenities, $departure_time, $fare);
     }
     if ($_POST['op'] == "edit") {
         extract($_POST);
@@ -85,7 +80,7 @@ $travel_trips = $trip_model->getByStateTravel($_SESSION['state_id'], $_SESSION['
                                                 <option value="" selected>-- Vehicle Type --</option>
                                                 <?php
                                                 foreach ($vehicle_types as $vehicle) {
-                                                    printf("<option value='%s'>%s</option>", $vehicle->id, $vehicle->vehicle_name);
+                                                    printf("<option value='%s'>%s</option>", $vehicle->vehicle_type_id, $vehicle->vehicle_name);
                                                 }
                                                 ?>
                                             </select>

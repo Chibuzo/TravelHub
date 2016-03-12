@@ -42,29 +42,24 @@ class db extends DBConnection {
 	 */
 	public function query($sql, $param=null)
 	{
-		$this->prepare($sql);
-		$this->execute($param);
-		return $this->stmt; 	// Return PDO result statment
+		try {
+			$this->prepare($sql);
+			$this->execute($param);
+			return $this->stmt; 	// Return PDO result statment
+		} catch (Exception $e) {
+			return $e->getMessage();
+		}
 	}
 
 	function prepare($sql)
 	{
-		try {
-			$this->stmt = $this->dbh->prepare($sql);
-		} catch (Exception $e) {
-			return $e->getMessage();
-		}
+		$this->stmt = $this->dbh->prepare($sql);
 	}
 
 
 	function execute($param)
 	{
-		try {
-			$this->stmt->execute($param);
-		} catch (Exception $e) {
-			return $e->getMessage();
-		}
-
+		$this->stmt->execute($param);
 	}
 
 
