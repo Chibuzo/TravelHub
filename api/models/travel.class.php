@@ -13,21 +13,21 @@ class Travel extends Model {
 	
 	function getTravel($travel_id)
     {
-        $sql = "SELECT id, company_name, offline_charge, online_charge FROM travels WHERE id = :id";
+        $sql = "SELECT id, company_name, offline_charge, online_charge, account_number FROM travels WHERE id = :id";
         self::$db->query($sql, array('id' => $travel_id));
         return self::$db->fetch('obj');
     }
 
     function getTravels()
     {
-        $sql = "SELECT id, company_name, abbr, offline_charge, online_charge FROM travels WHERE deleted = '0' ORDER BY date_created";
+        $sql = "SELECT id, company_name, abbr, offline_charge, online_charge, account_number FROM travels WHERE deleted = '0' ORDER BY date_created";
         self::$db->query($sql);
         return self::$db->fetchAll('obj');
     }
 
     function getTravelByUser($user_id)
     {
-        $sql = "SELECT travels.id, travels.company_name, travels.offline_charge, travels.online_charge FROM travel_admins INNER JOIN travels ON travel_admins.travel_id = travels.id WHERE travel_admins.user_id = :user_id";
+        $sql = "SELECT travels.id, travels.company_name, travels.offline_charge, travels.online_charge, travels.account_number FROM travel_admins INNER JOIN travels ON travel_admins.travel_id = travels.id WHERE travel_admins.user_id = :user_id";
         self::$db->query($sql, array('user_id' => $user_id));
         return self::$db->fetch('obj');
     }
@@ -82,7 +82,8 @@ class Travel extends Model {
     private function addTravel($params)
     {
         try {
-            $sql = "INSERT INTO {$this->tbl} (company_name, abbr, offline_charge, online_charge) VALUES (:company_name, :abbr, :offline_charge, :online_charge)";
+            $sql = "INSERT INTO {$this->tbl} (company_name, abbr, offline_charge, online_charge, account_number) VALUES (:company_name, :abbr :offline_charge, :online_charge, :account_number)";
+
             $result = self::$db->query($sql, $params);
             if ($result !== false) {
                 $params['id'] = self::$db->getLastInsertId();
@@ -97,7 +98,8 @@ class Travel extends Model {
 
     private function updateTravel($params)
     {
-        $sql = "UPDATE {$this->tbl} SET company_name = :company_name, abbr = :abbr, offline_charge = :offline_charge, online_charge = :online_charge WHERE id = :id";
+        $sql = "UPDATE {$this->tbl} SET company_name = :company_name, abbr = :abbr, offline_charge = :offline_charge, online_charge = :online_charge, account_number = :account_number WHERE id = :id";
+
         $result = self::$db->query($sql, $params);
         if ($result !== false) {
             return true;
