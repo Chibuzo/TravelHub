@@ -8,8 +8,10 @@ $travel_model = new Travel();
 
 if (isset($_POST['add_travel'])) {
     $params['company_name'] = $_POST['company_name'];
+    $param['abbr'] = $_POST['abbr'];
     $params['online_charge'] = $_POST['online_charge'];
     $params['offline_charge'] = $_POST['offline_charge'];
+
     try {
         $result = $travel_model->saveTravel($params);
         if ($result == false) {
@@ -41,7 +43,7 @@ if (isset($_POST['add_travel'])) {
     <!-- Main content -->
     <section class="content">
         <div class="row">
-            <div class="col-md-6 col-xs-12">
+            <div class="col-md-7 col-xs-12">
                 <div class="box box-warning">
                     <div class="box-header with-border">
                         <h2 style='font-size: 18px' class="box-title"><i class="fa fa-bus"></i> &nbsp;Manage Travels</h2>
@@ -51,27 +53,33 @@ if (isset($_POST['add_travel'])) {
                             <div id="route-div">
                                 <form method="post">
                                     <div class="row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <div class="form-group" id="origin">
                                                 <input type="text" class="form-control" placeholder="Company Name" name="company_name" id="company_name" required="required" />
                                             </div>
                                         </div>
 
                                         <div class="col-md-3">
+                                            <div class="form-group" id="abbr">
+                                                <input type="text" class="form-control" placeholder="Abbreviation" name="abbr" id="abbr" required="required" />
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2">
                                             <div class="form-group" id="destination">
                                                 <input type="text" class="form-control" placeholder="Online Charge" name="online_charge" id="online_charge" required="required" />
                                             </div>
                                         </div>
 
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
                                             <div class="form-group" id="destination">
                                                 <input type="text" class="form-control" placeholder="Offline Charge" name="offline_charge" id="offline_charge" required="required" />
                                             </div>
                                         </div>
                                         <input type="hidden" name="add_travel" value="yes" />
 
-                                        <div class="col-md-1">
-                                            <button type="submit" name="addTravel" class="btn bg-olive"><i class='fa fa-plus'></i> Add</button>
+                                        <div class="col-md-2">
+                                            <button type="submit" name="addTravel" class="btn bg-olive btn-block"><i class='fa fa-plus'></i> Add</button>
                                         </div>
                                     </div>
                                 </form>
@@ -82,6 +90,7 @@ if (isset($_POST['add_travel'])) {
                                 <tr>
                                     <th width='30'>S/No</th>
                                     <th>Company Name</th>
+                                    <th>Abbr</th>
                                     <th>Online Charge</th>
                                     <th>Offline Charge</th>
                                     <th></th>
@@ -95,6 +104,7 @@ if (isset($_POST['add_travel'])) {
                                     $html .= "<tr>
 													<td class='text-right'>$n</td>
 													<td>{$travel->company_name}</td>
+													<td>{$travel->abbr}</td>
 													<td>{$travel->online_charge}</td>
 													<td>{$travel->offline_charge}</td>
 													<td class='opt-icons text-center' id='{$travel->id}'>
@@ -113,7 +123,7 @@ if (isset($_POST['add_travel'])) {
                 </div>
             </div>
 
-            <div class="col-md-6 col-xs-12">
+            <div class="col-md-5 col-xs-12">
                 <div class="box box-danger">
                     <div class="box-header with-border">
                         <h2 style='font-size: 20px' class="box-title"><i class="fa fa-binoculars"></i> &nbsp; Travel Details</h2>
@@ -169,87 +179,92 @@ if (isset($_POST['add_travel'])) {
 </div>
 <?php include_once "includes/footer.html"; ?>
 <script>
-    $(document).ready(function() {
+$(document).ready(function() {
 
-        // edit travel
-        $("#travel-tbl").on("click", ".edit-travel", function(e) {
-            e.preventDefault();
-            var parentTr = $(this).parents("tr");
-            var id = $(this).parent("td").attr("id");
+    // edit travel
+    $("#travel-tbl").on("click", ".edit-travel", function(e) {
+        e.preventDefault();
+        var parentTr = $(this).parents("tr");
+        var id = $(this).parent("td").attr("id");
 
-            var comapny_name = parentTr.find("td:nth-child(2)").text();
-            var online_charge = parentTr.find("td:nth-child(3)").text();
-            var offline_charge = parentTr.find("td:nth-child(4)").text();
+        var comapny_name = parentTr.find("td:nth-child(2)").text();
+        var abbr = parentTr.find("td:nth-child(3)").text();
+        var online_charge = parentTr.find("td:nth-child(4)").text();
+        var offline_charge = parentTr.find("td:nth-child(5)").text();
 
-            var nameInput = "<input type='text class='form-control' name='company_name' value='" + comapny_name + "' />";
-            var onlineInput = "<input type='text class='form-control' name='online_charge' value='" + online_charge + "' style='width: 35px' />";
-            var offlineInput = "<input type='text class='form-control' name='offline_charge' value='" + offline_charge + "' style='width: 35px' />";
+        var nameInput = "<input type='text class='form-control' name='company_name' value='" + comapny_name + "' />";
+        var abbrInput = "<input type='text class='form-control' name='abbr' value='" + abbr + "' />";
+        var onlineInput = "<input type='text class='form-control' name='online_charge' value='" + online_charge + "' style='width: 35px' />";
+        var offlineInput = "<input type='text class='form-control' name='offline_charge' value='" + offline_charge + "' style='width: 35px' />";
 
-            parentTr.find("td:nth-child(2)").html(nameInput);
-            parentTr.find("td:nth-child(3)").html(onlineInput);
-            parentTr.find("td:nth-child(4)").html(offlineInput);
+        parentTr.find("td:nth-child(2)").html(nameInput);
+        parentTr.find("td:nth-child(3)").html(abbrInput);
+        parentTr.find("td:nth-child(4)").html(onlineInput);
+        parentTr.find("td:nth-child(5)").html(offlineInput);
 
-             $(this).removeClass('edit-travel').html("<i class='fa fa-save'></i>").addClass("save-travel");
+        $(this).removeClass('edit-travel').html("<i class='fa fa-save'></i>").addClass("save-travel");
+    });
+
+    // update travel (and table)
+    $("#travel-tbl").on("click", ".save-travel", function(e) {
+        e.preventDefault();
+        var parentTr = $(this).parents("tr");
+        var id = $(this).parent("td").attr("id");
+        var company_name = parentTr.find("input[name=company_name]").val();
+        var abbr = parentTr.find("input[name=abbr]").val();
+        var online_charge = parentTr.find("input[name=online_charge]").val();
+        var offline_charge = parentTr.find("input[name=offline_charge]").val();
+
+        $.post("../../ajax/misc_fns.php", {"op": "update-travel", "company_name": company_name, "abbr": abbr, "online_charge": online_charge, "offline_charge": offline_charge, "id": id}, function(d) {
+            if (d.trim() == "Done") {
+            }
         });
+        parentTr.find("td:nth-child(2)").text(company_name);
+        parentTr.find("td:nth-child(3)").text(abbr);
+        parentTr.find("td:nth-child(4)").text(online_charge);
+        parentTr.find("td:nth-child(5)").text(offline_charge);
+        $(this).removeClass('save-travel').html("<i class='fa fa-pencil'></i>").addClass("edit-travel");
+    });
 
-        // update travel (and table)
-        $("#travel-tbl").on("click", ".save-travel", function(e) {
-            e.preventDefault();
-            var parentTr = $(this).parents("tr");
-            var id = $(this).parent("td").attr("id");
-            var company_name = parentTr.find("input[name=company_name]").val();
-            var online_charge = parentTr.find("input[name=online_charge]").val();
-            var offline_charge = parentTr.find("input[name=offline_charge]").val();
+    //display travel details
+    $("#travel-tbl").on("click", ".travel-details", function(e) {
+        e.preventDefault();
+        var id = $(this).parent("td").attr("id");
 
-            $.post("../../ajax/misc_fns.php", {"op": "update-travel", "company_name": company_name, "online_charge": online_charge, "offline_charge": offline_charge, "id": id}, function(d) {
+        $.post("../../ajax/misc_fns.php", {"op": "travel-details", "id": id}, function(d) {
+            $("#detail-div").html(d);
+        });
+    });
+
+    //set travel_id for adding user
+    $('#userModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var travel_id = button.data('travel-id');
+        var modal = $(this);
+        modal.find('.modal-body #travel_id').val(travel_id);
+    });
+
+    $('#addUser').on('submit', function(e) {
+        e.preventDefault();
+        var full_name = $('#full_name').val();
+        var username = $('#username').val();
+        var password = $('#password').val();
+        var v_password = $('#v_password').val();
+        var travel_id = $('#travel_id').val();
+
+        if (password !== v_password) {
+            alert("Password do not match.");
+        } else {
+            $.post("../../ajax/misc_fns.php", {"op": "add-travel-admin", "full_name": full_name, "username": username, "password": password, "travel_id": travel_id}, function(d) {
                 if (d.trim() == "Done") {
+                    $.post("../../ajax/misc_fns.php", {"op": "travel-details", "id": travel_id}, function(_data) {
+                        $("#detail-div").html(_data);
+                    });
                 }
             });
-            parentTr.find("td:nth-child(2)").text(company_name);
-            parentTr.find("td:nth-child(3)").text(online_charge);
-            parentTr.find("td:nth-child(4)").text(offline_charge);
-            $(this).removeClass('save-travel').html("<i class='fa fa-pencil'></i>").addClass("edit-travel");
-        });
+            $('#userModal').modal('hide');
+        }
+    })
 
-        //display travel details
-        $("#travel-tbl").on("click", ".travel-details", function(e) {
-            e.preventDefault();
-            var id = $(this).parent("td").attr("id");
-
-            $.post("../../ajax/misc_fns.php", {"op": "travel-details", "id": id}, function(d) {
-                $("#detail-div").html(d);
-            });
-        });
-
-        //set travel_id for adding user
-        $('#userModal').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget);
-            var travel_id = button.data('travel-id');
-            var modal = $(this);
-            modal.find('.modal-body #travel_id').val(travel_id);
-        });
-
-        $('#addUser').on('submit', function(e) {
-            e.preventDefault();
-            var full_name = $('#full_name').val();
-            var username = $('#username').val();
-            var password = $('#password').val();
-            var v_password = $('#v_password').val();
-            var travel_id = $('#travel_id').val();
-
-            if (password !== v_password) {
-                alert("Password do not match.");
-            } else {
-                $.post("../../ajax/misc_fns.php", {"op": "add-travel-admin", "full_name": full_name, "username": username, "password": password, "travel_id": travel_id}, function(d) {
-                    if (d.trim() == "Done") {
-                        $.post("../../ajax/misc_fns.php", {"op": "travel-details", "id": travel_id}, function(_data) {
-                            $("#detail-div").html(_data);
-                        });
-                    }
-                });
-                $('#userModal').modal('hide');
-            }
-        })
-
-    });
+});
 </script>

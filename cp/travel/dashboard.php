@@ -5,6 +5,7 @@ require_once "../../api/models/bookingmodel.class.php";
 require_once "../../api/models/reportmodel.class.php";
 
 if (!isset($_SESSION['user_id'])) header("Location: ../index.php");
+$travel_id = $_SESSION['travel_id'];
 
 $db = new Db(DB_NAME);
 // bus hire count
@@ -13,7 +14,7 @@ $result = $stmt->fetch();
 $bushire = $result['num'];
 
 // reservation count
-$stmt = $db->query("SELECT COUNT(*) num FROM booking_details WHERE status = '1'");
+$stmt = $db->query("SELECT COUNT(*) num FROM booking_details bd JOIN boarding_vehicle bv ON bd.boarding_vehicle_id = bv.id WHERE travel_id = '$travel_id' AND status = '1' ");
 $result = $stmt->fetch();
 $books = $result['num'];
 
@@ -23,16 +24,16 @@ $result = $stmt->fetch();
 $routes = $result['num'];
 
 // vehicle types
-$stmt = $db->query("SELECT COUNT(*) num FROM vehicle_types");
+$stmt = $db->query("SELECT COUNT(*) num FROM travel_vehicle_types WHERE travel_id = '$travel_id'");
 $result = $stmt->fetch();
 $bustypes = $result['num'];
 
 $booking = new BookingModel();
-$bookings = $booking->getByTravel($_SESSION['travel_id']);
+$bookings = $booking->getByTravel($travel_id, 10);
 
 // data for chart
 $report_model = new Report();
-$reports = $report_model->travelGetBooking($_SESSION['travel_id'], "MONTH", date('Y-01-01'), date('Y-m-d'));
+$reports = $report_model->travelGetBooking($travel_id, "MONTH", date('Y-01-01'), date('Y-m-d'));
 $chart_data = json_encode($reports, true);
 
 ?>

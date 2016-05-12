@@ -12,6 +12,7 @@
 		<link rel="stylesheet" type="text/css" href="<?php echo BASE_URL; ?>css/style.css" media="all" />
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
 		<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
-		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<!--		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">-->
+		<link href="../../css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 		<link rel="shortcut icon" href="<?php echo BASE_URL; ?>favicon.ico">
 	</head>

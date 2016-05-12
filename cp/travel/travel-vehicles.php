@@ -9,7 +9,7 @@ $vehicle_model = new VehicleModel();
 $travel_vehicle_model = new TravelVehicle();
 
 if (isset($_POST['add_travel_vehicle_type'])) {
-    $travel_vehicle_model->addVehicleType($_SESSION['travel_id'], $_POST['vehicle_name'], $_POST['vehicle_type_id'], '');
+    $travel_vehicle_model->addVehicleType($_SESSION['travel_id'], $_POST['vehicle_name'], $_POST['vehicle_type_id']);
 }
 
 $all_vehicle_types = $vehicle_model->getAllVehicleTypes();
@@ -23,7 +23,7 @@ $travel_vehicle_types = $travel_vehicle_model->getAllVehicleTypes($_SESSION['tra
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Routes & Vehicles
+            Manage Vehicles
             <small>Control panel</small>
         </h1>
         <ol class="breadcrumb">

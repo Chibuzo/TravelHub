@@ -48,6 +48,7 @@ if (isset($_REQUEST['op'])) {
 
         $params['id'] = $_POST['id'];
         $params['company_name'] = $_POST['company_name'];
+        $params['abbr'] = $_POST['abbr'];
         $params['online_charge'] = $_POST['online_charge'];
         $params['offline_charge'] = $_POST['offline_charge'];
         try {

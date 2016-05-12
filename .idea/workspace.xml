@@ -2,49 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9be91367-51af-4926-804b-fd9a516e7167" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/scroller.js" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/images/sienna.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/images/x.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/imgs/dhtmlxcalendar_dhx_skyblue/arrow_left.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/imgs/dhtmlxcalendar_dhx_skyblue/arrow_left_hover.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/imgs/dhtmlxcalendar_dhx_skyblue/arrow_right.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/imgs/dhtmlxcalendar_dhx_skyblue/arrow_right_hover.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/imgs/dhtmlxcalendar_dhx_skyblue/bg_days.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/imgs/dhtmlxcalendar_dhx_skyblue/bg_main.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/imgs/dhtmlxcalendar_dhx_web/arrow_left.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/imgs/dhtmlxcalendar_dhx_web/arrow_left_hover.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/imgs/dhtmlxcalendar_dhx_web/arrow_right.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/imgs/dhtmlxcalendar_dhx_web/arrow_right_hover.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/imgs/dhtmlxcalendar_dhx_web/bg_days.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/imgs/dhtmlxcalendar_dhx_web/bg_main.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/imgs/dhtmlxcalendar_omega/arrow_left.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/imgs/dhtmlxcalendar_omega/arrow_left_hover.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/imgs/dhtmlxcalendar_omega/arrow_right.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/imgs/dhtmlxcalendar_omega/arrow_right_hover.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/imgs/dhtmlxcalendar_omega/bg_days.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/imgs/dhtmlxcalendar_omega/bg_main.png" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ajax/hold_details.php" afterPath="$PROJECT_DIR$/ajax/hold_details.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ajax/save_booking_details.php" afterPath="$PROJECT_DIR$/ajax/save_booking_details.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ajax/seating.php" afterPath="$PROJECT_DIR$/ajax/seating.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api/models/bookingmodel.class.php" afterPath="$PROJECT_DIR$/api/models/bookingmodel.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api/models/trip.class.php" afterPath="$PROJECT_DIR$/api/models/trip.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api/models/vehiclemodel.class.php" afterPath="$PROJECT_DIR$/api/models/vehiclemodel.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/check_out.php" afterPath="$PROJECT_DIR$/check_out.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/classes/seatpicker.class.php" afterPath="$PROJECT_DIR$/classes/seatpicker.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/gsdk-base.css" afterPath="$PROJECT_DIR$/css/gsdk-base.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/seats.css" afterPath="$PROJECT_DIR$/css/seats.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/style.css" afterPath="$PROJECT_DIR$/css/style.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/travelhub.sql" afterPath="$PROJECT_DIR$/db/travelhub.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/details.php" afterPath="$PROJECT_DIR$/details.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/includes/banner.php" afterPath="$PROJECT_DIR$/includes/banner.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/includes/footer.php" afterPath="$PROJECT_DIR$/includes/footer.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/includes/header.php" afterPath="$PROJECT_DIR$/includes/header.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.php" afterPath="$PROJECT_DIR$/index.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/pickbus.js" afterPath="$PROJECT_DIR$/js/pickbus.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/payment.php" afterPath="$PROJECT_DIR$/payment.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pick_vehicle.php" afterPath="$PROJECT_DIR$/pick_vehicle.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api/index.php" afterPath="$PROJECT_DIR$/api/index.php" />
     </list>
     <ignored path="travelhub.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -66,54 +24,31 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="pick_vehicle.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pick_vehicle.php">
+      <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/api/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-97.935486">
-              <caret line="138" column="0" selection-start-line="138" selection-start-column="0" selection-end-line="138" selection-end-column="0" />
-              <folding>
-                <marker date="1457091935586" expanded="true" signature="5674:6636" placeholder="..." />
-                <marker date="1457091935586" expanded="true" signature="5674:6896" placeholder="..." />
-                <marker date="1457091935586" expanded="true" signature="5713:5915" placeholder="..." />
-                <marker date="1457091935586" expanded="true" signature="5713:5946" placeholder="..." />
-                <marker date="1457091935586" expanded="true" signature="5713:6120" placeholder="..." />
-                <marker date="1457091935586" expanded="true" signature="6181:6318" placeholder="..." />
-                <marker date="1457091935586" expanded="true" signature="6366:6489" placeholder="..." />
-                <marker date="1457091935586" expanded="true" signature="6542:6636" placeholder="..." />
-                <marker date="1457091935586" expanded="true" signature="6694:6836" placeholder="..." />
-                <marker date="1457091935586" expanded="true" signature="6694:6884" placeholder="..." />
-                <marker date="1457091935586" expanded="true" signature="7513:7698" placeholder="{...}" />
-                <marker date="1457091935586" expanded="true" signature="7513:7850" placeholder="{...}" />
-              </folding>
+            <state vertical-scroll-proportion="-3.0">
+              <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/index.php">
+      <file leaf-file-name="layout.jade" pinned="false" current-in-tab="true">
+        <entry file="file://C:/matzun/views/layout.jade">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="127" column="26" selection-start-line="127" selection-start-column="26" selection-end-line="127" selection-end-column="26" />
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/../chambers/index.php">
+      <file leaf-file-name="home.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../marshal/home.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.35689455">
-              <caret line="14" column="29" selection-start-line="14" selection-start-column="29" selection-end-line="14" selection-end-column="29" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../chambers/css/style.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.548387">
-              <caret line="5" column="39" selection-start-line="5" selection-start-column="39" selection-end-line="5" selection-end-column="39" />
+            <state vertical-scroll-proportion="78.3871">
+              <caret line="49" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="356" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -124,26 +59,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="64" column="1" selection-start-line="52" selection-start-column="0" selection-end-line="64" selection-end-column="1" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="header.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../chambers/includes/header.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="banner.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../chambers/includes/banner.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-10.645162">
-              <caret line="15" column="22" selection-start-line="15" selection-start-column="22" selection-end-line="15" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -190,6 +105,7 @@
         <option value="$PROJECT_DIR$/../chambers/includes/banner.php" />
         <option value="$PROJECT_DIR$/../chambers/css/style.css" />
         <option value="$PROJECT_DIR$/../chambers/index.php" />
+        <option value="$PROJECT_DIR$/api/index.php" />
       </list>
     </option>
   </component>
@@ -240,30 +156,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="travelhub" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="travelhub" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="travelhub" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="travelhub" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="travelhub" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -336,9 +228,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="0" width="1932" height="1088" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15376344" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15376344" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -392,27 +284,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/css/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="143" column="39" selection-start-line="143" selection-start-column="39" selection-end-line="143" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/includes/footer.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/includes/banner.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="14" column="50" selection-start-line="14" selection-start-column="50" selection-end-line="14" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/classes/seatpicker.class.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -779,8 +650,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../chambers/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.35689455">
-          <caret line="14" column="29" selection-start-line="14" selection-start-column="29" selection-end-line="14" selection-end-column="29" />
+        <state vertical-scroll-proportion="-8.5161295">
+          <caret line="12" column="42" selection-start-line="12" selection-start-column="42" selection-end-line="12" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.0">
+          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../marshal/home.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="78.3871">
+          <caret line="49" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="356" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/matzun/views/layout.jade">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>

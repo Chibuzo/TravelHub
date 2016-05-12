@@ -103,11 +103,29 @@ class User extends Travel {
 		$sql = "SELECT username, id, user_type FROM users WHERE username = :username AND password = :password";
 
         self::$db->query($sql, $param);
-		$obj = self::$db->fetch("obj");
-		if (isset($obj->id)) {
+		if ($obj = self::$db->fetch("obj")) {
 			$_SESSION['user_type'] = $obj->user_type;
 			$_SESSION['username'] = $obj->username;
 			$_SESSION['user_id']     = $obj->id;
+
+			// get travel details
+			$sql = "SELECT company_name, abbr, t.id FROM travels t
+					JOIN travel_admins ta ON ta.travel_id = t.id
+					WHERE user_id = '$obj->id'";
+
+			self::$db->query($sql);
+			if ($travel = self::$db->fetch('obj')) {
+				$_SESSION['company_name'] = $travel->company_name;
+				$_SESSION['abbr'] = $travel->abbr;
+				$_SESSION['travel_id'] = $travel->id;
+			}
+
+			// lets get park id for park admins
+			if ($obj->user_type == 'park_admin') {
+				$park = $this->getParkDetails($obj->id);
+				$_SESSION['park_id'] = $park->id;
+				$_SESSION['park'] = $park->park;
+			}
 			return true;
 		}
 		return "Couldn't logn";
@@ -200,6 +218,18 @@ class User extends Travel {
 	}
 
 
+	function getTravelUsersByPark($travel_id, $park_id)
+	{
+		$sql = "SELECT u.* FROM users u
+		  		JOIN travel_admins ta ON u.id = ta.user_id
+		  		JOIN travel_park tp ON u.id = tp.user_id
+		  		WHERE ta.travel_id = :travel_id AND tp.park_id = :park_id";
+
+		self::$db->query($sql, array('travel_id' => $travel_id, 'park_id' => $park_id));
+		return self::$db->fetchAll('obj');
+	}
+
+
 	function getAllUsers()
 	{
 		return self::$db->query("SELECT * FROM users WHERE deleted = '0' ORDER BY date_created");
@@ -246,5 +276,14 @@ class User extends Travel {
             return false;
         }
     }
+
+	function getParkDetails($user_id)
+	{
+		$sql = "SELECT p.id, park FROM travel_park tp JOIN parks p ON tp.park_id = p.id WHERE user_id = :user_id";
+		self::$db->query($sql, array('user_id' => $user_id));
+		if ($park = self::$db->fetch('obj')) {
+			return $park;
+		}
+	}
 }
 ?>

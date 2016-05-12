@@ -1,6 +1,5 @@
 <?php
 require_once "includes/banner.php";
-//require_once "includes/db_handle.php";
 require "api/models/routemodel.class.php";
 
 $route = new RouteModel();
@@ -50,10 +49,12 @@ if (isset($_POST['bus_charter'])) {
 }
 
 h1 {
+	clear: both;
 	font: 300 38px 'Open Sans', San-serif, Helvetica Neue, Tahoma;
 	margin: 15px 0;
 	margin-bottom: 25px;
 	text-align: center;
+	color: #333;
 }
 
 .feature { font-size: 17px; color: #bbb; font-weight: 100; }
@@ -100,8 +101,12 @@ h1 {
 	font-size: 24px;
 }
 
-.right-border {
-	box-shadow: 4px 0px 5px -4px #ccc;
+#callus-left {
+	text-align: right;
+}
+
+#callus-right {
+	text-align: left;
 }
 
 .operators {
@@ -126,6 +131,10 @@ h1 {
 		font-weight: 300;
 		font-size:15px;
 		line-height: 22px;
+	}
+
+	#callus-left, #callus-right {
+		text-align: center;
 	}
 }
 
@@ -230,7 +239,7 @@ h1 {
 			<div class="">
 				<h3><span class="glyphicon glyphicon-phone-alt"></span> &nbsp;Call Us Now</h3>
 				TravelHub has a caring and friendly crew that are willing to receive your calls and answer all your questions concerning
-				intra-city travels in Nigeria. We can also help you make reservations without any service charge.
+				intra-city travels in Nigeria. We can also help you make reservations from any transport of choice without any service charge.
 			</div>
 		</div>
 	</div>
@@ -238,12 +247,9 @@ h1 {
 
 <div class="container">
 	<div class="row">
-		<div class="col-md-5 th-desktop"></div>
-		<div class="col-md-5 col-xs-12 text-right"><br>
-			<h3 class="text-right">Call us: (0700) XXXX XXX</h3>
-		</div>
-		<div class="col-md-2 th-desktop text-right">
-			<img src="images/callus.jpg"  style="width: 80%" />
+		<div class="col-md-12 col-xs-12"><br>
+			<div class="col-md-6" id="callus-left"><h3><i class="fa fa-phone"></i> Call us: </h3></div>
+			<div class="col-md-6" id="callus-right"><h3> (0700) 0000 000</h3></div>
 		</div>
 	</div>
 </div>

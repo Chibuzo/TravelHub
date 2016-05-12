@@ -3,7 +3,7 @@ html { min-height: 100%; position: relative; }
 body {
 	font: normal 16px 'Open Sans', sans-serif;
 	margin-bottom: 150px;
-	color: #333
+	color: #333;
 	/*background-color: #f7f7f7;*/
 	background-image: url('../images/bg1.png');
 	background-repeat: repeat;
@@ -16,26 +16,22 @@ header {
 	/*height: 50px;*/
 }
 
-#logo-div {
-	display: inline-block;
-	float: left;
-}
 
 #logo {
 	position: relative;
-	top: -20px;
+	top: 8px;
+	width: 200px;
 }
 
-.navbar-brand {
+/*.navbar-brand {
 	margin-top: 0px !important;
 	font: bold 31px 'Verdana', Sans-serif !important;
 	color: #ccc !important;
-}
+}*/
 
 
 .navbar {
 	border: none;
-	/*background: none;*/
 }
 
 .navbar-default {
@@ -47,7 +43,7 @@ header {
 ul.nav li a {
 	font: 300 18px "Open Sans", sans-serif;
 	color: #ccc !important;
-	margin-top: 19px;
+	margintop: 19px;
 }
 
 ul.nav li a:hover { color: #999 !important; }
@@ -177,12 +173,6 @@ footer .socials .fa {
 		font-size: 11px !important;
 	}
 
-	#logo {
-		position: relative;
-		top: -60px;
-		z-index: -1;
-	}
-
 	.th-mobile {
 		display: block;
 	}
@@ -191,9 +181,18 @@ footer .socials .fa {
 		display: none;
 	}
 
+	#logo {
+		margin-left: 10px;
+	}
+
 	.nav-links {
 		float: left !important;
 	}
+
+	.navbar-default {
+		/*height: auto !important;*/
+	}
+
 
 	.navbar-collapse {
 		border: none;

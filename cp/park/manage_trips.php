@@ -13,7 +13,8 @@ $travel_vehicle_model = new TravelVehicle();
 $trip_model = new Trip();
 
 $vehicle_types = $travel_vehicle_model->getAllVehicleTypes($_SESSION['travel_id']);
-$park_maps = $travel_park_map->getTravelStateParkMaps($_SESSION['travel_id'], $_SESSION['state_id']);
+//$park_maps = $travel_park_map->getTravelStateParkMaps($_SESSION['travel_id'], $_SESSION['state_id']);
+$park_maps = $travel_park_map->getTravelParkParkMaps($_SESSION['travel_id'], $_SESSION['park_id']);
 
 if (isset($_POST['op'])) {
     if ($_POST['op'] == 'create') {

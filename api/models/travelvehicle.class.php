@@ -22,18 +22,17 @@ class TravelVehicle extends Model
     //}
 
 
-    public function addVehicleType($travel_id, $vehicle_name, $vehicle_type_id, $amenities)
+    public function addVehicleType($travel_id, $vehicle_name, $vehicle_type_id)
     {
         $sql = "INSERT INTO " . self::$tbl . "
-                (travel_id, vehicle_name, vehicle_type_id, amenities)
+                (travel_id, vehicle_name, vehicle_type_id)
             VALUES
-                (:travel_id, :vehicle_name, :vehicle_type_id, :amenities)";
+                (:travel_id, :vehicle_name, :vehicle_type_id)";
 
         $param = array(
             'travel_id' => $travel_id,
             'vehicle_name' => $vehicle_name,
-            'vehicle_type_id' => $vehicle_type_id,
-            'amenities' => $amenities
+            'vehicle_type_id' => $vehicle_type_id
         );
 
         if (self::$db->query($sql, $param)) {

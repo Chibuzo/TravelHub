@@ -39,19 +39,19 @@ $user_types = array('admin' => "Administrator",
 										<th style="width:120px">Date Added</th>
 										<th>User fullname</th>
 										<th>Username</th>
-										<th>User Type</th>
+										<th class="hidden">User Type</th>
 										<th style="width:100px">Option</th>
 									</tr>
 								</thead>
 								<tbody>
 									<?php
-										$users = $user->getAllUsers();
+										$users = $user->getTravelUsersByPark($_SESSION['travel_id'], $_SESSION['park_id']);
 										foreach ($users AS $_user) {
-											echo "<tr id='{$_user['id']}'>
-													<td>" . date('jS M Y', strtotime($_user['date_created'])) . "</td>
-													<td>{$_user['fullname']}</td>
-													<td>{$_user['username']}</td>
-													<td>{$user_types[$_user['user_type']]}</td>
+											echo "<tr id='{$_user->id}'>
+													<td>" . date('jS M Y', strtotime($_user->date_created)) . "</td>
+													<td>{$_user->fullname}</td>
+													<td>{$_user->username}</td>
+													<td class='hidden'>{$user_types[$_user->user_type]}</td>
 													<td>
 														<a data-toggle='modal' href='#edit-userModal' class='btn btn-xs btn-info edit' title='Edit user'><i class='fa fa-edit fa-lg'></i></a>&nbsp;&nbsp
 														<a href='#' title='Remove user' class='delete btn btn-xs btn-danger'><i class='fa fa-trash-o fa-lg'></i></a>
@@ -82,17 +82,9 @@ $user_types = array('admin' => "Administrator",
 			<form action="" id="add-user-form">
 				<div class="modal-body">
 					<div class="row form-group">
-						<section class="col-md-6">
+						<section class="col-md-12">
 							<label>Fullname</label>
 							<input type="text" name="fullname" id="fullname" placeholder="Name" class="form-control">
-						</section>
-						<section class="col-md-6">
-							<label>User type</label>
-							<select name="user_level" id="level" class="form-control">
-								<option value="user">User</option>
-								<!--<option value="account">Account</option>-->
-								<option value="admin">Administrator</option>
-							</select>
 						</section>
 					</div>
 
@@ -131,26 +123,14 @@ $user_types = array('admin' => "Administrator",
 			<form action="" id="edit-user-form">
 				<div class="modal-body">
 					<div class="row form-group">
-						<section class="col-md-12">
+						<section class="col-md-6">
 							<label>Fullname</label>
 							<input type="text" name="fullname" id="_fullname" placeholder="Name" class="form-control">
 						</section>
-					</div>
 
-					<div class="row form-group">
 						<section class="col-md-6">
 							<label>Username</label>
 							<input type="text" name="username" id="_username" placeholder="Username" class="form-control">
-						</section>
-
-						<section class="col-md-6">
-							<label>User type</label>
-							<select name="user_level" id="_level" class="form-control">
-								<option value="user">User</option>
-								<!--<option value="account">Account</option>-->
-								<option value="admin">Administrator</option>
-								<option value="travel_admin">Travel Administrator</option>
-							</select>
 						</section>
 					</div>
 				</div>
@@ -200,9 +180,6 @@ $user_types = array('admin' => "Administrator",
         var $parentTr = $(this).parents("tr");
 		$("#_fullname").val($parentTr.find("td:nth-child(2)").text());
 		$("#_username").val($parentTr.find("td:nth-child(3)").text());
-		$("#_level").find("option").filter(function(index) {
-            return $parentTr.find("td:nth-child(4)").text() == $(this).val();
-        }).attr("selected", "selected");
 		$("#user-id").val($parentTr.attr("id"));
 	});
 

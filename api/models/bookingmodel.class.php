@@ -141,7 +141,7 @@ class BookingModel extends Model {
     public function getByTravel($travel_id, $limit = null)
     {
         if ($limit != null) {
-            $limit = "LIMIT 0, 5";
+            $limit = "LIMIT 0, $limit";
         }
         $sql = "SELECT booking_details.*, boarding_vehicle.travel_date AS travel_date, customers.c_name, customers.phone_no, trips.fare, travels.company_name, CONCAT(op.park, ' - ', dp.park) AS route, vehicle_types.`name` AS vehicle_type
                 FROM " . self::$db_tbl . "
