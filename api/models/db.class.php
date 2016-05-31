@@ -47,7 +47,7 @@ class db extends DBConnection {
 			$this->execute($param);
 			return $this->stmt; 	// Return PDO result statment
 		} catch (Exception $e) {
-			return $e->getMessage();
+			throw new Exception($e->getMessage());
 		}
 	}
 

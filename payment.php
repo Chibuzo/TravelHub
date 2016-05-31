@@ -68,9 +68,9 @@ $details = $booking->getTicketRefNo($_SESSION['ticket_id']);
 		</div>
 
 		<div id='btn-checkout'><br />
-			<a href='#' class='btn btn-primary pull-right btn-lg' id='checkout'>Check out</a>
+			<a href='#' class='btn btn-primary btn-lg btn-fill' id='checkout'>Check out</a>
 		</div>
-		<br />
+		<br /><br>
 	</div>
 
 	<div style='margin-top: 15px' id="error" class="alert alert-error hidden"></div>

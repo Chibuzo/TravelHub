@@ -11,17 +11,6 @@ class TravelVehicle extends Model
     }
 
 
-    //function findVehicles($where, $route_id)
-    //{
-    //  $sql = "SELECT f.id fare_id, bt.id vehicle_type_id, num_of_seats, name, fare FROM fares f
-    //          JOIN vehicle_types bt ON f.vehicle_type_id = bt.id
-    //          {$where}";
-    //
-    //  $this->db->query($sql, array('route_id' => $route_id));
-    //  return $this->db->fetchAll();
-    //}
-
-
     public function addVehicleType($travel_id, $vehicle_name, $vehicle_type_id)
     {
         $sql = "INSERT INTO " . self::$tbl . "
@@ -64,7 +53,7 @@ class TravelVehicle extends Model
 
     public function getAllVehicleTypes($travel_id)
     {
-        $sql = "SELECT travel_vehicle_types.*, vehicle_types.num_of_seats, vehicle_types.name AS type_name FROM " . self::$tbl . " INNER JOIN vehicle_types ON vehicle_types.id = travel_vehicle_types.vehicle_type_id WHERE travel_id = :travel_id AND status = '0' ORDER BY vehicle_name";
+        $sql = "SELECT travel_vehicle_types.*, vehicle_types.num_of_seats, vehicle_types.name AS type_name, vehicle_types.id AS vehicle_type_id FROM " . self::$tbl . " INNER JOIN vehicle_types ON vehicle_types.id = travel_vehicle_types.vehicle_type_id WHERE travel_id = :travel_id AND status = '0' ORDER BY vehicle_name";
         self::$db->query($sql, array('travel_id' => $travel_id));
         return self::$db->fetchAll('obj');
     }

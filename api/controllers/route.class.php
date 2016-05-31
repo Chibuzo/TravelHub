@@ -1,6 +1,6 @@
 <?php
 
-class Route extends Oya {
+class Route extends TravelHub {
 	private $params;
 	private $route_obj;
 	
@@ -8,13 +8,13 @@ class Route extends Oya {
 	{
 		parent::__construct();
 		$this->params = $params;
-		$this->route_obj = new RouteModel();
+		$this->model = new RouteModel();
 	}
 	
 	
 	function getRoutes()
 	{
-		return $this->route_obj->getRoutes();
+		return $this->model->getRoutes();
 	}
 	
 	
@@ -23,12 +23,5 @@ class Route extends Oya {
 		$route = "{$this->params['origin']} - {$this->params['destination']}";
 		return $this->route_obj->getRouteId($route);
 	}
-	
-	
-	function getRouteMap()
-	{
-		return $this->route_obj->getRouteMap($this->params['route_id']);
-	}
 }
-
 ?>

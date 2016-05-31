@@ -81,7 +81,7 @@ $states = $park_model->getStates();
                                         if (isset($_state) && $_state != "all") {
                                             $bookings = $booking->getByTravelState($_SESSION['travel_id'], $_state);
                                         } else {
-                                            $bookings = $booking->getBookings();
+                                            $bookings = $booking->getByTravel($_SESSION['travel_id']);
                                         }
 										foreach ($bookings AS $book) {
 											$n++;

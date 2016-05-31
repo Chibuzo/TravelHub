@@ -1,7 +1,7 @@
 <?php
-require_once "paths.php";
-require_once "../lib/autoloader.class.php";
-require_once "apibootstrap.class.php";
+require_once "../config/paths.php";
+require_once "autoloader.class.php";
+require_once "bootstrap.class.php";
 
 $autoloader = new ClassAutoloader();
 
@@ -15,13 +15,13 @@ $app_id = $_REQUEST['app_id'];
 
 try {
 	//check first if the app id exists in the list of applications
-	//if( !isset($applications[$app_id]) ) {
-	//	throw new Exception('Application does not exist!');
-	//}
+	if( !isset($applications[$app_id]) ) {
+		throw new Exception('Application does not exist!');
+	}
 
 	//decrypt the request
-	//$params = json_decode(trim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, $applications[$app_id], base64_decode($enc_request), MCRYPT_MODE_ECB )));
-	$params = json_decode(trim(base64_decode($enc_request)));
+	$params = json_decode(trim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, $applications[$app_id], base64_decode($enc_request), MCRYPT_MODE_ECB )));
+	//$params = json_decode(trim(base64_decode($enc_request)));
 
 	//check if the request is valid by checking if it's an array and looking for the controller and action
 	if (!isset($params->controller) || !isset($params->action)) {
@@ -30,7 +30,7 @@ try {
 
 	$params = (array) $params;
 
-	$bootstrap = new APIBootstrap();
+	$bootstrap = new Bootstrap();
 	$result = $bootstrap->route($params);
 	echo json_encode($result);
 } catch (Exception $e) {

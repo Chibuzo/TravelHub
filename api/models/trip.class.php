@@ -36,6 +36,12 @@ class Trip extends Model
     }
 
 
+    public function getTrip($trip_id)
+    {
+        return self::getOneById('trips', $trip_id);
+    }
+
+
     /* for ticketing office */
     public function getDailyTrips($vehicle_type_id, $park_map_id, $travel_id)
     {

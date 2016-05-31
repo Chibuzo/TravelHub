@@ -85,7 +85,7 @@ $travel_trips = $trip_model->getByStateTravel($_SESSION['state_id'], $_SESSION['
                                                 <option value="" selected>-- Vehicle Type --</option>
                                                 <?php
                                                 foreach ($vehicle_types as $vehicle) {
-                                                    printf("<option value='%s'>%s</option>", $vehicle->id, $vehicle->vehicle_name);
+                                                    printf("<option value='%s'>%s</option>", $vehicle->vehicle_type_id, $vehicle->vehicle_name);
                                                 }
                                                 ?>
                                             </select>

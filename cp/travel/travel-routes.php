@@ -70,19 +70,19 @@ if (isset($_POST['update_state'])) {
 								<tbody id="route-tbl">
 								<?php
 									$html = ""; $n = 0;
-									foreach ($travel_model->getTravelStates($_SESSION['travel_id']) AS $row) {
-										$n++;
-										$html .= "<tr>
-													<td class='text-right'>$n</td>
-													<td>{$row->state_name}</td>
-													<td>{$row->fullname} ({$row->username})</td>
-													<td class='opt-icons text-center' id='{$row->id}' data-row-id='{$row->id}' data-userid='{$row->user_id}' data-fullname='{$row->fullname}' data-username='{$row->username}' data-state-id='{$row->state_id}'>
+                               	    foreach ($travel_model->getTravelStates($_SESSION['travel_id']) AS $row) {
+                                        $n++;
+                                        $html .= "<tr>
+                                                    <td class='text-right'>$n</td>
+                                                    <td>{$row->state_name}</td>
+                                                    <td>{$row->fullname} ({$row->username})</td>
+                                                    <td class='opt-icons text-center' id='{$row->id}' data-row-id='{$row->id}' data-userid='{$row->user_id}' data-fullname='{$row->fullname}' data-username='{$row->username}' data-state-id='{$row->state_id}'>
                                                         <span data-toggle='tooltip' title='Edit'>
                                                             <a href='#' class='edit-state' data-toggle='modal' rel='tooltip' data-target='#editState'><i class='fa fa-pencil'></i></a>
                                                         </span>
-														<a href='#' class='remove-state' title='Remove' data-toggle='tooltip'><i class='fa fa-trash-o'></i></a>
-													</td>
-												</tr>";
+                                                        <a href='#' class='remove-state' title='Remove' data-toggle='tooltip'><i class='fa fa-trash-o'></i></a>
+                                                    </td>
+                                                </tr>";
 									}
 									echo $html;
 								?>

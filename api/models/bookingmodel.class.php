@@ -74,17 +74,17 @@ class BookingModel extends Model {
 	}
 
 
-	function book($boarding_vehicle_id, $seat_no, $payment_opt, $customer_id)
+	function book($boarding_vehicle_id, $seat_no, $channel, $customer_id)
 	{
 		$ticket_no = $this->generateRefNo();
 
 		$sql = "INSERT INTO " . self::$db_tbl . "
-		(ticket_no, payment_opt, boarding_vehicle_id, seat_no, customer_id)
+		(ticket_no, channel, boarding_vehicle_id, seat_no, customer_id)
 		VALUES
-		('$ticket_no', :payment_opt, :boarding_vehicle_id, :seat_no, '$customer_id')";
+		('$ticket_no', :channel, :boarding_vehicle_id, :seat_no, '$customer_id')";
 
 		$param = array(
-			'payment_opt' => $payment_opt,
+			'channel' => $channel,
 			'boarding_vehicle_id' => $boarding_vehicle_id,
 			'seat_no' => $seat_no
 		);
@@ -99,6 +99,34 @@ class BookingModel extends Model {
 		} else {
 			return "03"; // Booking wasn't successful
 		}
+	}
+
+
+	public function externalBooking($trip_id, $travel_date, $departure_order, $seat_no, $customer_id, $channel)
+	{
+		// first, get boarding vehicle ID
+		$boarding_vehicle_id = self::getBoardingVehicleId($trip_id, $departure_order, $travel_date);
+		if ($boarding_vehicle_id == false) {
+			$trip = new Trip();
+			$_trip = $trip->getTrip($trip_id);
+
+			$vehicle = new VehicleModel();
+			$vehicle->fixBoardingVehicles($_trip->vehicle_type_id, $_trip->park_map_id, $travel_date, $_trip->travel_id);
+			$boarding_vehicle_id = self::getBoardingVehicleId($trip_id, $departure_order, $travel_date);
+		}
+echo $boarding_vehicle_id . "ikpu";
+		// reserve seat, haha
+		$result = $this->reserveSeat($boarding_vehicle_id, $seat_no);
+		if ($result != $seat_no) {
+			throw new Exception ("Couldn't reserve seat. Please try again", "01");
+		}
+
+		// complete booking
+		$result = $this->book($boarding_vehicle_id, $seat_no, $channel, $customer_id);
+		if ($result != true) {
+			throw new Exception ("Booking not successful", "02");
+		}
+		return true;
 	}
 
 
@@ -205,6 +233,33 @@ class BookingModel extends Model {
         self::$db->query($sql, array('travel_id' => $travel_id, 'park_id' => $park_id));
         return self::$db->fetchAll('obj');
     }
+
+
+	private function getBoardingVehicleId($trip_id, $departure_order, $travel_date)
+	{
+		if (is_numeric($departure_order) == false) {
+			$query = "AND seat_status = 'Not full'";
+			$param = array(
+				'trip_id' => $trip_id,
+				'travel_date' => $travel_date
+			);
+		} else {
+			$query = "AND departure_order = :departure_order";
+			$param = array(
+				'trip_id' => $trip_id,
+				'departure_order' => $departure_order,
+				'travel_date' => $travel_date
+			);
+		}
+		$sql = "SELECT id FROM boarding_vehicle WHERE trip_id = :trip_id AND travel_date = :travel_date $query";
+
+		self::$db->query($sql, $param);
+		if ($d = self::$db->fetch('obj')) {
+			return $d->id;
+		} else {
+			return false;
+		}
+	}
 
 	function cancelBooking($id = null, $travel_date = null, $ref_no = null)
 	{

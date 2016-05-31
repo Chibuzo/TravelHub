@@ -1,6 +1,6 @@
 <?php
 
-class Oya {
+class TravelHub {
 	protected function __construct() {
 		
 	}

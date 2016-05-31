@@ -64,6 +64,12 @@ a:link, a:visited {
 	color: #666;
 }
 
+a.btn-primary, .btn-fill:visited {
+	background-color: #515b6b;
+	border-color: #515b6b;
+	color:#fff;
+}
+
 .alert {
   padding: 10px 35px 10px 14px;
   margin-bottom: 18px;
