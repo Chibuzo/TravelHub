@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 28, 2016 at 08:26 PM
+-- Generation Time: May 31, 2016 at 11:51 PM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -38,28 +38,14 @@ CREATE TABLE IF NOT EXISTS `boarding_vehicle` (
   `seat_status` enum('Not full','Full') NOT NULL DEFAULT 'Not full',
   `travel_date` date NOT NULL,
   `travel_id` smallint(6) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `boarding_vehicle`
 --
 
 INSERT INTO `boarding_vehicle` (`id`, `booked_vehicle_id`, `trip_id`, `park_map_id`, `vehicle_type_id`, `booked_seats`, `departure_order`, `fare`, `seat_status`, `travel_date`, `travel_id`) VALUES
-(19, 1, 7, 7, 1, '2,5,4,3,1', 1, '6000.00', 'Full', '2016-02-23', 4),
-(20, 2, 7, 7, 1, '5,2,1,3', 2, '6000.00', 'Full', '2016-02-23', 4),
-(21, 0, 7, 7, 1, '', 3, '6000.00', 'Not full', '2016-02-23', 4),
-(22, 0, 7, 7, 1, '3,5', 4, '6000.00', 'Not full', '2016-02-23', 4),
-(23, 0, 7, 7, 1, '2,3', 1, '6000.00', 'Not full', '2016-02-24', 4),
-(24, 4, 8, 7, 3, '7', 1, '6000.00', 'Not full', '2016-02-26', 4),
-(25, 0, 1, 0, 0, '', 3, '4000.00', 'Not full', '2016-02-28', 0),
-(26, 0, 2, 0, 0, '', 1, '5000.00', 'Not full', '2016-02-28', 0),
-(27, 0, 4, 0, 0, '', 1, '2500.00', 'Not full', '2016-02-28', 0),
-(28, 0, 6, 0, 0, '', 2, '2500.00', 'Not full', '2016-02-28', 0),
-(29, 0, 1, 0, 0, '', 3, '4000.00', 'Not full', '2016-02-29', 0),
-(30, 0, 2, 0, 0, '', 1, '5000.00', 'Not full', '2016-02-29', 0),
-(31, 0, 4, 0, 0, '', 1, '2500.00', 'Not full', '2016-02-29', 0),
-(32, 0, 6, 0, 0, '', 2, '2500.00', 'Not full', '2016-02-29', 0),
-(33, 0, 3, 0, 0, '', 1, '3000.00', 'Not full', '2016-02-29', 0);
+(1, 0, 11, 7, 3, '2,4,3,1,5,6', 1, '4000.00', 'Not full', '2016-05-30', 6);
 
 -- --------------------------------------------------------
 
@@ -96,7 +82,7 @@ INSERT INTO `booked_vehicles` (`id`, `vehicle_no`, `vehicle_type_id`, `departure
 CREATE TABLE IF NOT EXISTS `booking_details` (
 `id` int(11) NOT NULL,
   `payment_status` varchar(15) NOT NULL DEFAULT 'Not paid',
-  `payment_opt` varchar(15) NOT NULL,
+  `channel` varchar(15) NOT NULL,
   `response` varchar(100) NOT NULL,
   `ticket_no` char(8) NOT NULL,
   `boarding_vehicle_id` int(11) NOT NULL,
@@ -106,28 +92,19 @@ CREATE TABLE IF NOT EXISTS `booking_details` (
   `date_booked` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `user_id` int(11) NOT NULL,
   `status` char(1) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `booking_details`
 --
 
-INSERT INTO `booking_details` (`id`, `payment_status`, `payment_opt`, `response`, `ticket_no`, `boarding_vehicle_id`, `seat_no`, `park_id`, `customer_id`, `date_booked`, `user_id`, `status`) VALUES
-(1, 'Not paid', 'offline', '', 'DQFZNKH7', 1, 1, 0, 4, '2016-02-09 04:04:07', 0, '1'),
-(2, 'Not paid', 'offline', '', 'I8LY8YGH', 0, 5, 0, 5, '2016-02-21 01:16:47', 0, '1'),
-(3, 'Not paid', 'offline', '', 'XQCDQSA1', 19, 4, 0, 8, '2016-02-23 20:50:25', 0, '1'),
-(4, 'Paid', 'offline', '', 'VMQQUFHC', 19, 3, 0, 9, '2016-02-23 21:07:33', 0, '1'),
-(5, 'Paid', 'offline', '', 'SLITMPAT', 19, 1, 0, 10, '2016-02-23 22:38:13', 0, '1'),
-(6, 'Paid', 'offline', '', 'DG5DEQDW', 20, 5, 0, 11, '2016-02-23 23:58:21', 0, '1'),
-(7, 'Paid', 'offline', '', 'EI23PY6A', 20, 2, 0, 12, '2016-02-23 23:59:47', 0, '1'),
-(8, 'Paid', 'offline', '', 'RNQHYKKY', 20, 1, 0, 13, '2016-02-24 00:00:41', 0, '1'),
-(9, 'Paid', 'offline', '', 'RPUW2HWF', 20, 3, 0, 14, '2016-02-24 00:02:19', 0, '1'),
-(10, 'Paid', 'offline', '', 'DOCTNPAG', 0, 3, 0, 15, '2016-02-24 10:17:15', 0, '1'),
-(11, 'Paid', 'offline', '', 'RTIMO6VL', 23, 2, 0, 16, '2016-02-24 12:00:08', 0, '1'),
-(12, 'Paid', 'offline', '', 'OTU99JOW', 23, 3, 0, 17, '2016-02-24 12:07:38', 0, '1'),
-(13, 'Paid', 'offline', '', 'DPHTYMLH', 24, 7, 0, 5, '2016-02-26 12:35:33', 0, '1'),
-(14, 'Not paid', 'offline', '', 'TIAXXK2O', 0, 3, 0, 18, '2016-02-26 16:40:19', 0, '1'),
-(15, 'Not paid', 'online', '', '6GUND6G5', 0, 5, 0, 19, '2016-02-27 12:52:30', 0, '1');
+INSERT INTO `booking_details` (`id`, `payment_status`, `channel`, `response`, `ticket_no`, `boarding_vehicle_id`, `seat_no`, `park_id`, `customer_id`, `date_booked`, `user_id`, `status`) VALUES
+(1, 'Not paid', 'offline', '', 'RLRTEBOH', 1, 2, 0, 17, '2016-05-28 01:40:02', 0, '1'),
+(2, 'Not paid', 'offline', '', 'VVYCVVNG', 1, 4, 0, 20, '2016-05-28 01:43:59', 0, '1'),
+(3, 'Not paid', 'offline', '', 'SXT64JZL', 1, 3, 0, 17, '2016-05-28 01:47:52', 0, '1'),
+(4, 'Not paid', 'offline', '', 'WDNMW4ZD', 1, 1, 0, 17, '2016-05-28 01:48:34', 0, '1'),
+(5, 'Not paid', 'offline', '', 'MIHSFBHD', 1, 5, 0, 17, '2016-05-28 01:49:17', 0, '1'),
+(6, 'Not paid', 'offline', '', 'SC1RRREG', 1, 6, 0, 17, '2016-05-28 01:52:17', 0, '1');
 
 -- --------------------------------------------------------
 
@@ -167,7 +144,7 @@ CREATE TABLE IF NOT EXISTS `customers` (
   `c_name` varchar(40) NOT NULL,
   `phone_no` varchar(12) NOT NULL,
   `next_of_kin_phone` varchar(12) NOT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `customers`
@@ -192,7 +169,8 @@ INSERT INTO `customers` (`id`, `c_name`, `phone_no`, `next_of_kin_phone`) VALUES
 (16, 'Kester', '0485048540', '038535808'),
 (17, 'Jide', '08035725606', '08035725606'),
 (18, 'Okolo', '09689484', '085359308'),
-(19, 'uzo', '845808977', '8798987987');
+(19, 'uzo', '845808977', '8798987987'),
+(20, 'Trother', '080555555667', '080555555667');
 
 -- --------------------------------------------------------
 
@@ -551,19 +529,21 @@ INSERT INTO `states_towns` (`id`, `name`, `time_added`) VALUES
 CREATE TABLE IF NOT EXISTS `travels` (
 `id` tinyint(3) NOT NULL,
   `company_name` varchar(50) NOT NULL,
+  `abbr` varchar(20) NOT NULL,
   `offline_charge` varchar(6) NOT NULL,
   `online_charge` varchar(6) NOT NULL,
   `date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `deleted` tinyint(1) NOT NULL DEFAULT '0'
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `travels`
 --
 
-INSERT INTO `travels` (`id`, `company_name`, `offline_charge`, `online_charge`, `date_created`, `deleted`) VALUES
-(4, 'Ekene', '8', '11', '2015-10-30 04:33:01', 0),
-(5, 'Ifesinachi', '5', '10', '2015-11-01 23:08:48', 0);
+INSERT INTO `travels` (`id`, `company_name`, `abbr`, `offline_charge`, `online_charge`, `date_created`, `deleted`) VALUES
+(4, 'Ekene', '', '8', '11', '2015-10-30 04:33:01', 0),
+(5, 'Ifesinachi Mass Transit', 'Ifesinachi', '5', '10', '2015-11-01 23:08:48', 0),
+(6, 'Peace Mass Transit', 'Peace', '2', '5', '2016-05-20 19:35:53', 0);
 
 -- --------------------------------------------------------
 
@@ -575,7 +555,7 @@ CREATE TABLE IF NOT EXISTS `travel_admins` (
 `id` int(11) NOT NULL,
   `travel_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `travel_admins`
@@ -594,7 +574,11 @@ INSERT INTO `travel_admins` (`id`, `travel_id`, `user_id`) VALUES
 (21, 5, 28),
 (22, 4, 29),
 (23, 4, 30),
-(24, 4, 31);
+(24, 4, 31),
+(25, 6, 32),
+(26, 6, 33),
+(27, 6, 34),
+(28, 6, 35);
 
 -- --------------------------------------------------------
 
@@ -607,7 +591,7 @@ CREATE TABLE IF NOT EXISTS `travel_park` (
   `travel_id` int(11) NOT NULL,
   `park_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `travel_park`
@@ -618,7 +602,8 @@ INSERT INTO `travel_park` (`id`, `travel_id`, `park_id`, `user_id`) VALUES
 (2, 4, 14, 25),
 (3, 4, 2, 26),
 (4, 4, 16, 30),
-(5, 4, 17, 31);
+(5, 4, 17, 31),
+(6, 6, 16, 35);
 
 -- --------------------------------------------------------
 
@@ -632,7 +617,7 @@ CREATE TABLE IF NOT EXISTS `travel_park_map` (
   `park_map_id` smallint(6) NOT NULL,
   `status` tinyint(4) NOT NULL DEFAULT '0',
   `date_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `travel_park_map`
@@ -646,7 +631,9 @@ INSERT INTO `travel_park_map` (`id`, `travel_id`, `park_map_id`, `status`, `date
 (5, 4, 5, 0, '2015-11-20 14:51:32'),
 (6, 4, 6, 0, '2016-01-28 22:33:58'),
 (7, 4, 7, 0, '2016-02-21 11:59:35'),
-(10, 4, 10, 0, '2016-02-22 20:33:46');
+(10, 4, 10, 0, '2016-02-22 20:33:46'),
+(11, 6, 7, 0, '2016-05-20 20:20:35'),
+(12, 6, 10, 0, '2016-05-20 20:20:59');
 
 -- --------------------------------------------------------
 
@@ -674,7 +661,7 @@ CREATE TABLE IF NOT EXISTS `travel_state` (
   `travel_id` int(11) NOT NULL,
   `state_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `travel_state`
@@ -684,7 +671,9 @@ INSERT INTO `travel_state` (`id`, `travel_id`, `state_id`, `user_id`) VALUES
 (4, 4, 16, 12),
 (11, 4, 25, 19),
 (12, 5, 20, 28),
-(13, 4, 3, 29);
+(13, 4, 3, 29),
+(14, 6, 3, 33),
+(15, 6, 25, 34);
 
 -- --------------------------------------------------------
 
@@ -700,7 +689,7 @@ CREATE TABLE IF NOT EXISTS `travel_vehicle_types` (
   `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0 for active, 1 for inactive',
   `date_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `date_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `travel_vehicle_types`
@@ -709,7 +698,9 @@ CREATE TABLE IF NOT EXISTS `travel_vehicle_types` (
 INSERT INTO `travel_vehicle_types` (`id`, `travel_id`, `vehicle_name`, `vehicle_type_id`, `status`, `date_modified`, `date_added`) VALUES
 (1, 4, 'Coach', 4, 0, '2015-11-15 13:17:41', '2015-11-15 13:13:14'),
 (3, 4, 'Executive', 1, 0, '2015-11-15 13:30:18', '2015-11-15 13:30:18'),
-(4, 4, 'Luxury Bus', 5, 0, '2015-11-15 13:30:57', '2015-11-15 13:30:57');
+(4, 4, 'Luxury Bus', 5, 0, '2015-11-15 13:30:57', '2015-11-15 13:30:57'),
+(5, 6, 'Hiace', 3, 0, '2016-05-20 20:24:26', '2016-05-20 20:24:26'),
+(6, 6, 'Foton', 8, 0, '2016-05-20 20:24:44', '2016-05-20 20:24:44');
 
 -- --------------------------------------------------------
 
@@ -730,7 +721,7 @@ CREATE TABLE IF NOT EXISTS `trips` (
   `date_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_updated` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   `fare` float(6,0) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `trips`
@@ -745,7 +736,9 @@ INSERT INTO `trips` (`id`, `park_map_id`, `travel_id`, `state_id`, `departure`, 
 (6, 3, 4, 25, 2, 14, 1, 'A/C', '01:00:00', '2016-02-21 00:45:46', '2016-02-21 01:43:34', 2500),
 (7, 7, 4, 3, 1, 1, 1, 'A/C>Refreshment', '12:45:00', '2016-02-21 12:00:29', '2016-02-21 12:06:16', 6000),
 (8, 7, 4, 3, 2, 1, 3, 'A/C', '02:00:00', '2016-02-23 01:00:39', '0000-00-00 00:00:00', 6000),
-(9, 7, 4, 3, 2, 1, 1, 'A/C', '02:00:00', '2016-02-23 01:01:04', '2016-02-23 01:01:30', 5500);
+(9, 7, 4, 3, 2, 1, 1, 'A/C', '02:00:00', '2016-02-23 01:01:04', '2016-02-23 01:01:30', 5500),
+(10, 7, 6, 3, 1, 1, 5, 'A/C', '07:00:00', '2016-05-20 20:43:46', '0000-00-00 00:00:00', 4000),
+(11, 7, 6, 3, 1, 1, 3, 'A/C', '07:15:00', '2016-05-20 21:18:34', '0000-00-00 00:00:00', 4000);
 
 -- --------------------------------------------------------
 
@@ -762,7 +755,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `user_type` varchar(15) NOT NULL,
   `date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `deleted` char(1) NOT NULL DEFAULT '0'
-) ENGINE=MyISAM AUTO_INCREMENT=32 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=36 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
@@ -786,7 +779,11 @@ INSERT INTO `users` (`id`, `fullname`, `username`, `password`, `salt`, `user_typ
 (28, 'Kano Admin', 'kano', '34ee91c74a47a7b683c659229706699d42fb97bc4b184515b17ca62881760004', 'R2jV1gxEX6f60z+FaF3SBpsN081ZPt1R', 'state_admin', '2016-01-28 19:24:22', '0'),
 (29, 'Chibuzo Okolo', 'buzo', '7db807d9c3361a22e8e353ccf39906d467724bd76548499b8135b933d88226b3', 'FbFTf7p9IFg36kP6Qpyt0cXH56kx2zlt', 'state_admin', '2016-02-21 11:44:09', '0'),
 (30, 'Chris Ossai', 'chris', '37d95369d4ba4ee3dfff6b9cbb4266da958efa8604cc174c73863ede1965b853', 'zHeQ1Y0zwpyHoxdO7LE7MyDmF4OIC6xE', 'park_admin', '2016-02-21 11:59:15', '0'),
-(31, 'Oliver Ossai', 'bekee', '562bc813edcbce4aae12f936c31f9bf251ef3600be9ea17c63f3791a9a693400', '2RSToOqvxuEsd+net8y1FrhdFM7qTZvX', 'park_admin', '2016-02-22 20:34:25', '0');
+(31, 'Oliver Ossai', 'bekee', '562bc813edcbce4aae12f936c31f9bf251ef3600be9ea17c63f3791a9a693400', '2RSToOqvxuEsd+net8y1FrhdFM7qTZvX', 'park_admin', '2016-02-22 20:34:25', '0'),
+(32, 'chibike', 'chibike', '7273daa4fd761ccc996c0f7b811fdbee28600892431c484481a39461ad16e30f', 'JlZRMO4vHj0KaMPA2Zf9OoMMwa+gJPA2', 'travel_admin', '2016-05-20 20:09:13', '0'),
+(33, 'Chibuzo Okolo', 'peace_enugu', 'd748618ddee1ea60072e491ef8eb9c50b0b65597e4cb077d54ddfdae72d9ed80', 'f1r7dAdyy2RG7T+C9W8zD5svhWfGXBHP', 'state_admin', '2016-05-20 20:17:24', '0'),
+(34, 'Ossai Emeka', 'ossai', 'cbf635fee76cde847f9d91fbd2216c3644507b226f513f1fa841ffc13fdcbeb7', 'hFtsio6QERahU/S4UHM8HG9i9CG9jQab', 'state_admin', '2016-05-20 20:18:41', '0'),
+(35, 'Peace Holyghost', 'peace_holyghost', '73415eaa99847c4ed4afef60ea6b670e1cff4ee0a1cb075e8cb7443700cb08dc', 'VB3c+uxRNKNOLXw0kRoxweIVpHyuMwVN', 'park_admin', '2016-05-20 20:20:03', '0');
 
 -- --------------------------------------------------------
 
@@ -1017,7 +1014,7 @@ ALTER TABLE `vehicle_types`
 -- AUTO_INCREMENT for table `boarding_vehicle`
 --
 ALTER TABLE `boarding_vehicle`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=34;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `booked_vehicles`
 --
@@ -1027,7 +1024,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 -- AUTO_INCREMENT for table `booking_details`
 --
 ALTER TABLE `booking_details`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `bus_charter`
 --
@@ -1037,7 +1034,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=20;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT for table `departure_time`
 --
@@ -1097,22 +1094,22 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=56;
 -- AUTO_INCREMENT for table `travels`
 --
 ALTER TABLE `travels`
-MODIFY `id` tinyint(3) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+MODIFY `id` tinyint(3) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `travel_admins`
 --
 ALTER TABLE `travel_admins`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=25;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=29;
 --
 -- AUTO_INCREMENT for table `travel_park`
 --
 ALTER TABLE `travel_park`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `travel_park_map`
 --
 ALTER TABLE `travel_park_map`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `travel_routes`
 --
@@ -1122,22 +1119,22 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT for table `travel_state`
 --
 ALTER TABLE `travel_state`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `travel_vehicle_types`
 --
 ALTER TABLE `travel_vehicle_types`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `trips`
 --
 ALTER TABLE `trips`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-MODIFY `id` tinyint(4) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=32;
+MODIFY `id` tinyint(4) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=36;
 --
 -- AUTO_INCREMENT for table `vehicle_info`
 --
