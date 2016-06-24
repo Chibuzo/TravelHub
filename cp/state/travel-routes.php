@@ -64,7 +64,6 @@ if (isset($_POST['update_park'])) {
 								<thead>
 									<tr>
 										<th width='30'>S/No</th>
-                                        <th width="70">Park ID</th>
 										<th>Park</th>
 										<th>Admin (username)</th>
 										<th></th>
@@ -77,8 +76,7 @@ if (isset($_POST['update_park'])) {
 										$n++;
 										$html .= "<tr>
 													<td class='text-right'>$n</td>
-													<td class='text-right'>{$row->park_id}</td>
-													<td>{$row->park} {$row->state_name}</td>
+													<td>{$row->park} ({$row->state_name})</td>
 													<td>{$row->fullname} ({$row->username})</td>
 													<td class='opt-icons text-center' id='{$row->park_id}' data-row-id='{$row->id}' data-userid='{$row->user_id}' data-fullname='{$row->fullname}' data-username='{$row->username}' data-state-id='{$row->park_id}'>
 													    <span data-toggle='tooltip' title='Edit'>

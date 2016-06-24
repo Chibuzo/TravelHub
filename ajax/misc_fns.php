@@ -71,11 +71,8 @@ if (isset($_REQUEST['op'])) {
     {
         require_once "../api/models/user.class.php";
         $user_model = new User();
-        $result = $user_model->createUser($_POST['full_name'], $_POST['username'], $_POST['password'], 'travel_admin');
-        if ($result != false) {
-            $user_model->linkUserToTravel($_POST['travel_id'], $result);
-            echo "Done";
-        }
+        $result = $user_model->createTravelAdmin($_POST['full_name'], $_POST['username'], $_POST['password'], 'travel_admin', $_POST['travel_id']);
+        echo ($result !== false) ? "Done" : "Error";
     }
     elseif ($_POST['op'] == 'park-details')
     {

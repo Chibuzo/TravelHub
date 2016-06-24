@@ -96,10 +96,10 @@ class ParkModel extends Model {
 
     function getTravelParks($travel_id)
     {
-        $sql = "SELECT travel_park.id, travel_park.travel_id AS travel_id, parks.park, states.state_name AS state_name, states.id AS state_id, users.fullname, users.username, users.id AS user_id
+        $sql = "SELECT travel_park.id, travel_park.travel_id AS travel_id, parks.park, states.state_name AS state_name, states.id AS state_id, travel_admins.fullname, travel_admins.username, travel_admins.id AS user_id
                 FROM travel_park
                 INNER JOIN parks ON travel_park.park_id = parks.id
-                INNER JOIN users ON travel_park.user_id = users.id
+                INNER JOIN travel_admins ON travel_park.user_id = travel_admins.id
                 INNER JOIN states ON states.id = parks.state_id
                 WHERE travel_park.travel_id = :travel_id";
         self::$db->query($sql, array('travel_id' => $travel_id));
@@ -108,10 +108,10 @@ class ParkModel extends Model {
 
     function getTravelParksByState($travel_id, $state_id)
     {
-        $sql = "SELECT travel_park.id, travel_park.travel_id AS travel_id, parks.park, parks.id AS park_id, users.fullname, users.username, users.id AS user_id, states.state_name AS state_name
+        $sql = "SELECT travel_park.id, travel_park.travel_id AS travel_id, parks.park, parks.id AS park_id, travel_admins.fullname, travel_admins.username, travel_admins.id AS user_id, states.state_name AS state_name
                 FROM travel_park
                 INNER JOIN parks ON travel_park.park_id = parks.id
-                INNER JOIN users ON travel_park.user_id = users.id
+                INNER JOIN travel_admins ON travel_park.user_id = travel_admins.id
                 INNER JOIN states ON parks.state_id = states.id
                 WHERE travel_park.travel_id = :travel_id AND parks.state_id = :state_id";
         self::$db->query($sql, array('travel_id' => $travel_id, 'state_id' => $state_id));
@@ -120,10 +120,10 @@ class ParkModel extends Model {
 
     function getTravelParksByPark($travel_id, $park_id)
     {
-        $sql = "SELECT travel_park.id, travel_park.travel_id AS travel_id, parks.park, parks.id AS park_id, users.fullname, users.username, users.id AS user_id, states.state_name AS state_name
+        $sql = "SELECT travel_park.id, travel_park.travel_id AS travel_id, parks.park, parks.id AS park_id, travel_admins.fullname, travel_admins.username, travel_admins.id AS user_id, states.state_name AS state_name
                 FROM travel_park
                 INNER JOIN parks ON travel_park.park_id = parks.id
-                INNER JOIN users ON travel_park.user_id = users.id
+                INNER JOIN travel_admins ON travel_park.user_id = travel_admins.id
                 INNER JOIN states ON parks.state_id = states.id
                 WHERE travel_park.travel_id = :travel_id AND parks.id = :park_id";
         self::$db->query($sql, array('travel_id' => $travel_id, 'park_id' => $park_id));

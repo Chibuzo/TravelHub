@@ -32,7 +32,7 @@ if (isset($_POST['op'])) {
     }
 }
 
-$travel_trips = $trip_model->getByStateTravel($_SESSION['state_id'], $_SESSION['travel_id']);
+$travel_trips = $trip_model->getByParkTravel($_SESSION['park_id'], $_SESSION['travel_id']);
 
 ?>
 <div class="content-wrapper">

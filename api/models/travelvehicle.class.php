@@ -53,7 +53,9 @@ class TravelVehicle extends Model
 
     public function getAllVehicleTypes($travel_id)
     {
-        $sql = "SELECT travel_vehicle_types.*, vehicle_types.num_of_seats, vehicle_types.name AS type_name, vehicle_types.id AS vehicle_type_id FROM " . self::$tbl . " INNER JOIN vehicle_types ON vehicle_types.id = travel_vehicle_types.vehicle_type_id WHERE travel_id = :travel_id AND status = '0' ORDER BY vehicle_name";
+        $sql = "SELECT travel_vehicle_types.*, vehicle_types.num_of_seats, vehicle_types.name AS type_name, vehicle_types.id AS vehicle_type_id "
+            . "FROM " . self::$tbl
+            . " INNER JOIN vehicle_types ON vehicle_types.id = travel_vehicle_types.vehicle_type_id WHERE travel_id = :travel_id AND status = '0' ORDER BY vehicle_name";
         self::$db->query($sql, array('travel_id' => $travel_id));
         return self::$db->fetchAll('obj');
     }
