@@ -3,7 +3,8 @@
 require_once '../api/models/user.class.php';
 require_once '../api/models/travelparkmap.class.php';
 
-$user_types = array('admin' => "Administrator",
+$user_types = array(
+    'admin' => "Administrator",
     "user" => "User",
     "travel_admin" => "Travel Administrator",
     "account" => "Account",
@@ -29,7 +30,7 @@ if (is_array($travel_admins) && count($travel_admins) > 0):
     <table id="travel_admin_tbl" class="table tablebordered table-striped">
         <thead>
         <tr>
-            <th width='30'>S/No</th>
+            <th>S/No</th>
             <th>Full Name</th>
             <th>Username</th>
             <th>User Type</th>
@@ -39,8 +40,18 @@ if (is_array($travel_admins) && count($travel_admins) > 0):
         <?php
         $i = 1;
         foreach ($travel_admins as $admin) {
-            printf("<tr><td>%d</td><td>%s</td><td>%s</td><td>%s</td></tr>", $i, $admin->fullname, $admin->username, $user_types[$admin->user_type]);
-            $i += 1;
+            printf("<tr data-id='%d'><td>%d</td>", $admin->id, $i);
+            printf("<td>%s</td>", $admin->fullname);
+            printf("<td>%s</td>", $admin->username);
+            printf("<td>%s</td>", $user_types[$admin->user_type]);
+            ?>
+            <td class='opt-icons text-center'>
+                <a class='edit-travel-admin' href='' title='Edit' data-toggle='tooltip'><i class='fa fa-pencil'></i></a>
+                <a class="delete-travel-admin" href='' title='Edit' data-toggle="modal" data-target="#deleteTravelAdmin"><i class='fa fa-trash' data-toggle='tooltip'></i></a>
+            </td>
+            </tr>
+            <?php
+            $i++;
         }
         ?>
         </tbody>

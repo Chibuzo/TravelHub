@@ -53,7 +53,7 @@ $user_types = array('admin' => "Administrator",
 													<td>{$_user['username']}</td>
 													<td>{$user_types[$_user['user_type']]}</td>
 													<td>
-														<a data-toggle='modal' href='#edit-userModal' class='btn btn-xs btn-info edit' title='Edit user'><i class='fa fa-edit fa-lg'></i></a>&nbsp;&nbsp
+														<a data-toggle='modal' href='#edit-userModal' class='btn btn-xs btn-info edit' title='Edit user'><i class='fa fa-edit fa-lg'></i></a>&nbsp;&nbsp;
 														<a href='#' title='Remove user' class='delete btn btn-xs btn-danger'><i class='fa fa-trash-o fa-lg'></i></a>
 													</td>
 												</tr>";
@@ -149,7 +149,6 @@ $user_types = array('admin' => "Administrator",
 								<option value="user">User</option>
 								<!--<option value="account">Account</option>-->
 								<option value="admin">Administrator</option>
-								<option value="travel_admin">Travel Administrator</option>
 							</select>
 						</section>
 					</div>

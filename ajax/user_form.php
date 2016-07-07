@@ -16,9 +16,15 @@ elseif ($_REQUEST['op'] == 'edit-user') {
 	}
 }
 elseif ($_REQUEST['op'] == 'delete-user') {
-	if ($user->delete('', $_POST['id']) === true) {
-		echo "Done";
-	}
+    if (isset($_POST['user_type']) && $_POST['user_type'] == "travel_admin") {
+        if ($user->delete($_POST['id'], 'travel_admins') === true) {
+            echo "Done";
+        }
+    } else {
+        if ($user->delete($_POST['id']) === true) {
+            echo "Done";
+        }
+    }
 }
 elseif ($_REQUEST['op'] == 'update-username') {
 	if ($user->changeUsername($name, $_SESSION['user_id']) === true) {
@@ -34,4 +40,12 @@ elseif ($_REQUEST['op'] == 'change-password') {
 		echo $e->getMessage();
 	}
 }
-?>
+elseif ($_REQUEST['op'] == 'edit-travel-admin') {
+    try {
+        if ($user->updateTravelUser($id, $full_name, $username) === true) {
+            echo "Done";
+        }
+    } catch (Exception $e) {
+        echo $e->getMessage();
+    }
+}

@@ -24,7 +24,7 @@ if (isset($_POST['update_state'])) {
     $user_model = new User();
     $user = $user_model->getUserById($_POST['user_id']);
 
-    $user_model->updateUser($_POST['user_id'], $_POST['full_name'], $_POST['username'], 'state_admin', $password);
+    $user_model->updateTravelUser($_POST['user_id'], $_POST['full_name'], $_POST['username'], 'state_admin', $password);
 }
 
 ?>

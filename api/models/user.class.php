@@ -3,6 +3,8 @@ require_once "travel.class.php";
 
 class User extends Travel {
 
+    private $tables = array('operator' => 'travel_admins', 'travelhub' => 'users');
+
 	function __construct()
 	{
 		parent::__construct();
@@ -39,24 +41,44 @@ class User extends Travel {
 		return false;
 	}
 
-    function createTravelAdmin($fullname, $username, $password, $travel_id)
+    function createTravelAdmin($fullname, $username, $password, $user_type, $travel_id)
     {
-        self::$db->beginDbTransaction();
-        $user_id = $this->createUser($fullname, $username, $password, 'travel_admin');
-        if ($user_id != false) {
-            $this->linkUserToTravel($travel_id, $user_id);
-            self::$db->commitTransaction();
+        $sql = "SELECT username FROM travel_admins WHERE username = :username";
+        self::$db->query($sql, array('username' => $username));
+        $result = self::$db->fetch();
+        if (isset($result->username)) {
+            return "02"; // username already taken
         } else {
-            self::$db->rollBackTransaction();
+            $salt     = base64_encode(mcrypt_create_iv(24, MCRYPT_DEV_URANDOM));
+            $password = hash('sha256', $password . $salt);
+
+            $param = array(
+                'fullname'  => $fullname,
+                'username'  => $username,
+                'password'  => $password,
+                'user_type'  => $user_type,
+                'salt'      => $salt,
+                'travel_id' => $travel_id
+            );
+
+            $sql = "INSERT INTO travel_admins
+						(fullname, username, password, user_type, salt, travel_id)
+					VALUES
+						(:fullname, :username, :password, :user_type, :salt, :travel_id)";
+
+            if (self::$db->query($sql, $param)) {
+                return self::$db->getLastInsertId();
+            }
         }
+        return false;
     }
 
     function createStateAdmin($fullname, $username, $password, $travel_id, $state_id)
     {
         self::$db->beginDbTransaction();
-        $user_id = $this->createUser($fullname, $username, $password, 'state_admin');
+        $user_id = $this->createTravelAdmin($fullname, $username, $password, 'state_admin', $travel_id);
         if ($user_id !== false) {
-            if (($this->linkUserToTravel($travel_id, $user_id) !== false) && ($this->addTravelState($travel_id, $state_id, $user_id) !== false)) {
+            if ($this->addTravelState($travel_id, $state_id, $user_id) !== false) {
                 self::$db->commitTransaction();
                 return true;
             } else {
@@ -70,9 +92,9 @@ class User extends Travel {
     function createParkAdmin($fullname, $username, $password, $travel_id, $park_id)
     {
         self::$db->beginDbTransaction();
-        $user_id = $this->createUser($fullname, $username, $password, 'park_admin');
+        $user_id = $this->createTravelAdmin($fullname, $username, $password, 'park_admin', $travel_id);
         if ($user_id !== false) {
-            if (($this->linkUserToTravel($travel_id, $user_id) !== false) && ($this->addTravelPark($travel_id, $park_id, $user_id) !== false)) {
+            if ($this->addTravelPark($travel_id, $park_id, $user_id) !== false) {
                 self::$db->commitTransaction();
                 return true;
             } else {
@@ -83,13 +105,15 @@ class User extends Travel {
         }
     }
 
-	function login($username, $password)
+	function login($username, $password, $inst_code)
 	{
-		if (!isset($username, $password)) {
-			return "01"; // Empty username or password field
+		if (empty($username) || empty($password) || empty($inst_code)) {
+			return "01"; // Empty username or password or institution code field
 		}
 
-		$sql = "SELECT salt FROM users WHERE username = :username AND deleted = '0'";
+        $tbl = $this->tables[$inst_code];
+
+		$sql = "SELECT salt FROM ".$tbl." WHERE username = :username AND deleted = '0'";
         self::$db->query($sql, array('username' => $username));
 		$obj = self::$db->fetch("obj");
 		if (!isset($obj->salt)) {
@@ -100,31 +124,32 @@ class User extends Travel {
 		$password = hash('sha256', $password . $salt);
 		$param = array('username' => $username, 'password' => $password);
 
-		$sql = "SELECT username, id, user_type FROM users WHERE username = :username AND password = :password";
+		$sql = "SELECT username, id, user_type FROM ".$tbl." WHERE username = :username AND password = :password";
 
         self::$db->query($sql, $param);
 		if ($obj = self::$db->fetch("obj")) {
-			$_SESSION['user_type'] = $obj->user_type;
-			$_SESSION['username'] = $obj->username;
-			$_SESSION['user_id']     = $obj->id;
+			$_SESSION['user_type']  = $obj->user_type;
+			$_SESSION['username']   = $obj->username;
+			$_SESSION['user_id']    = $obj->id;
 
 			// get travel details
-			$sql = "SELECT company_name, abbr, t.id FROM travels t
+			$sql = "SELECT company_name, abbr, t.id
+                    FROM travels t
 					JOIN travel_admins ta ON ta.travel_id = t.id
-					WHERE user_id = '$obj->id'";
+					WHERE ta.id = '$obj->id'";
 
 			self::$db->query($sql);
 			if ($travel = self::$db->fetch('obj')) {
-				$_SESSION['company_name'] = $travel->company_name;
-				$_SESSION['abbr'] = $travel->abbr;
-				$_SESSION['travel_id'] = $travel->id;
+				$_SESSION['company_name']   = $travel->company_name;
+				$_SESSION['abbr']           = $travel->abbr;
+				$_SESSION['travel_id']      = $travel->id;
 			}
 
 			// lets get park id for park admins
 			if ($obj->user_type == 'park_admin') {
 				$park = $this->getParkDetails($obj->id);
-				$_SESSION['park_id'] = $park->id;
-				$_SESSION['park'] = $park->park;
+				$_SESSION['park_id']    = $park->id;
+				$_SESSION['park']       = $park->park;
 			}
 			return true;
 		}
@@ -159,6 +184,36 @@ class User extends Travel {
 		}
 	}
 
+    public function updateTravelUser($id, $fullname, $username, $user_type = null, $password = null)
+    {
+        $param = array(
+            'fullname' => $fullname,
+            'username' => $username,
+            'id'       => $id
+        );
+        $user_type_sql = "";
+        if ($user_type !== null) {
+            $user_type_sql = ", user_type = :user_type";
+            $param['user_type'] = $user_type;
+        }
+        $password_sql = "";
+        if ($password !== null) {
+            $salt     = base64_encode(mcrypt_create_iv(24, MCRYPT_DEV_URANDOM));
+            $password = hash('sha256', $password . $salt);
+            $param['password'] = $password;
+            $param['salt'] = $salt;
+            $password_sql = ", password = :password, salt = :salt";
+        }
+        $sql = "UPDATE travel_admins SET
+					fullname = :fullname,
+					username = :username
+					{$user_type_sql} {$password_sql}
+				WHERE id = :id";
+
+        if (self::$db->query($sql, $param)) {
+            return true;
+        }
+    }
 
 	public function changeUsername($username, $id) {
 		$sql = "UPDATE users SET username = :username WHERE id = :id";
@@ -175,8 +230,8 @@ class User extends Travel {
 	}
 
 
-	public function changePassword($old_pswd, $new_pswd, $id) {
-		$sql = "SELECT salt, password FROM users WHERE id = :id";
+	public function changePassword($old_pswd, $new_pswd, $id, $tbl = "users") {
+		$sql = "SELECT salt, password FROM {$tbl} WHERE id = :id";
         self::$db->query($sql, array('id' => $id));
 		$obj = self::$db->fetch("obj");
 		if (!isset($obj->salt)) {
@@ -190,7 +245,7 @@ class User extends Travel {
 		}
 		$new_password = hash('sha256', $new_pswd . $salt);
 		$param = array('password' => $new_password, 'id' => $id);
-		$sql = "UPDATE users SET password = :password WHERE id = :id";
+		$sql = "UPDATE {$tbl} SET password = :password WHERE id = :id";
 
 		$param = array(
 			'password' => $new_password,
@@ -203,9 +258,9 @@ class User extends Travel {
 	}
 
 
-	public function delete($tbl, $id)
+	public function delete($id, $tbl = "users")
 	{
-		if (self::$db->query("UPDATE users SET deleted = '1' WHERE id = :id", array('id' => $id))) {
+		if (self::$db->query("UPDATE {$tbl} SET deleted = '1' WHERE id = :id", array('id' => $id))) {
 			return true;
 		}
 	}
@@ -220,9 +275,9 @@ class User extends Travel {
 
 	function getTravelUsersByPark($travel_id, $park_id)
 	{
-		$sql = "SELECT u.* FROM users u
-		  		JOIN travel_admins ta ON u.id = ta.user_id
-		  		JOIN travel_park tp ON u.id = tp.user_id
+		$sql = "SELECT ta.*
+                FROM travel_admins ta
+		  		JOIN travel_park tp ON ta.id = tp.user_id
 		  		WHERE ta.travel_id = :travel_id AND tp.park_id = :park_id";
 
 		self::$db->query($sql, array('travel_id' => $travel_id, 'park_id' => $park_id));
@@ -235,14 +290,14 @@ class User extends Travel {
 		return self::$db->query("SELECT * FROM users WHERE deleted = '0' ORDER BY date_created");
 	}
 
-    function linkUserToTravel($travel_id, $user_id)
+    function getTravelAdmins()
     {
-        return self::$db->query("INSERT INTO travel_admins (travel_id, user_id) VALUES (:travel_id, :user_id)", array('travel_id' => $travel_id, 'user_id' => $user_id));
+        return self::$db->query("SELECT * FROM travel_admins WHERE deleted = '0' ORDER BY date_created");
     }
 
     function getUserByTravel($travel_id)
     {
-        $sql = "SELECT users.* FROM users INNER JOIN travel_admins ON users.id = travel_admins.user_id WHERE travel_admins.travel_id = :travel_id";
+        $sql = "SELECT * FROM travel_admins WHERE travel_admins.travel_id = :travel_id AND deleted = 0";
         self::$db->query($sql, array('travel_id' => $travel_id));
         return self::$db->fetchAll('obj');
     }
@@ -286,4 +341,3 @@ class User extends Travel {
 		}
 	}
 }
-?>

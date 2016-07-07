@@ -3,10 +3,11 @@ session_start();
 require "../api/models/user.class.php";
 require_once '../api/models/travel.class.php';
 
+$msg = $username = "";
 if (isset($_POST['login'])) {
 	$user = new User();
 	extract($_POST);
-	$status = $user->login($username, $password);
+	$status = $user->login($username, $password, $inst_code);
 	if ($status === true) {
         if ($_SESSION['user_type'] == 'travel_admin') {
             $travel = (new Travel())->getTravelByUser($_SESSION['user_id']);
@@ -28,7 +29,8 @@ if (isset($_POST['login'])) {
         }
 		exit;
 	} else {
-		echo $status;
+        $msg = "Login failed. Please, check credentials";
+        $username = empty($_POST['username']) ? "" : $_POST['username'];
 	}
 }
 
@@ -60,15 +62,22 @@ if (isset($_POST['login'])) {
         <a href=""><b>TravelHub</b>Admin</a>
       </div><!-- /.login-logo -->
       <div class="login-box-body">
-        <p class="login-box-msg">Sign in to start your session</p>
+        <p class="login-box-msg text-red"><?=$msg?></p>
         <form action="" method="post">
           <div class="form-group has-feedback">
-            <input type="text" name="username" class="form-control" placeholder="Username"/>
+            <input type="text" name="username" class="form-control" placeholder="Username" value="<?=$username?>" required />
             <span class="glyphicon glyphicon-user form-control-feedback"></span>
           </div>
           <div class="form-group has-feedback">
-            <input type="password" name="password" class="form-control" placeholder="Password"/>
+            <input type="password" name="password" class="form-control" placeholder="Password" required />
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+          </div>
+          <div class="form-group has-feedback">
+            <select class="form-control" name="inst_code" required>
+                <option value="">-- Institution Code --</option>
+                <option value="operator">Travel Operator</option>
+                <option value="travelhub">TravelHub</option>
+            </select>
           </div>
           <div class="row">
             <div class="col-xs-8">

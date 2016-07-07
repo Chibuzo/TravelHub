@@ -64,11 +64,11 @@ $travel_trips = $trip_model->getByStateTravel($_SESSION['state_id'], $_SESSION['
                                 </thead>
                                 <tbody>
                                 <?php
-                                $park_maps = $travel_park_map->getTravelStateParkMaps($_SESSION['travel_id'], $_SESSION['state_id']);
+                                $park_maps = $travel_park_map->getTravelParkParkMaps($_SESSION['travel_id'], $_SESSION['park_id']);
 
                                 $_travel_trips = array();
                                 foreach ($park_maps as $park_map) {
-                                    $_trips = $trip_model->getByStateTravelParkMap($_SESSION['state_id'], $_SESSION['travel_id'], $park_map->id);
+                                    $_trips = $trip_model->getByParkTravelParkMap($_SESSION['park_id'], $_SESSION['travel_id'], $park_map->id);
                                     for($i = 0; $i < count($vehicle_types['id']); $i++) {
                                         $fare = $ffare = "";
                                         if (count($_trips) > 0) {
