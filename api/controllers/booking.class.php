@@ -19,10 +19,10 @@ class Booking extends TravelHub
         $_customer = $customer->getCustomer('phone_no', $this->params['customer_phone']);
         $customer_id = $_customer['id'];
         if ($_customer == false) {
-            $customer->customer_name = $this->params['customer_name'];
-            $customer->phone_no = $this->params['customer_phone'];
+            $customer->customer_name     = $this->params['customer_name'];
+            $customer->phone_no          = $this->params['customer_phone'];
             $customer->next_of_kin_phone = $this->params['next_of_kin_phone'];
-            $customer_id = $customer->addNew($customer);
+            $customer_id                 = $customer->addNew($customer);
         }
         try {
             $this->model->externalBooking($this->params['trip_id'], $this->params['travel_date'], $this->params['departure_order'], $this->params['seat_no'], $customer_id, $this->params['channel']);

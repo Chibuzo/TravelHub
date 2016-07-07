@@ -9,7 +9,7 @@ $vehicle_model = new VehicleModel();
 $travel_vehicle_model = new TravelVehicle();
 
 if (isset($_POST['add_travel_vehicle_type'])) {
-    $travel_vehicle_model->addVehicleType($_SESSION['travel_id'], $_POST['vehicle_name'], $_POST['vehicle_type_id']);
+    $travel_vehicle_model->addVehicleType($_SESSION['travel_id'], $_POST['vehicle_name'], $_POST['vehicle_type_id'], $_POST['num_of_seats']);
 }
 
 $all_vehicle_types = $vehicle_model->getAllVehicleTypes();
@@ -139,12 +139,13 @@ $travel_vehicle_types = $travel_vehicle_model->getAllVehicleTypes($_SESSION['tra
                             <option value="">-- Vehicle Type --</option>
                             <?php
                             foreach ($all_vehicle_types AS $vehicle_type) {
-                                $states .= "<option value='{$vehicle_type->id}'>{$vehicle_type->name}</option>";
+                                $states .= "<option value='{$vehicle_type->id}' data-num_of_seats='{$vehicle_type->num_of_seats}'>{$vehicle_type->name}</option>";
                             }
                             echo $states;
                             ?>
                         </select>
                     </div>
+                    <input type="hidden" name="num_of_seats" id="num_of_seats" />
                     <input type="hidden" name="add_travel_vehicle_type" value="yes" />
                 </div>
                 <div class="modal-footer">
@@ -158,7 +159,9 @@ $travel_vehicle_types = $travel_vehicle_model->getAllVehicleTypes($_SESSION['tra
 </div>
 <?php include_once "includes/footer.html"; ?>
 <script>
-    $(document).ready(function() {
-
+$(document).ready(function() {
+    $("select[name='vehicle_type_id']").change(function () {
+        $("#num_of_seats").val($("select[name='vehicle_type_id'] option:selected").data('num_of_seats'));
     });
+});
 </script>

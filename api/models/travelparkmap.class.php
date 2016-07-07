@@ -18,8 +18,9 @@ class TravelParkMap extends ParkModel
         $park_map_id = parent::addParkMap($origin, $destination);
 
         // check if the route has been added already
-        if (is_numeric($this->verifyParkMap($park_map_id, $travel_id))) {
-            return true;
+        $travel_park_map_id = $this->verifyParkMap($park_map_id, $travel_id);
+        if (is_numeric($travel_park_map_id)) {
+            return $park_map_id;
         }
 
         $sql = "INSERT INTO " . self::$tbl . " (travel_id, park_map_id) VALUES (:travel_id, :park_map_id)";
@@ -28,7 +29,7 @@ class TravelParkMap extends ParkModel
             'park_map_id' => $park_map_id
         );
         if (self::$db->query($sql, $param)) {
-            return self::$db->getLastInsertId();
+            return $park_map_id;
         }
     }
 
@@ -40,7 +41,7 @@ class TravelParkMap extends ParkModel
      */
     public function getParkMap($travel_id, $park_id)
     {
-        $sql = "SELECT pm.id park_map_id, d_s.state_name as destination_state
+        $sql = "SELECT pm.id park_map_id, d_s.state_name as destination_state, origin, destination
                 FROM park_map AS pm
                 INNER JOIN travel_park_map ON travel_park_map.park_map_id = pm.id
                 INNER JOIN parks AS d ON pm.destination = d.id

@@ -119,6 +119,19 @@ class Travel extends Model {
         }
         return false;
     }
+
+
+    public function getTravelDepot($trip_id)
+    {
+        $sql = "SELECT abbr, park FROM travels t
+                JOIN trips tr ON t.id = tr.travel_id
+                JOIN park_map pm ON tr.park_map_id = pm.id
+                JOIN parks p ON pm.origin = p.id
+                WHERE tr.id = :trip_id";
+
+        self::$db->query($sql, array('trip_id' => $trip_id));
+        return self::$db->fetch('obj');
+    }
 	
 	function getServiceCharge($travel_id)
 	{

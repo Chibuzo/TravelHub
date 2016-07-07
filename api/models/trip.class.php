@@ -10,15 +10,8 @@ class Trip extends Model
         parent::__construct();
     }
 
-    public function addTrip($park_map_id, $departure, $travel_id, $state_id, $route_id, $vehicle_type_id, $amenities, $departure_time, $fare)
+    public function addTrip($park_map_id, $departure, $travel_id, $state_id, $route_id, $vehicle_type_id, $amenities, $departure_time, $fare, $channel=null)
     {
-        if (is_numeric($this->verifyTrip($park_map_id, $vehicle_type_id, $departure))) {
-            return true;
-        }
-
-        $sql = "INSERT INTO trips (park_map_id, travel_id, state_id, departure, vehicle_type_id, route_id, amenities, departure_time, fare)
-            VALUES (:park_map_id, :travel_id, :state_id, :departure, :vehicle_type_id, :route_id, :amenities, :departure_time, :fare)";
-
         $param = array(
             'park_map_id' => $park_map_id,
             'travel_id' => $travel_id,
@@ -31,7 +24,23 @@ class Trip extends Model
             'fare' => $fare
         );
 
+        $trip_id = $this->verifyTrip($park_map_id, $vehicle_type_id, $departure);
+        if (is_numeric($trip_id)) {
+            // push this to the concerned terminal
+            if ($channel === null) {
+                self::pushData($param, 'add-trip');
+            }
+            return $trip_id;
+        }
+
+        $sql = "INSERT INTO trips (park_map_id, travel_id, state_id, departure, vehicle_type_id, route_id, amenities, departure_time, fare)
+            VALUES (:park_map_id, :travel_id, :state_id, :departure, :vehicle_type_id, :route_id, :amenities, :departure_time, :fare)";
+
         self::$db->query($sql, $param);
+        // push this to the concerned terminal
+        if ($channel === null) {
+            self::pushData($param, 'add-trip');
+        }
         return self::$db->getLastInsertId();
     }
 
@@ -59,11 +68,16 @@ class Trip extends Model
     }
 
 
-    public function updateTrip($trip_id, $amenities, $fare)
+    public function updateTrip($trip_id, $amenities, $fare, $channel = null)
     {
         $sql = "UPDATE trips SET amenities = :amenities, fare = :fare WHERE id = :id";
-        $result = self::$db->query($sql, array('amenities' => $amenities, 'fare' => $fare, 'id' => $trip_id));
+        $param = array('amenities' => $amenities, 'fare' => $fare, 'id' => $trip_id);
+        $result = self::$db->query($sql, $param);
         if ($result !== false) {
+            if (is_null($channel)) {
+                // push to concerned terminal
+                self::pushData($param, 'add-trip');
+            }
             return true;
         }
         return false;

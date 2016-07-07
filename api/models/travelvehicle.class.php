@@ -11,7 +11,7 @@ class TravelVehicle extends Model
     }
 
 
-    public function addVehicleType($travel_id, $vehicle_name, $vehicle_type_id)
+    public function addVehicleType($travel_id, $vehicle_name, $vehicle_type_id, $num_of_seats)
     {
         $sql = "INSERT INTO " . self::$tbl . "
                 (travel_id, vehicle_name, vehicle_type_id)
@@ -25,6 +25,13 @@ class TravelVehicle extends Model
         );
 
         if (self::$db->query($sql, $param)) {
+            $param['num_of_seats'] = $num_of_seats;
+            $param['category'] = $_SESSION['abbr'];
+            try {
+                self::pushData($param, 'add-vehicle-type');
+            } catch (Exception $e) {
+                // log exception
+            }
             return true;
         }
     }

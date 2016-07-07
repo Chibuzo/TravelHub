@@ -17,6 +17,7 @@ $(document).ready(function() {
 		//var route_id     = $(this).data('route_id');
 		var park_map_id = $this.data('park_map_id');
 		var departure_order = $this.data('departure_order');
+		//var departure_time = $this.data('departure_time');
 		var fare = $this.data('fare');
 		var trip_id = $this.data('trip_id');
 		var travel_id = $this.data('travel_id');
@@ -36,6 +37,7 @@ $(document).ready(function() {
 				//'route_id'    :route_id,
 				'park_map_id' :park_map_id,
 				'departure_order':departure_order,
+				//'departure_time':departure_time,
 				'fare'        :fare,
 				'trip_id'     :trip_id,
 				'travel_id'   :travel_id,
@@ -95,6 +97,8 @@ $(document).ready(function() {
 		var vehicle_type_id = $seating_parent.data('vehicle_type_id');
 		var travel_date = $seating_parent.data('travel_date');
 		var seat_no     = $seating_parent.find('.picked_seat').text();
+		var departure_order = $seating_parent.data('departure_order');
+		var departure_time = $seating_parent.data('departure_time');
 		boarding_vehicle_id = $seating_parent.data('boarding_vehicle_id');
 
 		if (seat_no.length < 1) {
@@ -103,7 +107,7 @@ $(document).ready(function() {
 		}
 
 		// confirm seat avaliability
-		$.post('ajax/save_booking_details.php', {'op': 'reserve-seat', 'seat_no': seat_no, 'boarding_vehicle_id': boarding_vehicle_id}, function(d) {
+		$.post('ajax/save_booking_details.php', {'op': 'check-seat-availability', 'seat_no': seat_no, 'boarding_vehicle_id': boarding_vehicle_id}, function(d) {
 			if (d.trim() == "2") {
 				alert("Sorry, seat " + seat_no + " is no longer available. Please pick another seat.");
 				// refresh seats
@@ -114,8 +118,8 @@ $(document).ready(function() {
 					'trip_id'    : trip_id,
 					'seat_no'    : seat_no,
 					'travel_date': travel_date,
-					//'num_of_seats': num_of_seats,
-					//'travel_id'  : travel_id,
+					'departure_time': departure_time,
+					'departure_order': departure_order,
 					'boarding_vehicle_id' : boarding_vehicle_id
 				},
 				function(d) {

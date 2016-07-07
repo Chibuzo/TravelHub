@@ -34,8 +34,6 @@ class SetupModel extends Model {
         $travelVehicle = new TravelVehicle();
         $data['vehicles'] = $travelVehicle->getAllVehicleTypes($travel_id);
 
-        // get park admin
-
         // get all routes from a park
         $park_map = new TravelParkMap();
         $data['destinations'] = $park_map->getParkMap($travel_id, $park_id);
@@ -45,5 +43,34 @@ class SetupModel extends Model {
         $data['trips'] = $trip->getByParkTravel($park_id, $travel_id);
 
         return $data;
+    }
+
+
+    public function addParkMap($origin, $destination, $travel_id)
+    {
+        $travelParkMap = new TravelParkMap();
+        return $travelParkMap->addParkMap($origin, $destination, $travel_id);
+    }
+
+
+    public function addTrip($park_map_id, $departure, $travel_id, $state_id, $vehicle_type_id, $amenities, $departure_time, $fare)
+    {
+        $data = array();
+        $travelParkMap = new TravelParkMap();
+        $route = $travelParkMap->getRoute($park_map_id);
+        $data['route_id'] = $route->id;
+        $trip = new Trip();
+        $data['trip_id'] = $trip->addTrip($park_map_id, $departure, $travel_id, $state_id, $route->id, $vehicle_type_id, $amenities, $departure_time, $fare);
+        return $data;
+    }
+
+
+    public function updateTrip($trip_id, $amenities, $fare)
+    {
+        $trip = new Trip();
+        if ($trip->updateTrip($trip_id, $amenities, $fare)) {
+            return true;
+        }
+        return false;
     }
 }

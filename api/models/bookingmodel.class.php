@@ -18,7 +18,8 @@ class BookingModel extends Model {
 	}
 
 
-	function reserveSeat($boarding_vehicle_id, $seat_no) {
+	public function checkSeatAvailability($boarding_vehicle_id, $seat_no)
+	{
 		// get the booked seats
 		$sql = "SELECT booked_seats, num_of_seats FROM boarding_vehicle bv
 				JOIN trips t ON bv.trip_id = t.id
@@ -26,16 +27,33 @@ class BookingModel extends Model {
 				WHERE bv.id = :id";
 
 		self::$db->query($sql, array('id' => $boarding_vehicle_id));
-		$seat_details = self::$db->fetch('obj');
+		if ($seat_details = self::$db->fetch('obj')) {
+			$booked_seats = explode(",", $seat_details->booked_seats);
 
+			/*** Make sure that the selected seat ($seat_no) has not already been booked ***/
+			if (in_array($seat_no, $booked_seats)) {
+				throw new Exception("Seat $seat_no is no longer available.", "02");
+			} else {
+				return $seat_details;
+			}
+		} else {
+			throw new Exception ("Invalid booking details", "03");
+		}
+	}
+
+
+	function reserveSeat($boarding_vehicle_id, $seat_no)
+	{
+		try {
+			$seat_details = $this->checkSeatAvailability($boarding_vehicle_id, $seat_no);
+		} catch (Exception $e) {
+			throw new Exception ($e->getMessage(), "02");
+		}
 		if (!empty($seat_details->booked_seats)) {
 			$booked_seats = explode(",", $seat_details->booked_seats);
 
-			/*** Make sure no seat number repeats itself, and that the selected seat ($seat_no) has not already been booked ***/
+			// remove seat number duplicates if any
 			$booked_seats = array_unique($booked_seats);
-			if (in_array($seat_no, $booked_seats)) {
-				throw new Exception("Seat $seat_no is no longer available.", "02");
-			}
 
 			# If there is any empty seat/array, remove it
 			foreach ($booked_seats AS $key => $value) if (empty($value)) unset($booked_seats[$key]);
@@ -90,12 +108,7 @@ class BookingModel extends Model {
 		);
 
 		if (self::$db->query($sql, $param)) {
-			$bd_id = self::$db->getLastInsertId();
-
-			$_SESSION['ticket_id'] = $bd_id;
-
-			//return $bd_id;
-			return true;
+			return self::$db->getLastInsertId();
 		} else {
 			return "03"; // Booking wasn't successful
 		}
@@ -114,7 +127,7 @@ class BookingModel extends Model {
 			$vehicle->fixBoardingVehicles($_trip->vehicle_type_id, $_trip->park_map_id, $travel_date, $_trip->travel_id);
 			$boarding_vehicle_id = self::getBoardingVehicleId($trip_id, $departure_order, $travel_date);
 		}
-echo $boarding_vehicle_id . "ikpu";
+
 		// reserve seat, haha
 		$result = $this->reserveSeat($boarding_vehicle_id, $seat_no);
 		if ($result != $seat_no) {
@@ -132,7 +145,7 @@ echo $boarding_vehicle_id . "ikpu";
 
 	public function getBookingDetails($trip_id)
 	{
-		$sql = "SELECT trips.id trip_id, vt.name vehicle_type, num_of_seats, fare, route, company_name, park FROM trips
+		$sql = "SELECT trips.id trip_id, departure, departure_time, vt.name vehicle_type, num_of_seats, fare, route, company_name, park FROM trips
 					JOIN vehicle_types vt ON trips.vehicle_type_id = vt.id
 					JOIN routes r ON r.id = trips.route_id
 					JOIN travels t ON trips.travel_id = t.id

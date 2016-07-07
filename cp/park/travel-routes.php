@@ -25,12 +25,12 @@ if (isset($_POST['park_map'])) {
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Parks & Routes
+            <i class="fa fa-road"></i> Routes
             <small>Control panel</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active">Parks & Routes</li>
+            <li class="active">Routes</li>
         </ol>
     </section>
 

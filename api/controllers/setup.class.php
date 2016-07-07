@@ -22,5 +22,20 @@ class Setup extends TravelHub
     }
 
 
-    //public function getWorkingData()
+    public function addParkMap()
+    {
+        return $this->model->addParkMap($this->params['origin'], $this->params['destination'], $this->params['travel_id']);
+    }
+
+
+    public function addTrip()
+    {
+        return $this->model->addTrip($this->params['park_map_id'], $this->params['departure'], $this->params['travel_id'], $this->params['state_id'], $this->params['vehicle_type_id'], $this->params['amenities'], $this->params['departure_time'], $this->params['fare'], 't');
+    }
+
+
+    public function updateTrip()
+    {
+        return $this->model->updateTrip($this->params['trip_id'], $this->params['amenities'], $this->params['fare'], 't');
+    }
 }

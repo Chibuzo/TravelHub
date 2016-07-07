@@ -52,6 +52,16 @@ class Model {
 		$result = self::$db->fetch('obj');
 		return $result->num_rows;
 	}
+
+
+	public static function pushData($data, $push_type)
+	{
+		$data['push_type'] = $push_type;
+		$context = new ZMQContext();
+		$socket = $context->getSocket(ZMQ::SOCKET_PUSH, 'my pusher');
+		$socket->connect("tcp://localhost:5555");
+		$socket->send(json_encode($data));
+	}
 }
 
 ?>

@@ -22,7 +22,7 @@ if (empty($_REQUEST['travel_date'])) {
 	$travel_date = $_POST['travel_date'];
 	$route_id = $route->getRouteId($origin_id, $destination_id);
 
-	/*** Get buses [ types and amenities ] that run the selected route ***/
+	/*** Get vehicles [ types and amenities ] that run the selected route ***/
 	$vehicle = new VehicleModel();
 	$vehicles = $vehicle->findVehicles($route_id);
 
@@ -233,7 +233,7 @@ select {
 			foreach ($vehicles AS $info) {
 				$fare = $info['fare'];
 
-				$btn = "<button class='display-seats btn btn-primary btn-fill pull-right btn-sm' data-fare='{$fare}' data-departure_order='{$info['departure']}' data-park_map_id='{$info['park_map_id']}' data-travel_date='{$travel_date}' data-num_of_seats='{$info['num_of_seats']}' data-trip_id='{$info['trip_id']}' data-travel_id='{$info['travel_id']}' data-vehicle_type_id='{$info['vehicle_type_id']}'><span class='fa fa-list'></span> Pick a seat</button>";
+				$btn = "<button class='display-seats btn btn-primary btn-fill pull-right btn-sm' data-fare='{$fare}' data-departure_order='{$info['departure']}' data-departure_time='{$info['departure_time']}' data-park_map_id='{$info['park_map_id']}' data-travel_date='{$travel_date}' data-num_of_seats='{$info['num_of_seats']}' data-trip_id='{$info['trip_id']}' data-travel_id='{$info['travel_id']}' data-vehicle_type_id='{$info['vehicle_type_id']}'><span class='fa fa-list'></span> Pick a seat</button>";
 
 				$html .= "<div class='vehicle col-md-12 row' data-vehicle-type-id='{$info['vehicle_type_id']}'>
 							<div class='col-md-4 col-xs-6'>
@@ -282,6 +282,7 @@ select {
 <script>
 $(document).ready(function() {
 
+	// for horizontal scroll on mobile
 	$(".nice").niceScroll({
 		cursorcolor: "#ddd",
 		autohidemode: false,

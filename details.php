@@ -2,11 +2,12 @@
 session_start();
 require_once "includes/banner.php";
 require_once "api/models/bookingmodel.class.php";
+require_once "classes/utility.class.php";
 
 /*** Get ticket booking details ***/
 $trip_id      = $_SESSION['trip_id'];
 $travel_date = $_SESSION['travel_date'];
-$travel_date = date('D d M Y', strtotime($travel_date));
+$travel_date = date('D, d M Y', strtotime($travel_date));
 
 $booking = new BookingModel();
 $vehicle = $booking->getBookingDetails($trip_id);
@@ -64,7 +65,7 @@ $vehicle = $booking->getBookingDetails($trip_id);
 
 			<div class="form-group">
 				<label class="payment-opt">
-					<input type="radio" name="payment_opt" value="offline" checked="checked">
+					<input type="radio" name="payment_opt" value="bank" checked="checked">
 					&nbsp;Pay offline
 				</label>
 
@@ -86,9 +87,9 @@ $vehicle = $booking->getBookingDetails($trip_id);
 		&nbsp;<span class='glyphicon glyphicon-hand-right'></span>&nbsp;&nbsp; <?php echo " {$vehicle->route}<br />
 		&nbsp;<span class='glyphicon glyphicon-hand-right'></span>&nbsp;&nbsp; {$vehicle->park} park<br />
 		&nbsp;<span class='glyphicon glyphicon-hand-right'></span>&nbsp;&nbsp; {$travel_date}<br />
-		&nbsp;<span class='glyphicon glyphicon-hand-right'></span>&nbsp;&nbsp; $vehicle->vehicle_type<br />";
+		&nbsp;<span class='glyphicon glyphicon-hand-right'></span>&nbsp;&nbsp; " . Utility::ordinal($vehicle->departure) . " {$vehicle->vehicle_type}<br />";
 		echo ($_SESSION['seat_no'] != 0) ? "&nbsp;<span class='glyphicon glyphicon-hand-right'></span>&nbsp;&nbsp; Seat no: {$_SESSION['seat_no']}<br />" : '';
-		//echo "&nbsp;<span class='glyphicon glyphicon-hand-right'></span>&nbsp;&nbsp; Departure: $bus->departure_time<br />
+		echo "&nbsp;<span class='glyphicon glyphicon-hand-right'></span>&nbsp;&nbsp; Departure: $vehicle->departure_time<br />";
 		echo "&nbsp;<span class='glyphicon glyphicon-hand-right'></span>&nbsp;&nbsp; Fare: $vehicle->fare NGN<br />
 		<hr style='margin:5px 0px' />
 		<b>Total amount: $vehicle->fare NGN</b>
@@ -99,7 +100,7 @@ $vehicle = $booking->getBookingDetails($trip_id);
 		<input type="hidden" id="total" name="total" value="<?php echo $vehicle->fare; ?>" />
 		<input type="hidden" id="merchant_ref" name="merchant_ref" />
 		<input type="hidden" id="v_merchant_id" name="v_merchant_id" value="1447-16254" />
-		<input type='hidden' name='memo' value='Bus ticket booking from oya.com.ng' />
+		<input type='hidden' name='memo' value='Bus ticket booking from travelhub.ng' />
 	</form>
 
 	</div>
@@ -148,9 +149,9 @@ $(document).ready(function() {
 		$.ajax({
 			type: "POST",
 			url : 'ajax/save_booking_details.php',
-			data: 'seat_no=' + seat_no
+			data: 'op=complete-booking&seat_no=' + seat_no
 				+ '&boarding_vehicle_id=' + boarding_vehicle_id
-				+ '&payment_opt=' + $('input[name=payment_opt]:checked').val()
+				+ '&channel=' + $('input[name=payment_opt]:checked').val()
 				+ '&customer_name=' + $('#customer_names').val()
 				+ '&customer_phone=' + $('#phone-number').val()
 				+ '&next_of_kin_phone=' + $('#next_of_kin_num').val(),
@@ -163,12 +164,12 @@ $(document).ready(function() {
 				} else if ($.trim(d) == "04") {
 					$(".alert").html("Please fill out all the form completely to continue").fadeIn();
 				} else {
-					var payment_opt = $('input[name=payment_opt]:checked').val();
-					if (payment_opt == 'online') {
+					var channel = $('input[name=payment_opt]:checked').val();
+					if (channel == 'online') {
 						//$('#merchant_ref').val(d);
 						//$('#payment-gateway').submit();
 						$("#payment-btn").prop("disabled", true);
-					} else if (payment_opt == 'offline') {
+					} else if (channel == 'bank') {
 						location.href = "payment.php";
 					} else {
 						$(".alert").html("Select a payment option to continue").fadeIn();

@@ -5,7 +5,7 @@ require "includes/side-bar.php";
 require_once "../../api/models/travelparkmap.class.php";
 require_once "../../api/models/travelvehicle.class.php";
 require_once "../../api/models/trip.class.php";
-require_once "../helpers/utils.php";
+require_once "../../classes/utility.class.php";
 
 //$fare_mapper = new Fare();
 $travel_park_map = new TravelParkMap();
@@ -162,7 +162,7 @@ $travel_trips = $trip_model->getByStateTravel($_SESSION['state_id'], $_SESSION['
                                     echo "<tr>";
                                     printf("<td>%s</td>", $i);
                                     printf("<td>%s</td>", $trip->origin_name . " to " . $trip->destination_name);
-                                    printf("<td>%s %s</td>", ordinal($trip->departure), $trip->vehicle_name);
+                                    printf("<td>%s %s</td>", Utility::ordinal($trip->departure), $trip->vehicle_name);
                                     printf("<td>%s</td>", $table_amenities);
                                     printf("<td>%s</td>", number_format($trip->fare));
                                     ?>
