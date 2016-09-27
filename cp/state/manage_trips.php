@@ -1,13 +1,11 @@
 <?php
 require "includes/head.php";
 require "includes/side-bar.php";
-//require_once "../../api/models/fare.class.php";
 require_once "../../api/models/travelparkmap.class.php";
 require_once "../../api/models/travelvehicle.class.php";
 require_once "../../api/models/trip.class.php";
 require_once "../../classes/utility.class.php";
 
-//$fare_mapper = new Fare();
 $travel_park_map = new TravelParkMap();
 $travel_vehicle_model = new TravelVehicle();
 $trip_model = new Trip();
@@ -138,7 +136,7 @@ $travel_trips = $trip_model->getByStateTravel($_SESSION['state_id'], $_SESSION['
             <div class="col-md-6">
                 <div class="box box-warning">
                     <div class="box-header with-border">
-                        <h2 style='font-size: 18px' class="box-title"><i class="fa fa-money"></i> &nbsp;Manage Fares</h2>
+                        <h2 style='font-size: 18px' class="box-title"><i class="fa fa-money"></i> &nbsp;Manage Trips</h2>
                     </div>
                     <div class="box-body">
                         <div>

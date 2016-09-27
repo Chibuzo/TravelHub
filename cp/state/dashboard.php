@@ -32,7 +32,7 @@ $booking = new BookingModel();
 $bookings = $booking->getByTravelState($_SESSION['travel_id'], $_SESSION['state_id']);
 
 // data for chart
-$report_model = new Report();
+$report_model = new ReportModel();
 $reports = $report_model->stateGetBooking($_SESSION['travel_id'], $_SESSION['state_id'], "MONTH", date('Y-01-01'), date('Y-m-d'));
 $chart_data = json_encode($reports, true);
 

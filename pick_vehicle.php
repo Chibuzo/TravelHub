@@ -66,8 +66,9 @@ require_once "includes/banner.php";
 	color: #999;
 }
 
-select[name=boarding_point] {
-	display:none
+label {
+	font-size: 13px;
+	/*font-weight: normal;*/
 }
 
 select {
@@ -145,12 +146,25 @@ select {
 	font-size: 15px;
 }
 
+.filter-opt-pane {
+	padding: 5px 0;
+	background: #f8f8f8;
+	border: #e8e8e8 solid thin;
+	-webkit-border-radius:;
+	-moz-border-radius:;
+	border-radius: 4px 4px 0 0;
+}
+
 
 #btn-filter { display: none; padding-top: 8px; }
 
 @media screen and (min-width: 200px) and (max-width: 600px) {
 	
 	#btn-filter { display: block; }
+
+	.filter-opt-pane {
+		position: relative;
+	}
 
 	.vehicles {
 		padding: 10px 0px;
@@ -162,6 +176,10 @@ select {
 		font-size: 11px;
 	}
 
+	.vehicle .col-xs-4 {
+		width: 50%;
+	}
+
 	#find-bus { display: none; }
 
 	.show-seat {
@@ -171,17 +189,18 @@ select {
 
 </style>
 <link rel="stylesheet" type="text/css" href='css/seats.css' />
+<link rel="stylesheet" type="text/css" href="css/jquery.multiselect.css" />
 <div class='container'>
-	<div class="row">
+	<div class="row vehicles">
 		<div class="textinfo col-md-5">
 			<?php echo "{$origin} - {$destination} | " . date('D, d M Y', strtotime($travel_date)); ?>
 		</div>
 
-		<div class="col-md-6" id="btn-filter"><button class="btn btn-primary btn-block" id="btn_filter">Change search info</button></div>
+		<div class="" id="btn-filter"><button class="btn btn-primary btn-block" id="btn_filter">Change trip info</button></div>
 		<div class="col-md-7 text-right" id="find-bus" style="padding-top: 15px">
 			<form action="pick_vehicle.php" method="post" role="form">
 				<div class="row">
-					<div class='col-md-3'>
+					<div class='col-md-3 col-sm-6'>
 						<div class="form-group">
 							<select id="origin" name="origin" class="form-control input-sm">
 								<option value="">-- Origin --</option>
@@ -194,7 +213,7 @@ select {
 						</div>
 					</div>
 
-					<div class='col-md-3'>
+					<div class='col-md-3 col-sm-6'>
 						<div class="form-group">
 							<select name="destination" id="destination" class="form-control input-sm">
 								<option value="">-- Destination --</option>
@@ -203,7 +222,7 @@ select {
 						</div>
 					</div>
 
-					<div class='col-md-3'>
+					<div class='col-md-3 col-sm-6'>
 						<div class="form-group">
 							<select name="travel_date" class="form-control input-sm">
 							<?php
@@ -215,7 +234,7 @@ select {
 							</select>
 						</div>
 					</div>
-					<div class='col-md-3'>
+					<div class='col-md-3 col-sm-6'>
 						<div class="form-group">
 							<button type="submit" name="search" class="btn btn-danger btn-submit btn-block btn-round input-sm"><span class="glyphicon glyphicon-search"></span> Find bus</button>
 						</div>
@@ -223,20 +242,48 @@ select {
 				</div>
 			</form>
 		</div>
-
 	</div>
 
     <div class="row vehicles">
+		<button type="button" class="btn btn-info btn-block th-mobile" id="show-filter-btn">Filter trip results</button>
+		<div class="filter-opt-pane row th-desktop">
+			<div class="col-md-3 col-sm-6">
+				<label for="travels-opt">Travels</label>
+				<select multiple="multiple" id="travels-opt"></select>
+			</div>
+			<div class="col-md-3 col-sm-6">
+				<label for="vehicles-opt">Vehicles</label>
+				<select multiple="multiple" id="vehicles-opt"></select>
+			</div>
+			<div class="col-md-3 col-sm-6">
+				<label for="amenities-opt">Amenities</label>
+				<select multiple="multiple" id="amenities-opt"></select>
+			</div>
+			<div class="col-md-3 col-sm-6">
+				<label for="boarding-parks-opt">Boarding Parks</label>
+				<select multiple="multiple" id="boarding-parks-opt"></select>
+			</div>
+		</div>
 		<?php
 			$n = 0; $html = "";
 			$_SESSION['travel_date'] = $travel_date;
+			$travels = array(); $amenities = array(); $boarding_parks = array(); $vehicle_types = array();
 			foreach ($vehicles AS $info) {
+				// let's get stuff for filter panel
+				$travels[]        = $info['company_name'];
+				$boarding_parks[] = $info['origin_park'];
+				//$vehicle_types['id'][]  = $info['vehicle_type_id'];
+				$vehicle_types[] = $info['name'];
+				foreach (explode(">", $info['amenities']) AS $am) {
+					$amenities[] = $am;
+				}
+
 				$fare = $info['fare'];
 
 				$btn = "<button class='display-seats btn btn-primary btn-fill pull-right btn-sm' data-fare='{$fare}' data-departure_order='{$info['departure']}' data-departure_time='{$info['departure_time']}' data-park_map_id='{$info['park_map_id']}' data-travel_date='{$travel_date}' data-num_of_seats='{$info['num_of_seats']}' data-trip_id='{$info['trip_id']}' data-travel_id='{$info['travel_id']}' data-vehicle_type_id='{$info['vehicle_type_id']}'><span class='fa fa-list'></span> Pick a seat</button>";
 
-				$html .= "<div class='vehicle col-md-12 row' data-vehicle-type-id='{$info['vehicle_type_id']}'>
-							<div class='col-md-4 col-xs-6'>
+				$html .= "<div class='vehicle col-md-12 row' data-vehicle-type-id='{$info['vehicle_type_id']}' data-vehicle-name='{$info['name']}' data-travel='{$info['company_name']}' data-boarding-park='{$info['origin_park']}' data-amenities='{$info['amenities']}'>
+							<div class='col-md-4 col-sm-4 col-xs-4'>
 								<div class='bold'><i class='fa fa-bus fa_c'></i>&nbsp{$info['company_name']}</div>
 								<span>{$info['name']}: {$info['num_of_seats']} - Seater</span><br />
 								<span class='th-mobile'>" . implode(", ", explode(">", $info['amenities'])) . "</span>
@@ -244,16 +291,16 @@ select {
 								<span></span>
 							</div>
 
-							<div class='col-md-3 col-xs-6 amenities th-desktop'><br>
+							<div class='col-md-3 col-sm-3 col-xs-3 amenities th-desktop'>
 								<div class='bold'>Amenities</div>
-								<span>" . implode(", ", explode(">", $info['amenities'])) . "</span>
+								<span>" . implode(", ", explode(">", $info['amenities'])) . "</span><br>
 							</div>
 
-							<div class='col-md-3 parks th-desktop'><br>
+							<div class='col-md-3 col-sm-3 col-xs-3 parks th-desktop'><br>
 								<i class='fa fa-map-marker fa_c'></i>&nbsp; {$info['origin_park']} - {$info['destination_park']}
 							</div>
 
-							<div class='col-md-2 text-right th-desktop'>
+							<div class='col-md-2 col-sm-2 col-xs-2 text-right th-desktop'>
 								$btn<br>
 								<div class='fare'>₦" . number_format($fare) . " </div>
 							</div>
@@ -271,24 +318,32 @@ select {
 		} else {
 			echo "<br><div class='alert alert-info'><i class='fa fa-exclamation-circle fa-lg'></i> &nbsp;Sorry!!! No vehicle was found for the selected route.</div>";
 		}
-
+		// let's build the filter options
+		$_travels = '';
+		foreach (array_unique($travels) AS $t) {
+			$_travels .= "<option value='$t'>$t</option>";
+		}
+		$_amenities = '';
+		foreach (array_unique($amenities) AS $a) {
+			$_amenities .= "<option value='$a'>$a</option>";
+		}
+		$_vehicle_types = '';
+		foreach (array_unique($vehicle_types) as $v) {
+			$_vehicle_types .= "<option value='$v'>$v</option>";
+		}
+		$_parks = '';
+		foreach (array_unique($boarding_parks) AS $bp) {
+			$_parks .= "<option value='$bp'>$bp</option>";
+		}
 		?>
 	</div>
 	<div class='hidden' id='picked_seat'></div>
 </div>
 <div class="clearfix"></div>
 <?php require_once "includes/footer.php"; ?>
-<script type="text/javascript" src="js/plugins/jquery.nicescroll.min.js"></script>
+<script type="text/javascript" src="js/plugins/jquery.multiselect.js"></script>
 <script>
 $(document).ready(function() {
-
-	// for horizontal scroll on mobile
-	$(".nice").niceScroll({
-		cursorcolor: "#ddd",
-		autohidemode: false,
-		cursorwidth: "10px"
-	});
-
 	var destination_ids = [<?php echo $str_destination_ids; ?>];
 	var destinations = ['<?php echo $str_destinations; ?>'];
 	var destination = [];
@@ -312,6 +367,43 @@ $(document).ready(function() {
 	// show change route form on mobile
 	$("#btn_filter").click(function() {
 		$("#find-bus").slideToggle();
+	});
+
+
+	$("#travels-opt").html("<?php echo $_travels; ?>");
+	$("#vehicles-opt").html("<?php echo $_vehicle_types; ?>");
+	$("#amenities-opt").html("<?php echo $_amenities; ?>");
+	$("#boarding-parks-opt").html("<?php echo $_parks; ?>");
+
+	$('select[multiple]').multiselect({
+		onOptionClick: function(elem, opt) {
+			var filters = [];
+			$(".filter-opt-pane .col-md-3 .ms-options ul li").each(function(i, elem) {
+				if ($(elem).attr('class') == 'selected') {
+					filters.push($(elem).find(':checkbox').val());
+				}
+			});
+			if (filters.length == 0) {
+				$(".vehicle").show();
+			} else {
+				$(".vehicle").each(function() {
+					var travel          = $(this).data('travel');
+					var vehicle_name    = $(this).data('vehicle-name');
+					var boarding_park   = $(this).data('boarding-park');
+					var amenities       = $(this).data('amenities');
+					if (($.inArray(travel, filters) > -1) || ($.inArray(vehicle_name, filters) > -1) || ($.inArray(boarding_park, filters) > -1) || ($.inArray(amenities, filters) > -1)) {
+						$(this).show();
+					} else {
+						$(this).hide();
+					}
+				});
+			}
+		}
+	});
+
+	// show/hide filter controls on mobile
+	$("#show-filter-btn").click(function() {
+		$(".filter-opt-pane").slideToggle().css('overflow', ''); // removed overflow: hidden to prevent hidding the dropdown
 	});
 });
 </script>

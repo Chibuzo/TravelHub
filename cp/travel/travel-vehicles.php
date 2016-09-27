@@ -130,20 +130,24 @@ $travel_vehicle_types = $travel_vehicle_model->getAllVehicleTypes($_SESSION['tra
             <form action="" method="post" id="addState">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>Vehicle Name</label>
-                        <input class="form-control" type="text" placeholder="Vehicle Name" name="vehicle_name" id="vehicle_name" required>
-                    </div>
-                    <div class="form-group">
-                        <label>State</label>
+                        <label>Vehicle Type</label>
                         <select name="vehicle_type_id" class="form-control" required>
                             <option value="">-- Vehicle Type --</option>
                             <?php
                             foreach ($all_vehicle_types AS $vehicle_type) {
-                                $states .= "<option value='{$vehicle_type->id}' data-num_of_seats='{$vehicle_type->num_of_seats}'>{$vehicle_type->name}</option>";
+                                $diff = $vehicle_type->num_of_seats . ' seats';
+                                if (strstr($vehicle_type->name, 'Hiace')) {
+                                    $diff = ($vehicle_type->num_of_seats == 14) ? 'One front seat' : 'Two front seats';
+                                }
+                                $states .= "<option value='{$vehicle_type->id}' data-num_of_seats='{$vehicle_type->num_of_seats}'>{$vehicle_type->name} ($diff)</option>";
                             }
                             echo $states;
                             ?>
                         </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Vehicle Name</label>
+                        <input class="form-control" type="text" placeholder="Vehicle Name" name="vehicle_name" id="vehicle_name" required>
                     </div>
                     <input type="hidden" name="num_of_seats" id="num_of_seats" />
                     <input type="hidden" name="add_travel_vehicle_type" value="yes" />

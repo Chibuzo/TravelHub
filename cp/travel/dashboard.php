@@ -19,7 +19,7 @@ $result = $stmt->fetch();
 $books = $result['num'];
 
 // active routes
-$stmt = $db->query("SELECT COUNT(*) num FROM routes WHERE status = '1'");
+$stmt = $db->query("SELECT COUNT(*) num FROM travel_park_map WHERE travel_id = '$travel_id' AND status = '0'");
 $result = $stmt->fetch();
 $routes = $result['num'];
 
@@ -32,7 +32,7 @@ $booking = new BookingModel();
 $bookings = $booking->getByTravel($travel_id, 10);
 
 // data for chart
-$report_model = new Report();
+$report_model = new ReportModel();
 $reports = $report_model->travelGetBooking($travel_id, "MONTH", date('Y-01-01'), date('Y-m-d'));
 $chart_data = json_encode($reports, true);
 

@@ -13,7 +13,7 @@ class Travel extends Model {
 	
 	function getTravel($travel_id)
     {
-        $sql = "SELECT id, company_name, abbr, offline_charge, online_charge FROM travels WHERE id = :id";
+        $sql = "SELECT id, company_name, abbr, offline_charge, online_charge, api_charge FROM travels WHERE id = :id";
         self::$db->query($sql, array('id' => $travel_id));
         return self::$db->fetch('obj');
     }
@@ -21,7 +21,13 @@ class Travel extends Model {
     function getTravels()
     {
         try {
-            $sql = "SELECT id, company_name, abbr, offline_charge, online_charge FROM travels WHERE deleted = '0' ORDER BY date_created";
+            $sql = "SELECT t.id, company_name, abbr, offline_charge, online_charge, api_charge, COUNT(DISTINCT ts.id) states, COUNT(DISTINCT tp.id) parks FROM travels t
+                    LEFT JOIN travel_state ts ON t.id = ts.travel_id
+                    LEFT JOIN travel_park tp ON t.id = tp.travel_id
+                    WHERE t.deleted = '0'
+                    GROUP BY t.id
+                    ORDER BY date_created";
+
             self::$db->query($sql);
             return self::$db->fetchAll('obj');
         } catch (PDOException $e) {
@@ -38,10 +44,10 @@ class Travel extends Model {
 
     function getTravelStates($travel_id)
     {
-        $sql = "SELECT travel_state.id, travel_state.travel_id AS travel_id, states.state_name, states.id AS state_id, travel_admins.fullname, travel_admins.username, travel_admins.id AS user_id
-                FROM travel_state INNER JOIN states ON travel_state.state_id = states.id
-                INNER JOIN travel_admins ON travel_state.user_id = travel_admins.id
-                WHERE travel_state.travel_id = :travel_id";
+        $sql = "SELECT ts.status, ts.online, ts.id, ts.travel_id AS travel_id, states.state_name, states.id AS state_id, travel_admins.fullname, travel_admins.username, travel_admins.id AS user_id
+                FROM travel_state ts INNER JOIN states ON ts.state_id = states.id
+                INNER JOIN travel_admins ON ts.user_id = travel_admins.id
+                WHERE ts.travel_id = :travel_id";
 
        // try {
             self::$db->query($sql, array('travel_id' => $travel_id));
@@ -52,9 +58,33 @@ class Travel extends Model {
 
     }
 
+
+    public function getNumOfParksByState($travel_id, $state_id)
+    {
+        $sql = "SELECT COUNT(park_id) num FROM travel_park tp
+                JOIN parks p ON tp.park_id = p.id
+                WHERE state_id = :state_id AND travel_id = :travel_id";
+
+        $param = array(
+            'state_id' => $state_id,
+            'travel_id' => $travel_id
+        );
+
+        self::$db->query($sql, $param);
+        if ($num = self::$db->fetch('obj')) {
+            return $num->num;
+        } else {
+            return 0;
+        }
+    }
+
     function getTravelStateByUser($user_id)
     {
-        $sql = "SELECT travel_state.id, travel_state.travel_id AS travel_id, states.state_name, states.id as state_id, travel_admins.fullname, travel_admins.username, travel_admins.id AS user_id FROM travel_state INNER JOIN states ON travel_state.state_id = states.id INNER JOIN travel_admins ON travel_state.user_id = travel_admins.id WHERE travel_state.user_id = :user_id";
+        $sql = "SELECT travel_state.id, travel_state.travel_id AS travel_id, states.state_name, states.id as state_id, travel_admins.fullname, travel_admins.username, travel_admins.id AS user_id
+                FROM travel_state
+                INNER JOIN states ON travel_state.state_id = states.id
+                INNER JOIN travel_admins ON travel_state.user_id = travel_admins.id
+                WHERE travel_state.user_id = :user_id";
         self::$db->query($sql, array('user_id' => $user_id));
         return self::$db->fetch('obj');
     }
@@ -95,7 +125,9 @@ class Travel extends Model {
     private function addTravel($params)
     {
         try {
-            $sql = "INSERT INTO {$this->tbl} (company_name, abbr, offline_charge, online_charge) VALUES (:company_name, :abbr, :offline_charge, :online_charge)";
+            $sql = "INSERT INTO {$this->tbl}
+              (company_name, abbr, offline_charge, online_charge, api_charge) VALUES
+              (:company_name, :abbr, :offline_charge, :online_charge, :api_charge)";
 
             $result = self::$db->query($sql, $params);
             if ($result !== false) {
@@ -110,13 +142,41 @@ class Travel extends Model {
 
     private function updateTravel($params)
     {
-        $sql = "UPDATE {$this->tbl} SET company_name = :company_name, abbr = :abbr, offline_charge = :offline_charge, online_charge = :online_charge WHERE id = :id";
+        $sql = "UPDATE {$this->tbl} SET
+                  company_name = :company_name,
+                  abbr = :abbr,
+                  offline_charge = :offline_charge,
+                  online_charge = :online_charge,
+                  api_charge = :api_charge
+                WHERE id = :id";
 
         $result = self::$db->query($sql, $params);
         if ($result !== false) {
             return true;
         }
         return false;
+    }
+
+
+    public function updateStateSetting($travel_id, $state_id, $field, $value) {
+        $sql = "UPDATE travel_state SET {$field} = :value WHERE travel_id = :travel_id AND state_id = :state_id";
+        $param = array(
+            'value' => $value,
+            'travel_id' => $travel_id,
+            'state_id' => $state_id
+        );
+        self::$db->query($sql, $param);
+    }
+
+
+    public function updateParkSetting($travel_id, $park_id, $field, $value) {
+        $sql = "UPDATE travel_park SET {$field} = :value WHERE travel_id = :travel_id AND park_id = :park_id";
+        $param = array(
+            'value' => $value,
+            'travel_id' => $travel_id,
+            'park_id' => $park_id
+        );
+        self::$db->query($sql, $param);
     }
 
 
@@ -134,7 +194,7 @@ class Travel extends Model {
 	
 	function getServiceCharge($travel_id)
 	{
-		$sql = "SELECT offline_charge, online_charge FROM {$this->tbl} WHERE id = :travel_id";
+		$sql = "SELECT offline_charge, online_charge, api_charge FROM {$this->tbl} WHERE id = :travel_id";
 		self::$db->query($sql, array('travel_id' => $travel_id));
 		return self::$db->fetch('obj');
 	}

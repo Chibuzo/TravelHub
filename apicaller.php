@@ -40,7 +40,7 @@ class ApiCaller
 		
 		//check if we're able to json_decode the result correctly
 		if( $result == false || isset($result->success) == false ) {
-			throw new Exception('Request was not correct at all');
+			throw new Exception('Request was not correct');
 		}
 		
 		//if there was an error in the request, throw an exception

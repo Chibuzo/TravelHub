@@ -119,7 +119,7 @@ class BookingModel extends Model {
 	{
 		// first, get boarding vehicle ID
 		$boarding_vehicle_id = self::getBoardingVehicleId($trip_id, $departure_order, $travel_date);
-		if ($boarding_vehicle_id == false) {
+		if ($boarding_vehicle_id == false) { // if vehicle isn't boarding yet, add one
 			$trip = new Trip();
 			$_trip = $trip->getTrip($trip_id);
 
@@ -195,6 +195,7 @@ class BookingModel extends Model {
                 INNER JOIN parks dp ON pm.destination = dp.id
                 INNER JOIN vehicle_types ON vehicle_types.id = trips.vehicle_type_id
                 WHERE trips.travel_id = :travel_id
+                ORDER BY date_booked DESC
                 {$limit}";
 
         self::$db->query($sql, array('travel_id' => $travel_id));
@@ -248,9 +249,9 @@ class BookingModel extends Model {
     }
 
 
-	private function getBoardingVehicleId($trip_id, $departure_order, $travel_date)
+	public function getBoardingVehicleId($trip_id, $departure_order, $travel_date)
 	{
-		if (is_numeric($departure_order) == false) {
+		if (empty($departure_order)) {	// query currently boarding vehicle5
 			$query = "AND seat_status = 'Not full'";
 			$param = array(
 				'trip_id' => $trip_id,
@@ -264,7 +265,7 @@ class BookingModel extends Model {
 				'travel_date' => $travel_date
 			);
 		}
-		$sql = "SELECT id FROM boarding_vehicle WHERE trip_id = :trip_id AND travel_date = :travel_date $query";
+		$sql = "SELECT id, departure_order, booked_seats FROM boarding_vehicle WHERE trip_id = :trip_id AND travel_date = :travel_date $query";
 
 		self::$db->query($sql, $param);
 		if ($d = self::$db->fetch('obj')) {
@@ -274,13 +275,44 @@ class BookingModel extends Model {
 		}
 	}
 
-	function cancelBooking($id = null, $travel_date = null, $ref_no = null)
+
+	public function cancelTicketFromDepot($trip_id, $departure_order, $travel_date, $seat_no)
 	{
-		if ($id != null) {
-			$sql = "UPDATE " . self::$db_tbl . " SET status = '0' WHERE id = :id";
-		}
-		if (self::$db->query($sql, array('id' => $id))) {
-			return true;
+		$sql = "SELECT bv.booked_seats, bv.id bb_id, seat_no, bd.id ticket_id FROM " . self::$db_tbl . " bd
+				JOIN boarding_vehicle bv ON bd.boarding_vehicle_id = bv.id
+				WHERE trip_id = :trip_id AND departure_order = :departure_order AND bv.travel_date = :travel_date AND bd.seat_no = :seat_no";
+
+		$param = array(
+			'trip_id' => $trip_id,
+			'departure_order' => $departure_order,
+			'travel_date' => $travel_date,
+			'seat_no' => $seat_no
+		);
+		self::$db->query($sql, $param);
+		if ($details = self::$db->fetch('obj')) {
+			$seats = explode(",", $details->booked_seats);
+			foreach ($seats AS $key => $value) if ($seats[$key] == $details->seat_no) unset($seats[$key]);
+			$remaining_seats = implode(',', $seats);
+
+			// lets do some transactions
+			$query_check = true;
+			self::$db->beginDbTransaction();
+			$sql = "UPDATE boarding_vehicle SET booked_seats = '$remaining_seats', seat_status = 'Not full'
+					WHERE id = '$details->bb_id'";
+
+			self::$db->query($sql) ? null : $query_check = false;
+
+			self::$db->query("DELETE FROM booking_details WHERE id = :id", array('id' => $details->ticket_id)) ? null : $query_check = false;
+
+			if ($query_check == true) {
+				self::$db->commitTransaction();
+				return true;
+			} else {
+				self::$db->rollBackTransaction();
+				return false;
+			}
+		} else {
+			echo "Not Found";
 		}
 	}
 

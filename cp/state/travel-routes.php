@@ -6,7 +6,6 @@ require_once "../../includes/db_handle.php";
 require_once "../../api/models/user.class.php";
 require_once "../../api/models/travelparkmap.class.php";
 
-
 $travel_park_map = new TravelParkMap();
 
 if (isset($_POST['add_park'])) {
@@ -14,7 +13,7 @@ if (isset($_POST['add_park'])) {
     $user_model->createParkAdmin($_POST['full_name'], $_POST['username'], $_POST['password'], $_SESSION['travel_id'], $_POST['park']);
 }
 if (isset($_POST['park_map'])) {
-    $travel_park_map->addParkMap($_POST['origin'], $_POST['destination_park'], $_SESSION['travel_id']);
+    $travel_park_map->addTravelParkMap($_POST['origin'], $_POST['destination_park'], $_SESSION['travel_id']);
 }
 if (isset($_POST['update_park'])) {
     $user_id = $_POST['user_id'];
@@ -94,7 +93,7 @@ if (isset($_POST['update_park'])) {
                             <?php else: ?>
                                 <div>
                                     <div class="callout callout-warning">
-                                        <p> park has been added for your state.</p>
+                                        <p>No park has been added for your state.</p>
                                     </div>
                                 </div>
                                 <hr />

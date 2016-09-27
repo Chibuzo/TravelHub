@@ -16,27 +16,20 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
-            <li>
-                <a href="dashboard.php">
+            <li id="link-dashboard">
+                <a href="dashboard.php#dashboard">
                     <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                 </a>
             </li>
 
-            <li>
-                <a href="travel-routes.php">
+            <li id="link-routes">
+                <a href="travel-routes.php#routes">
                     <i class="fa fa-cogs"></i> <span>State & Routes</span>
                 </a>
             </li>
 
-            <!--<li>
-                <a href="manage_fares.php">
-                    <i class="fa fa-money"></i>
-                    <span>Manage Fares</span>
-                </a>
-            </li>-->
-
-            <li>
-                <a href="bookings.php">
+            <li id="link-book">
+                <a href="bookings.php#book">
                     <i class="fa fa-car"></i>
                     <span>Reservations</span>
                 </a>
@@ -49,15 +42,15 @@
                 </a>
             </li>-->
 
-            <li>
-                <a href="travel-vehicles.php">
+            <li id="link-vehicles">
+                <a href="travel-vehicles.php#vehicles">
                     <i class="fa fa-bus"></i>
                     <span>Manage Vehicles</span>
                 </a>
             </li>
 
-            <li>
-                <a href="view_reports.php">
+            <li id="link-report">
+                <a href="view_reports.php#report">
                     <i class="fa fa-book"></i>
                     <span>Reports</span>
                 </a>

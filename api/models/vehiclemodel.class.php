@@ -53,7 +53,7 @@ class VehicleModel extends Model {
 		if ($departure_order > 0) {
 			$query = "AND departure_order = '$departure_order'";
 		}
-		$sql = "SELECT id, booked_seats, fare, trip_id, seat_status FROM boarding_vehicle
+		$sql = "SELECT id, booked_seats, fare, trip_id, departure_order, seat_status FROM boarding_vehicle
 				WHERE park_map_id = :park_map_id AND vehicle_type_id = :vehicle_type_id AND travel_id = :travel_id
 				AND travel_date = :travel_date AND seat_status = 'Not full' $query
 				ORDER BY departure_order ASC LIMIT 0, 1";
@@ -125,6 +125,22 @@ class VehicleModel extends Model {
 		if (self::$db->query($sql, $param))
 			return true;
 	}*/
+
+
+	public function reopenVehicle($boarding_vehicle_id)
+	{
+		$sql = "UPDATE boarding_vehicle SET seat_status = 'Not full' WHERE id = :boarding_vehicle_id";
+		self::$db->query($sql, array('boarding_vehicle_id' => $boarding_vehicle_id));
+		return true;
+	}
+
+
+	public function closeVehicle($boarding_vehicle_id)
+	{
+		$sql = "UPDATE boarding_vehicle SET seat_status = 'Full' WHERE id = :boarding_vehicle_id";
+		self::$db->query($sql, array('boarding_vehicle_id' => $boarding_vehicle_id));
+		return true;
+	}
 
 
 	public function removeVehicle($id)

@@ -108,7 +108,7 @@ class ParkModel extends Model {
 
     function getTravelParksByState($travel_id, $state_id)
     {
-        $sql = "SELECT travel_park.id, travel_park.travel_id AS travel_id, parks.park, parks.id AS park_id, travel_admins.fullname, travel_admins.username, travel_admins.id AS user_id, states.state_name AS state_name
+        $sql = "SELECT address, phone, travel_park.status, travel_park.online, travel_park.id, travel_park.travel_id AS travel_id, parks.park, parks.id AS park_id, travel_admins.fullname, travel_admins.username, travel_admins.id AS user_id, states.state_name AS state_name
                 FROM travel_park
                 INNER JOIN parks ON travel_park.park_id = parks.id
                 INNER JOIN travel_admins ON travel_park.user_id = travel_admins.id
@@ -142,7 +142,7 @@ class ParkModel extends Model {
 		}
 	}
 
-	public function addParkMap($origin, $destination)
+    public function addParkMap($origin, $destination)
 	{
 		$park_map_id = $this->checkParkMapExist($origin, $destination);
 		if (is_numeric($park_map_id)) {
@@ -159,34 +159,6 @@ class ParkModel extends Model {
 		}
 	}
 
-
-	/*public function getAllRoutes()
-	{
-		return parent::getManyById('routes', 'status', 1, 'route');
-	}
-
-
-	public function getDestination($origin)
-	{
-		return parent::getManyById('routes', 'origin', $origin, 'destination');
-	}
-
-	public function editRoute($origin, $destination, $id)
-	{
-		$sql = "UPDATE park_map SET
-					origin = :origin,
-					destination = :destination
-				WHERE id = :id";
-
-		$param = array(
-			'origin' => $origin,
-			'destination' => $destination,
-			'id' => $id
-		);
-		if (self::$db->query($sql, $param)) {
-			return true;
-		}
-	}*/
 
 	public function removeParkMap($id)
 	{

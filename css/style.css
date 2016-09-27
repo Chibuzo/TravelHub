@@ -4,7 +4,6 @@ body {
 	font: normal 16px 'Open Sans', sans-serif;
 	margin-bottom: 150px;
 	color: #333;
-	/*background-color: #f7f7f7;*/
 	background-image: url('../images/bg1.png');
 	background-repeat: repeat;
 }
@@ -16,19 +15,11 @@ header {
 	/*height: 50px;*/
 }
 
-
 #logo {
 	position: relative;
 	top: 8px;
 	width: 200px;
 }
-
-/*.navbar-brand {
-	margin-top: 0px !important;
-	font: bold 31px 'Verdana', Sans-serif !important;
-	color: #ccc !important;
-}*/
-
 
 .navbar {
 	border: none;

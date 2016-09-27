@@ -28,7 +28,7 @@ $result = $stmt->fetch();
 $bustypes = $result['num'];
 
 // data for chart
-$report_model = new Report();
+$report_model = new ReportModel();
 $reports = $report_model->adminGetBooking("MONTH", date('Y-01-01'), date('Y-m-d'));
 $chart_data = json_encode($reports, true);
 

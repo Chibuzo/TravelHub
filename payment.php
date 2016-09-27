@@ -31,7 +31,7 @@ $details = $booking->getTicketRefNo($_SESSION['ticket_id']);
 
 <div class='container'><br />
 	<div class="row">
-		<h2>Offline Payment Details</h2>
+		<h3>Offline Payment Details</h3>
 		<br />
 
 		<div class="alert alert-info">

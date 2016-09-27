@@ -1,0 +1,245 @@
+.seat_arrangement {
+	display: block;
+	font:normal 12px 'Open Sans', Tahoma;
+	color:#666;
+	padding:10px;
+	border:#ccc solid thin;
+	border-radius:1px;
+	margin: 15px auto;
+	/*position:absolute;*/
+}
+
+.seat {
+	width: 20px;
+	height: 17px;
+	cursor: pointer;
+	margin: 7px;
+	background-image:url('../images/seat.gif');
+	background-repeat:no-repeat;
+}
+
+.push-seat {
+	margin-top: 15px !important;
+}
+
+.booked_seat {
+	width:20px;
+	height:18px;
+	background-image:url('../images/booked_seat.gif');
+	margin:7px; background-repeat:no-repeat; cursor:default;
+}
+
+.seat:hover{background-image:url('../images/highlighted_seat.gif')}
+
+#right_seats, #left_seats {
+	position:relative;
+	width:180px;
+	padding:4px;
+	overflow:auto;
+}
+
+#right_seats {
+	top:75px;
+}
+
+#left_seats {
+	top:-75px;
+}
+
+.seat_wrap {
+	padding-right:18px;
+	padding-left: 12px;
+	background-color:#fff;
+	border:#ccc solid thin;
+	border-radius:2px;
+	margin-top:23px;
+	margin-left:70px;
+	float:left;
+}
+
+#seat_tips {
+	float:right;
+	margin-right:20px;
+	margin-top:7px;
+}
+
+#seat_tips > ul {
+	list-style-type:none;
+	margin:0px; padding:0px;
+	line-height:21px
+}
+
+#seat_tips > ul > li {
+	line-height:24px
+}
+
+.available_seat {
+	background-image:url(../images/seat.gif);
+}
+
+.selected_seat {
+	background-image:url(../images/selected_seat.gif);
+}
+
+.booked-seat {
+	background-image:url(../images/booked_seat.gif);
+}
+
+.available_seat, .selected_seat, .booked-seat {
+	background-repeat:no-repeat;
+	background-position:0px 5px;
+	padding-left:25px;
+}
+
+.cols {
+	position:relative;
+	float:left;
+	width:20px;
+	margin-right: 7px;
+	bottom:0;
+}
+
+.cols .th-hide {
+	visibility: hidden;
+	width: 20px;
+	height: 17px;
+	margin: 7px;
+}
+
+.steering {
+	height:48px;
+	background-image:url(../images/steering.gif);
+	background-repeat:no-repeat;
+	background-position:bottom;
+}
+
+#picked_seat {
+	margin-right: 20px;
+}
+
+.continue-btn {
+	top: -25px;
+	position: relative;
+	right: 20px;
+}
+
+/* mini-bus style 10, 14, 15 seats */
+.mini-bus {
+	width: 410px;
+	height: 210px;
+}
+
+.mini-bus .seat_wrap {
+	margin-left: 40px;
+}
+
+.mini-bus .steering {
+	height:96px;
+}
+
+.mini-bus #seat_tips {
+	margin-top: 16px;
+}
+
+.mini-bus .seat-details, .sienna .seat-details {
+	position: relative;
+	display: block;
+	clear: both;
+	text-align: left;
+	top: 10px;
+}
+
+/* Sienna bus 5 & 6 seats */
+.sienna {
+	width: 420px;
+	height: 200px;
+	overflow: hidden;
+}
+
+.sienna .steering {
+	height:62px;
+}
+
+.sienna .push-seat {
+	margin-top: 20px !important;
+}
+
+.sienna .seat_wrap {
+	margin-top: 27px;
+	margin-left: 90px;
+	padding: 2px 13px !important;
+}
+
+.sienna .seat-details {
+	margin-top: 30px;
+}
+
+.sienna .continue-btn {
+	margin-top: 1px;
+}
+
+.seat_arrangement .glyphicon-remove {
+	cursor: pointer;
+}
+
+
+@media screen and (min-width: 320px) and (max-width: 600px) {
+
+	.seat_arrangement {
+		color: #666;
+	}
+
+	.seat-tips {
+		margin-top: -4px;
+	}
+
+	.seat-tips ul {
+		list-style-type: none;
+		margin-left: -50px;
+	}
+
+	.seat-tips ul li {
+		float: left;
+		margin-left: 15px;
+		line-height: 21px;
+	}
+
+	.seat_wrap {
+		margin-top: 12px;
+	}
+
+	.continue-btn {
+		top: 10px;
+		position: relative;
+		left: 0px;
+	}
+
+	.seat_arrangement .glyphicon-remove {
+		display: none;
+	}
+
+	 /*sienna*/
+	.sienna .continue-btn {
+		margin-right: 45px;
+	}
+
+	.sienna .seat_wrap {
+		margin-top: 23px;
+	}
+
+	.mini-bus {
+		height: 220px;
+	}
+
+	.mini-bus .seat-details, .sienna .seat-details {
+		clear: both;
+		width: 110px;
+		float: left;
+		text-align: left;
+		/*margin-top: 10px*/
+	}
+
+	.mini-bus .continue-btn {
+		margin-right: 60px;
+	}
+}

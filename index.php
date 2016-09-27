@@ -76,7 +76,7 @@ h1 {
 
 #services {
 	text-align: center;
-	margin-top: 50px;
+	margin-top: 40px;
 }
 
 #services .row div {
@@ -101,14 +101,6 @@ h1 {
 	font-size: 24px;
 }
 
-#callus-left {
-	text-align: right;
-}
-
-#callus-right {
-	text-align: left;
-}
-
 .operators {
 	background: #2f353e;
 	margin-top: 50px;
@@ -131,10 +123,6 @@ h1 {
 		font-weight: 300;
 		font-size:15px;
 		line-height: 22px;
-	}
-
-	#callus-left, #callus-right {
-		text-align: center;
 	}
 }
 
@@ -168,7 +156,7 @@ h1 {
 		<div id="bus_search">
 			<h1>Where are you going?</h1>
 			<?php echo isset($_GET['msg']) ? "<div class='alert alert-error'>You must select travel destination to continue.</div>" : ''; ?>
-			<form action="pick_vehicle.php" method="post" role="form">
+			<form action="pick_vehicle.php" method="post" role="form" id="form-book">
 				<div class="row">
 					<div class='col-md-3'>
 						<div class="form-group">
@@ -246,10 +234,14 @@ h1 {
 </div>
 
 <div class="container">
-	<div class="row">
-		<div class="col-md-12 col-xs-12"><br>
-			<div class="col-md-6" id="callus-left"><h3><i class="fa fa-phone"></i> Call us: </h3></div>
-			<div class="col-md-6" id="callus-right"><h3> (0700) 0000 000</h3></div>
+	<div class="row text-center th-mobile">
+		<br>
+		<div class="col-md-6"><h3><i class="fa fa-phone"></i> Call us: </h3></div>
+		<div class="col-md-6"><h3> (0700) 0000 000</h3></div>
+	</div>
+	<div class="row text-center th-desktop">
+		<div class="col-md-12">
+			<h3><i class="fa fa-phone"></i> Call us:  (0700) 0000 000</h3>
 		</div>
 	</div>
 </div>
@@ -267,23 +259,19 @@ h1 {
 <script type="text/javascript" src="js/bootstrap-datepicker.js"></script>
 <script>
 $(document).ready(function() {
-	var destination_ids = [<?php echo $str_destination_ids; ?>];
-	var destinations = ['<?php echo $str_destinations; ?>'];
-	var destination = [];
+	// reset booking form
+	$("#origin, #destination").val("");
+
+	destination_ids = [<?php echo $str_destination_ids; ?>];
+	destinations = ['<?php echo $str_destinations; ?>'];
+	destination = [];
 
 	$.each(destination_ids, function(i, val) {
 		destination[val] = destinations[i];
 	});
 
 	$("#origin").change(function() {
-		var origin = $(this).val().split("_")[1];
-		var opt = '<option value="">-- Pick destination --</option>';
-		var dests = [];
-		dests = destination[origin].split(",");
-		$.each(dests, function(i, val) {
-			opt += "<option value='" + val.split("-")[1] + "_" + val.split("-")[0] + "'>" + val.split("-")[1] + "</option>\n";
-		});
-		$("#destination").html(opt);
+		getDestination($(this));
 	});
 
 
@@ -295,5 +283,16 @@ $(document).ready(function() {
 	});
 
 });
+
+function getDestination(obj) {
+	var origin = obj.val().split("_")[1];
+	var opt = '<option value="">-- Pick destination --</option>';
+	var dests = [];
+	dests = destination[origin].split(",");
+	$.each(dests, function(i, val) {
+		opt += "<option value='" + val.split("-")[1] + "_" + val.split("-")[0] + "'>" + val.split("-")[1] + "</option>\n";
+	});
+	$("#destination").html(opt);
+}
 </script>
 <?php require_once "includes/footer.php"; ?>

@@ -1,65 +1,57 @@
-<?php
-session_start();
-require_once("../includes/db_handle.php");
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>TravelHub | Log in</title>
+	<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+	<!-- Bootstrap 3.3.2 -->
+	<link href="../cp/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<!-- Font Awesome Icons -->
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+	<!-- Theme style -->
+	<link href="../cp/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
 
-if (isset($_REQUEST['staff'])) {
-	extract($_REQUEST);	
-	$db->query("SELECT salt FROM staff WHERE username = :username", array('username' => $username));
-	$result = $db->fetch('obj');
-	if (!empty($result->salt)) {
-		$password = hash('sha256', $password . $result->salt);
-		
-		$sql = "SELECT id, page, status FROM staff WHERE username = :username AND password = :password";
-		$param = array('username' => $username, 'password' => $password);
-		$db->query($sql, $param);
-		$staff = $db->fetch('obj');
-		if (!empty($staff->id)) {
-			if ($staff->status == '1') {
-				$_SESSION['page'] = $staff->page;
-				if (isset($staff->page)) {
-					header("Location: {$staff->page}");
-					exit;
-				} 
-			} else {
-				$msg = "<div class='alert alert-warning'>This account has not been activated, yet.</div>";
-			}
-		} else {
-			$msg = "<div class='alert alert-error'>Are you trying to use someone else's account? We won't let you.</div>";
-		}
-	} else {
-		$msg = "<div class='alert alert-danger'>Leave here, we don't know you.</div>";
-	}
-} 
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]-->
+	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	<script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
 
-require_once "../includes/banner.php";
-?>
-<div class="content">
-	<br />
-	<h1>&nbsp;Staff Login</h1>
-	<hr />
-	<?php echo isset($msg) ? $msg : null; ?>
-	<br />
-	<form method="post" class="form-horizontal" role="form">
-		<div class="form-group">
-			<label for="username" class="col-sm-2 control-label">Username</label>
-			<div class="col-sm-4">
-				<input type='text' name='username' class="form-control" placeholder='Username' />
+<body class="login-page">
+<div class="login-box">
+	<div class="login-logo">
+		<a href=""><b>TravelHub</b>Admin</a>
+	</div><!-- /.login-logo -->
+	<div class="login-box-body">
+		<p class="login-box-msg text-red"></p>
+		<form action="../cp/index.php" method="post">
+			<div class="form-group has-feedback">
+				<input type="text" name="username" class="form-control" placeholder="Username" required />
+				<span class="glyphicon glyphicon-user form-control-feedback"></span>
 			</div>
-		</div>
-		
-		<div class="form-group">
-			<label for ="password" class="col-sm-2 control-label">Password</label>
-			<div class="col-sm-4">
-				<input type='password' name='password' class="form-control" placeholder='Password' />
+			<div class="form-group has-feedback">
+				<input type="password" name="password" class="form-control" placeholder="Password" required />
+				<span class="glyphicon glyphicon-lock form-control-feedback"></span>
 			</div>
-		</div>
-		<div class="form-group">
-			<div class="col-sm-offset-2 col-sm-5">
-				<input type="submit" name="staff" value=" Login " class="btn btn-primary" />
+			<div class="form-group has-feedback">
+				<input type="hidden" name="inst_code" value="travelhub" />
 			</div>
-		</div>
-	</form>
-	
-</div>
+			<div class="row">
+				<div class="col-xs-8">
+					<div class="">
 
-<?php require_once "../includes/footer.php"; ?>
+					</div>
+				</div><!-- /.col -->
+				<div class="col-xs-4">
+					<button type="submit" name="login" class="btn btn-primary btn-block btn-flat">Sign In</button>
+				</div><!-- /.col -->
+			</div>
+		</form>
+
+		<!--<a href="#">I forgot my password</a><br>
+        <a href="register.html" class="text-center">Register a new membership</a>-->
+
+	</div><!-- /.login-box-body -->
+</div><!-- /.login-box -->
+</body>
+</html>

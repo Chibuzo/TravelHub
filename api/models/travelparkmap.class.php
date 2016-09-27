@@ -13,7 +13,7 @@ class TravelParkMap extends ParkModel
     }
 
 
-    public function addParkMap($origin, $destination, $travel_id)
+    public function addTravelParkMap($origin, $destination, $travel_id)
     {
         $park_map_id = parent::addParkMap($origin, $destination);
 
@@ -114,6 +114,23 @@ class TravelParkMap extends ParkModel
                 WHERE travel_park_map.travel_id = :travel_id AND travel_park_map.status = '0' AND o.id = :park_id";
         self::$db->query($sql, array('travel_id' => $travel_id, 'park_id'=> $park_id));
         return self::$db->fetchAll('obj');
+    }
+
+
+    public function getNumOfRoutesForPark($travel_id, $park_id)
+    {
+        $sql = "SELECT COUNT(pm.id) num
+                FROM park_map AS pm
+                INNER JOIN travel_park_map ON travel_park_map.park_map_id = pm.id
+                INNER JOIN parks AS o ON pm.origin = o.id
+                WHERE travel_park_map.travel_id = :travel_id AND travel_park_map.status = '0' AND o.id = :park_id";
+
+        self::$db->query($sql, array('travel_id' => $travel_id, 'park_id'=> $park_id));
+        if ($num = self::$db->fetch('obj')) {
+            return $num->num;
+        } else {
+            return 0;
+        }
     }
 
     /**

@@ -90,9 +90,9 @@ $vehicle = $booking->getBookingDetails($trip_id);
 		&nbsp;<span class='glyphicon glyphicon-hand-right'></span>&nbsp;&nbsp; " . Utility::ordinal($vehicle->departure) . " {$vehicle->vehicle_type}<br />";
 		echo ($_SESSION['seat_no'] != 0) ? "&nbsp;<span class='glyphicon glyphicon-hand-right'></span>&nbsp;&nbsp; Seat no: {$_SESSION['seat_no']}<br />" : '';
 		echo "&nbsp;<span class='glyphicon glyphicon-hand-right'></span>&nbsp;&nbsp; Departure: $vehicle->departure_time<br />";
-		echo "&nbsp;<span class='glyphicon glyphicon-hand-right'></span>&nbsp;&nbsp; Fare: $vehicle->fare NGN<br />
+		echo "&nbsp;<span class='glyphicon glyphicon-hand-right'></span>&nbsp;&nbsp; Fare: ₦ $vehicle->fare NGN<br />
 		<hr style='margin:5px 0px' />
-		<b>Total amount: $vehicle->fare NGN</b>
+		<b>Total amount: ₦ $vehicle->fare NGN</b>
 	</div>";
 	?>
 
@@ -110,7 +110,6 @@ $vehicle = $booking->getBookingDetails($trip_id);
 $(document).ready(function() {
 	$('#customer_info').submit(function(e) {
 		e.preventDefault();
-		//var $this_form = $(this);
 
 		/*** validate customer's form ***/
 		var bln_validate = true;
@@ -146,6 +145,8 @@ $(document).ready(function() {
 		var boarding_vehicle_id = "<?php echo $_SESSION['boarding_vehicle_id']; ?>";
 		var seat_no = "<?php echo $_SESSION['seat_no']; ?>";
 
+		//$("#payment-btn").val("Working...").prop("disabled", true);
+
 		$.ajax({
 			type: "POST",
 			url : 'ajax/save_booking_details.php',
@@ -161,18 +162,17 @@ $(document).ready(function() {
 					$(".alert").html("Sorry, <b>seat " + seat_no + "</b> is no longer available, please go back and select a different seat.<br />Thank you").fadeIn();
 				} else if ($.trim(d) == "03") {
 					$(".alert").html("We are sorry, your seat booking wasn't successful, please try again later").fadeIn();
-				} else if ($.trim(d) == "04") {
-					$(".alert").html("Please fill out all the form completely to continue").fadeIn();
 				} else {
 					var channel = $('input[name=payment_opt]:checked').val();
 					if (channel == 'online') {
 						//$('#merchant_ref').val(d);
 						//$('#payment-gateway').submit();
-						$("#payment-btn").prop("disabled", true);
+						//$("#payment-btn").prop("disabled", true);
 					} else if (channel == 'bank') {
-						location.href = "payment.php";
+						//location.href = "payment.php";
 					} else {
 						$(".alert").html("Select a payment option to continue").fadeIn();
+						$("#payment-btn").val("Proceed to payment").prop("disabled", false);
 					}
 				}
 			}

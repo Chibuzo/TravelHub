@@ -130,7 +130,7 @@ class Trip extends Model
                 JOIN parks AS po ON po.id = pm.origin
                 JOIN parks AS pd ON pd.id = pm.destination
                 JOIN vehicle_types vt ON vt.id = t.vehicle_type_id
-                JOIN travel_vehicle_types tvt ON vt.id = tvt.vehicle_type_id
+                JOIN travel_vehicle_types tvt ON vt.id = tvt.vehicle_type_id AND tvt.travel_id = t.travel_id
                 WHERE t.state_id = :state_id AND t.travel_id = :travel_id
                 ORDER BY vehicle_name";
 
@@ -172,12 +172,13 @@ class Trip extends Model
 
     public function getByParkTravel($park_id, $travel_id)
     {
-        $sql = "SELECT trips.*, po.park AS origin_name, pd.park AS destination_name, vt.vehicle_name AS vehicle_name
+        $sql = "SELECT trips.*, po.park AS origin_name, pd.park AS destination_name, vehicle_name
                 FROM trips
                 JOIN park_map AS pm ON pm.id = trips.park_map_id
                 JOIN parks AS po ON po.id = pm.origin
                 JOIN parks AS pd ON pd.id = pm.destination
-                JOIN travel_vehicle_types vt ON vt.id = trips.vehicle_type_id
+                JOIN vehicle_types vt ON trips.vehicle_type_id = vt.id
+                JOIN travel_vehicle_types tvt ON vt.id = tvt.vehicle_type_id AND tvt.travel_id = trips.travel_id
                 WHERE po.id = :park_id AND trips.travel_id = :travel_id
                 ORDER BY vehicle_name";
         self::$db->query($sql, array('park_id' => $park_id, 'travel_id' => $travel_id));

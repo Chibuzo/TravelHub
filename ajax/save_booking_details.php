@@ -3,7 +3,7 @@ session_start();
 require_once "../api/models/bookingmodel.class.php";
 require_once "../api/models/customer.class.php";
 require_once "../api/models/travel.class.php";
-require_once "../includes/push.php";
+require_once "../api/models/bookingissues.class.php";
 
 extract($_POST);
 
@@ -32,7 +32,6 @@ if ($_REQUEST['op'] == 'complete-booking')
 		$terminal = $_travel->abbr . '_' . implode("-", explode(" ", $_travel->park));
 
 		$details = array(
-				'push_type'			=> 'booking',
 				'category'          => $terminal,
 				'trip_id'           => $_SESSION['trip_id'],
 				'travel_date'       => $_SESSION['travel_date'],
@@ -44,8 +43,11 @@ if ($_REQUEST['op'] == 'complete-booking')
 				'channel'           => 'online'
 		);
 
-		pushData($details);
-
+		$status = BookingModel::pushData($details, 'booking');
+		if ($status == 'Disconnected') {
+			$bookIssue = new BookingIssues();
+			$bookIssue->logFailedPush($_SESSION['trip_id'], $_SESSION['travel_date'], $seat_no, $_SESSION['departure_order'], $_POST['customer_phone'], $_POST['customer_phone'], $_POST['next_of_kin_phone'], $channel, $terminal, $status);
+		}
 	} catch (Exception $e) {
 		echo $e->getCode();
 	}

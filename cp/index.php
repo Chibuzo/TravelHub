@@ -73,11 +73,7 @@ if (isset($_POST['login'])) {
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
           </div>
           <div class="form-group has-feedback">
-            <select class="form-control" name="inst_code" required>
-                <option value="">-- Institution Code --</option>
-                <option value="operator">Travel Operator</option>
-                <option value="travelhub">TravelHub</option>
-            </select>
+              <input type="hidden" name="inst_code" value="operator" />
           </div>
           <div class="row">
             <div class="col-xs-8">

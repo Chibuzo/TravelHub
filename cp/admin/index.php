@@ -6,5 +6,5 @@
  * Time:    5:06 AM
  */
 
-header("Location: ../index.php");
+header("Location: ../../admin/index.php");
 exit;

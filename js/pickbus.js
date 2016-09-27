@@ -45,8 +45,8 @@ $(document).ready(function() {
 			},
 			function(d) {
 				var height = '';
-				if (num_of_seats > 15) height = "250px";
-				else height = "+230px";
+				if (num_of_seats > 16) height = "490px";
+				else height = "+350px";
 				$('#show-seat_' + trip_id).css('display', 'block').animate({height: height}, function() {
 					$(this).html(d);
 					//$this.next('.loading').css('visibility', 'hidden');
@@ -88,6 +88,7 @@ $(document).ready(function() {
  /*** Proceed to customer details page ***/
 	$('.vehicle, .show-seat').on('click', '.continue', function(e) {
 		e.preventDefault();
+		$(this).html("&nbsp; <i class='fa fa-cog fa-spin'></i> Working... &nbsp;<i class='fa fa-angle-double-right'></i>").prop("disabled", true);
 
 		var $seating_parent = $(this).parents('.seat_arrangement');
 
@@ -103,6 +104,7 @@ $(document).ready(function() {
 
 		if (seat_no.length < 1) {
 			alert("Pick a seat before you continue");
+			$(this).html("&nbsp; <i class='fa fa-caret-right'></i> Continue &nbsp;<i class='fa fa-angle-double-right'></i>").prop("disabled", false);
 			return false;
 		}
 
@@ -110,6 +112,7 @@ $(document).ready(function() {
 		$.post('ajax/save_booking_details.php', {'op': 'check-seat-availability', 'seat_no': seat_no, 'boarding_vehicle_id': boarding_vehicle_id}, function(d) {
 			if (d.trim() == "2") {
 				alert("Sorry, seat " + seat_no + " is no longer available. Please pick another seat.");
+				$(this).html("&nbsp; <i class='fa fa-caret-right'></i> Continue &nbsp;<i class='fa fa-angle-double-right'></i>").prop("disabled", false);
 				// refresh seats
 			} else {
 				$.post('ajax/hold_details.php', {

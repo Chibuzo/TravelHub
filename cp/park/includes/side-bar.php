@@ -26,59 +26,45 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
-            <li>
-                <a href="dashboard.php">
+            <li id="link-dashboard">
+                <a href="dashboard.php#dashboard">
                     <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                 </a>
             </li>
 
-            <li>
-                <a href="travel-routes.php">
+            <li id="link-routes">
+                <a href="travel-routes.php#routes">
                     <i class="fa fa-cogs"></i> <span>Routes</span>
                 </a>
             </li>
 
-            <li>
-                <a href="manage_trips.php">
+            <li id="link-trips">
+                <a href="manage_trips.php#trips">
                     <i class="fa fa-road"></i>
                     <span>Manage Trips</span>
                 </a>
             </li>
 
-            <li>
-                <a href="manage_fares.php">
+            <li id="link-fares">
+                <a href="manage_fares.php#fares">
                     <i class="fa fa-money"></i>
                     <span>Manage Fares</span>
                 </a>
             </li>
 
-            <li>
-                <a href="bookings.php">
+            <li id="link-booking">
+                <a href="bookings.php#booking">
                     <i class="fa fa-car"></i>
                     <span>Reservations</span>
                 </a>
             </li>
 
-            <!--<li>
-                <a href="bushire.php">
-                    <i class="fa fa-bus"></i>
-                    <span>Bus Hire</span>
-                </a>
-            </li>-->
-
-            <li>
-                <a href="view_reports.php">
+            <li id="link-reports">
+                <a href="view_reports.php#reports">
                     <i class="fa fa-book"></i>
                     <span>Reports</span>
                 </a>
             </li>
-
-            <!--<li>
-                <a href="users.php">
-                    <i class="fa fa-group"></i>
-                    <span>Manage Users</span>
-                </a>
-            </li>-->
 
             <li>
                 <a href="../logout.php">

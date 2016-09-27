@@ -51,16 +51,16 @@ if (isset($_REQUEST['op'])) {
         $params['abbr'] = $_POST['abbr'];
         $params['online_charge'] = $_POST['online_charge'];
         $params['offline_charge'] = $_POST['offline_charge'];
-        //$params['account_number'] = $_POST['account_number'];
+        $params['api_charge'] = $_POST['api_charge'];
         try {
             $result = $travel_model->saveTravel($params);
             if ($result == false) {
-                $msg = "There was an error, travel was not updated.";
+                echo $msg = "There was an error, travel was not updated.";
             }
+            echo "Done";
         } catch (\Exception $e) {
 
         }
-        echo "Done";
     }
     elseif ($_POST['op'] == 'travel-details')
     {

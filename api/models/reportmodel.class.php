@@ -2,7 +2,7 @@
 
 require_once 'model.class.php';
 
-class Report extends Model
+class ReportModel extends Model
 {
 
     protected static $payment = 'payments';
@@ -96,5 +96,65 @@ class Report extends Model
         self::$db->query($sql, $param);
 
         return self::$db->fetchAll('obj');
+    }
+
+
+    public function saveManifestAccount($boarding_vehicle_id, $feeding, $fuel, $scouters, $expenses, $load)
+    {
+        self::$db->query("SELECT id FROM manifest_account WHERE boarding_vehicle_id = :id", array('id' => $boarding_vehicle_id));
+
+        $param = array(
+            'feeding' => $feeding,
+            'fuel' => $fuel,
+            'scouters' => $scouters,
+            'expenses' => $expenses,
+            'load' => $load,
+            'boarding_vehicle_id' => $boarding_vehicle_id
+        );
+
+        if ($id = self::$db->fetch('obj')) {
+            $sql = "UPDATE manifest_account SET
+                      feeding = :feeding,
+                      fuel = :fuel,
+                      scouters_charge = :scouters,
+                      expenses = :expenses,
+                      load_charge = :load
+                    WHERE boarding_vehicle_id = :boarding_vehicle_id";
+
+            self::$db->query($sql, $param);
+        } else {
+            $sql = "INSERT INTO manifest_account
+                    (feeding, fuel, scouters_charge, expenses, load_charge, boarding_vehicle_id)
+					VALUES
+					(:feeding, :fuel, :scouters, :expenses, :load, :boarding_vehicle_id)";
+
+			self::$db->query($sql, $param);
+        }
+        return true;
+    }
+
+
+    public function getDailyReport($date)
+    {
+        $sql = "SELECT bv.booked_seats, seat_status, bv.departure_order, po.park o_park, pd.park d_park, sd.state_name destination, so.state_name origin, vehicle_name bus_type, t.fare, (scouters_charge + feeding + fuel) expenses
+				FROM boarding_vehicle bv
+				JOIN trips t ON bv.trip_id = t.id
+                JOIN park_map pm ON t.park_map_id = pm.id
+                JOIN parks pd ON pm.destination = pd.id
+                JOIN states sd ON pd.state_id = sd.id
+                JOIN parks po ON pm.origin = po.id
+                JOIN states so ON po.state_id = so.id
+				JOIN travel_vehicle_types vt ON t.vehicle_type_id = vt.vehicle_type_id
+				LEFT JOIN manifest_account ma ON bv.id = ma.boarding_vehicle_id
+				WHERE bv.travel_date = :travel_date AND seat_status = 'Full' AND booked_seats <> ''
+				GROUP BY bv.id
+				ORDER BY vehicle_name, bv.departure_order";
+
+        self::$db->query($sql, array('travel_date' => date('Y-m-d', strtotime($date))));
+        if ($reports = self::$db->fetchAll()) {
+            return $reports;
+        } else {
+            return array();
+        }
     }
 }
