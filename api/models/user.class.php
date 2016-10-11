@@ -89,12 +89,12 @@ class User extends Travel {
         }
     }
 
-    function createParkAdmin($fullname, $username, $password, $travel_id, $park_id)
+    function createParkAdmin($address, $phone, $fullname, $username, $password, $travel_id, $park_id)
     {
         self::$db->beginDbTransaction();
         $user_id = $this->createTravelAdmin($fullname, $username, $password, 'park_admin', $travel_id);
         if ($user_id !== false) {
-            if ($this->addTravelPark($travel_id, $park_id, $user_id) !== false) {
+            if ($this->addTravelPark($address, $phone, $travel_id, $park_id, $user_id) !== false) {
                 self::$db->commitTransaction();
                 return true;
             } else {
@@ -317,11 +317,19 @@ class User extends Travel {
         }
     }
 
-    function addTravelPark($travel_id, $park_id, $user_id)
+    function addTravelPark($address, $phone, $travel_id, $park_id, $user_id)
     {
         try {
-            $sql = "INSERT INTO travel_park (travel_id, park_id, user_id) VALUES (:travel_id, :park_id, :user_id)";
-            $result = self::$db->query($sql, array('travel_id' => $travel_id, 'park_id' => $park_id, 'user_id' => $user_id));
+            $sql = "INSERT INTO travel_park (travel_id, park_id, user_id, address, phone) VALUES
+					(:travel_id, :park_id, :user_id, :address, :phone)";
+
+            $result = self::$db->query($sql, array(
+					'travel_id' => $travel_id,
+					'park_id' => $park_id,
+					'user_id' => $user_id,
+					'address' => $address,
+					'phone' => $phone
+			));
             if ($result !== false) {
                 $params['id'] = self::$db->getLastInsertId();
                 return $params;
@@ -334,7 +342,7 @@ class User extends Travel {
 
 	function getParkDetails($user_id)
 	{
-		$sql = "SELECT p.id, park FROM travel_park tp JOIN parks p ON tp.park_id = p.id WHERE user_id = :user_id";
+		$sql = "SELECT p.id, park, address, phone FROM travel_park tp JOIN parks p ON tp.park_id = p.id WHERE user_id = :user_id";
 		self::$db->query($sql, array('user_id' => $user_id));
 		if ($park = self::$db->fetch('obj')) {
 			return $park;

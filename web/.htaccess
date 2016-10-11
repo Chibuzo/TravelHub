@@ -1,6 +1,0 @@
-#Options -MultiViews
-RewriteEngine on
-
-# Remove .php extension
-RewriteCond %{REQUEST_FILENAME}.php -f
-RewriteRule !.*\.php$ %{REQUEST_FILENAME}.php

@@ -107,7 +107,7 @@ if (isset($_POST['park_map'])) {
 										$html .= "<tr>
 													<td class='text-right'>$n</td>
 													<td>{$row->origin_name}</td>
-													<td>{$row->destination_name} ($row->destination_state)</td>
+													<td>{$row->destination_state} ($row->destination_name)</td>
 													<td class='opt-icons text-center' id='{$row->id}'>
 														<a href='' class='edit-vehicle' title='Edit' data-toggle='tooltip'><i class='fa fa-pencil'></i></a>
 														<a href='' class='delete' title='Remove' data-toggle='tooltip'><i class='fa fa-trash-o'></i></a>

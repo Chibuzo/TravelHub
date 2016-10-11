@@ -24,7 +24,7 @@ class Trip extends Model
             'fare' => $fare
         );
 
-        $trip_id = $this->verifyTrip($park_map_id, $vehicle_type_id, $departure);
+        $trip_id = $this->verifyTrip($park_map_id, $vehicle_type_id, $departure, $travel_id);
         if (is_numeric($trip_id)) {
             // push this to the concerned terminal
             if ($channel === null) {
@@ -68,10 +68,16 @@ class Trip extends Model
     }
 
 
-    public function updateTrip($trip_id, $amenities, $fare, $channel = null)
+    public function updateTrip($trip_id, $amenities, $fare, $departure_order, $departure_time, $channel = null)
     {
-        $sql = "UPDATE trips SET amenities = :amenities, fare = :fare WHERE id = :id";
-        $param = array('amenities' => $amenities, 'fare' => $fare, 'id' => $trip_id);
+        $sql = "UPDATE trips SET
+                  amenities = :amenities,
+                  fare = :fare,
+                  departure = :departure_order,
+                  departure_time = :departure_time
+                WHERE id = :id";
+
+        $param = array('amenities' => $amenities, 'fare' => $fare, 'id' => $trip_id, 'departure_order' =>$departure_order, 'departure_time' => $departure_time);
         $result = self::$db->query($sql, $param);
         if ($result !== false) {
             if (is_null($channel)) {
@@ -185,13 +191,15 @@ class Trip extends Model
         return self::$db->fetchAll('obj');
     }
 
-    private function verifyTrip($park_map_id, $vehicle_type_id, $departure)
+    private function verifyTrip($park_map_id, $vehicle_type_id, $departure, $travel_id)
     {
-        $sql = "SELECT id FROM trips WHERE park_map_id = :park_map_id AND vehicle_type_id = :vehicle_type_id AND departure = :departure";
+        $sql = "SELECT id FROM trips
+        WHERE park_map_id = :park_map_id AND vehicle_type_id = :vehicle_type_id AND departure = :departure AND travel_id = :travel_id";
         $param = array(
             'park_map_id' => $park_map_id,
             'vehicle_type_id' => $vehicle_type_id,
-            'departure' => $departure
+            'departure' => $departure,
+            'travel_id' => $travel_id
         );
         self::$db->query($sql, $param);
         if ($id = self::$db->fetch('obj')) {

@@ -17,6 +17,20 @@ if (isset($_REQUEST['op'])) {
 			echo "Done";
 		}
 	}
+    elseif ($_REQUEST['op'] == 'add-park-route')
+    {
+        require_once "../api/models/travelparkmap.class.php";
+        $travelParkMap = new TravelParkMap();
+        extract($_POST);
+        $travelParkMap->addTravelParkMap($origin, $destination_park, $travel_id);
+    }
+    elseif ($_POST['op'] == 'get-park-routes')
+    {
+        require_once "../api/models/travelparkmap.class.php";
+        $travelParkMap = new TravelParkMap();
+        $travel_park_maps = $travelParkMap->getTravelParkParkMaps($_POST['travel_id'], $_POST['park_id']);
+        echo json_encode($travel_park_maps);
+    }
 	elseif ($_POST['op'] == "remove-route") {
 		require_once "../api/models/routemodel.class.php";
 		$route = new RouteModel();
@@ -91,6 +105,25 @@ if (isset($_REQUEST['op'])) {
 
         echo json_encode($parks);
         exit;
+    }
+    elseif ($_POST['op'] == 'add-new-travel-state')
+    {
+        require_once "../api/models/user.class.php";
+        $user = new User();
+        extract($_POST);
+        if ($user->createStateAdmin($full_name, $username, $password, $travel_id, $state_id) == true) {
+            echo "Done";
+        }
+    }
+    elseif ($_POST['op'] == 'add-new-park')
+    {
+        require_once "../api/models/user.class.php";
+        $user = new User();
+        extract($_POST);
+        $phone = $_POST['telephone'] . ',' . $_POST['mobile'];
+        if ($user->createParkAdmin($address, $phone, $full_name, $username, $password, $travel_id, $park_id) == true) {
+            echo "Done";
+        }
     }
     elseif ($_POST['op'] == 'update-park')
     {
