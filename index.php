@@ -33,10 +33,20 @@ if (isset($_POST['bus_charter'])) {
 ?>
 
 <style>
-/*body { background-image:url('../images/bg.png'); background-repeat: repeat;}*/
-
 #search-wrap {
-	background-color: #f0f0f0;
+	background: url('images/header-bg.jpg') no-repeat center top;
+	background-position: center center;
+	min-height: 450px;
+	width: 100%;
+	-webkit-background-size: 100%;
+	-moz-background-size: 100%;
+	-o-background-size: 100%;
+	background-size: 100%;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	backgroundcolor: #f0f0f0;
 	margin-top: -20px;
 }
 
@@ -44,72 +54,102 @@ if (isset($_POST['bus_charter'])) {
 	padding: 10px;
 }
 
-#bus_search .btn-danger {
-	background-color: #fff !important;
+#phone-div {
+	margin-top: 20px;
+	text-align: center;
+	font: 400 28px 'Open Sans', San-serif, Helvetica Neue, Tahoma;
+	color: #fff;
+}
+
+#feature-tagline-bg {
+	position: relative;
+	background-color: rgba(0,0,0,0.5);
+	width: 530px;
+	border: #ccc solid thin;
+	padding: 10px 25px;
+	top: 40px;
+	height: 80px;
+	overflow: auto;
+	border-radius: 3px;
+	opacity: 0.7;
+	margin: auto;
+}
+
+#feature-tagline-text {
+	text-align: center;
+	padding-left: 17px;
+	width: 530px;
+	margin: auto;
+	position: relative;
+	top: -35px;
+	color: #fff;
+}
+
+#feature-tagline-text h4 {
+	margin-bottom: 1px !important;
+	margin-top: 9px;
+	font: 700 20px 'Lato', 'Open Sans', San-serif;
+	color: #FF3B30;
 }
 
 h1 {
 	clear: both;
 	font: 300 38px 'Open Sans', San-serif, Helvetica Neue, Tahoma;
-	margin: 15px 0;
-	margin-bottom: 25px;
+	margin: 30px 0;
+	margin-bottom: 30px;
 	text-align: center;
-	color: #333;
-}
-
-.feature { font-size: 17px; color: #bbb; font-weight: 100; }
-
-
-#bg {
-  min-height: 100%;
-  min-width: 1024px;
-
-  /* Set up proportionate scaling */
-  width: 100%;
-  height: auto;
-
-  /* Set up positioning */
-  position: fixed;
-  top: 0;
-  left: 0;
+	color: #fff;
 }
 
 #services {
 	text-align: center;
-	margin-top: 40px;
+	margin-top: 60px;
 }
 
 #services .row div {
-	padding: 10px 30px;
-	font-weight: 300;
-	font-size: 17px;
+	padding: 10px 12px;
+	font-weight: 400;
+	font-size: 15px;
 	line-height: 25px;
 }
 
 #services h3 {
 	margin-top: 8px;
-	margin-bottom: 15px;
+	margin-bottom: 20px;
 	font-size: 25px;
-}
-
-#services .glyphicon, #services .fa {
-	font-size: 21px;
-	color: #666;
+	font-weight: 400;
+	color: #3c3c3c;
 }
 
 #services .fa {
-	font-size: 24px;
+	font-size: 31px;
+	color: #27E1CE;
+	border: #27E1CE solid;
+	padding: 19px;
+	width: 80px;
+	height: 78px;
+	border-radius: 50%;
+	margin-bottom: 15px;
+}
+
+#services .fa {
+	font-size: 36px;
 }
 
 .operators {
-	background: #2f353e;
-	margin-top: 50px;
-	padding: 10px;
+	background-color: #f0f0f0;
+	margin: 70px 0;
+	padding: 30px;
 }
 
-.operators h3 {
-	color: #999;
-	margin-bottom: 6px;
+.operators h2 {
+	colr: #999;
+	margin-bottom: 16px;
+}
+
+.operators img {
+	margin: 20px 15px;
+	height: 25px;
 }
 
 
@@ -123,6 +163,10 @@ h1 {
 		font-weight: 300;
 		font-size:15px;
 		line-height: 22px;
+	}
+
+	#feature-tagline-bg, #feature-tagline-text {
+		width: auto;
 	}
 }
 
@@ -148,7 +192,7 @@ h1 {
 }
 </style>
 <link href="css/datepicker.css" rel="stylesheet" />
-<link href="css/datepicker3.css" rel="stylesheet" />
+<link href="cp/plugins/datepicker/datepicker3.css" rel="stylesheet" />
 
 <div class="container-fluid" id="search-wrap">
 	<div class="container">
@@ -182,6 +226,7 @@ h1 {
 
 					<div class='col-md-3'>
 						<div class="form-group">
+							<input type="text" name="travel_date" id="t_date" class="hidden form-control calendar input-lg" value="<?php echo date('Y-m-d'); ?>" />
 							<select name="travel_date" class="form-control input-lg">
 							<?php
 								for ($i = 1; $i < 30; $i++) {
@@ -195,11 +240,25 @@ h1 {
 
 					<div class='col-md-3'>
 						<div class="form-group">
-							<button type="submit" name="search" class="btn btn-danger btn-block btnsubmit btn-round btn-lg"><span class="glyphicon glyphicon-search"></span> Find bus</button>
+							<button type="submit" name="search" class="btn btn-danger btn-fill btn-block btnsubmit btn-round btn-lg"><span class="glyphicon glyphicon-search"></span> Find bus</button>
 						</div>
 					</div>
 				</div>
 			</form>
+			<div class="row">
+				<div class="col-md-12" id="phone-div">
+					<span class="glyphicon glyphicon-phone-alt"></span><br>
+					0703 000 0000
+				</div>
+			</div>
+
+			<div id="feature-tagline-bg">
+			</div>
+			<div id="feature-tagline-text">
+<!--				<img src="images/travelhub-emblem.png" style="float: left; margin-right: 25px; margin-top: -6px; width: 50px" />-->
+				<h4>CHECK FARES</h4>
+				Find over 500+ travel fares from different operators.
+			</div>
 		</div>
 	</div>
 	</div>
@@ -207,58 +266,58 @@ h1 {
 
 <div class="container" id="services">
 	<div class="row">
-		<div class="col-md-4 hidden">
+		<div class="col-md-4">
 			<div>
-				You don't like queuing at the ticketing office?
-				TravelHub provides a better alternative for buying tickets for your travels
-			</div>
-		</div>
-
-		<div class="col-md-6 right-border">
-			<div>
-				<h3><i class="fa fa-ticket"></i> &nbsp;Ticket Easy</h3>
-				You no longer need to visit different parks to get travel details like fare, departure time, vehicle type available etc,
+				<i class="fa fa-road"></i>
+				<h3>Travel Inventory</h3>
+				You no longer need to visit different parks to get travel details like fare, departure time, vehicle types etc.
 				TravelHub provides these details at the comfort of your home or office.
-				Now you can easily make better decisions about your trips
+				Now you can make better decisions about your trips.
 			</div>
 		</div>
 
-		<div class="col-md-6">
+		<div class="col-md-4 right-border">
+			<div>
+				<i class="fa fa-gift"></i>
+				<h3>Loyalty & Gifts</h3>
+				Receive discounts on tickets purchased from our platform and get surprising gift items from the respective departure parks.
+				Your favourite bus operators will often offer loyalities and discounts on this platform. Don't miss out.
+			</div>
+		</div>
+
+		<div class="col-md-4">
 			<div class="">
-				<h3><span class="glyphicon glyphicon-phone-alt"></span> &nbsp;Call Us Now</h3>
-				TravelHub has a caring and friendly crew that are willing to receive your calls and answer all your questions concerning
-				intra-city travels in Nigeria. We can also help you make reservations from any transport of choice without any service charge.
+				<i class="fa fa-briefcase"></i>
+				<h3>Travel Easy</h3>
+				Travelhub provides you more trip options than you can get in the park. Here you can see boarding vehicles and avaliable seats,
+				amenities and different vehicle fares without having to ask. Traveling hasn't been that easy.
 			</div>
-		</div>
-	</div>
-</div>
-
-<div class="container">
-	<div class="row text-center th-mobile">
-		<br>
-		<div class="col-md-6"><h3><i class="fa fa-phone"></i> Call us: </h3></div>
-		<div class="col-md-6"><h3> (0700) 0000 000</h3></div>
-	</div>
-	<div class="row text-center th-desktop">
-		<div class="col-md-12">
-			<h3><i class="fa fa-phone"></i> Call us:  (0700) 0000 000</h3>
 		</div>
 	</div>
 </div>
 
 <div class="container-fluid operators">
 	<div class="container">
-		<div class="row">
-			<h3>Available operators</h3><br>
-			<button class="btn btn-default">Coming soon...</button>
-			<br><br>
+		<div class="row text-center">
+			<h3>Available transport operators</h3>
+			<img src="images/ekerson-logo.png" alt="Ekeson Tranport logo" />
+			<img src="images/ifesinachi-logo.png" alt="Ifesinachi Transport logo" />
+			<img src="images/guo-logo.png" alt="GUO transport logo" />
 		</div>
 	</div>
 </div>
 
-<script type="text/javascript" src="js/bootstrap-datepicker.js"></script>
-<script>
+<?php require_once "includes/footer.php"; ?>
+<script type="text/javascript" src="cp/plugins/datepicker/bootstrap-datepicker.js"></script><script>
 $(document).ready(function() {
+	$('.calendar').datepicker({
+		format: 'yyyy-mm-dd',
+		keyboardNavigation: false,
+		forceParse: true,
+		todayHighlight: true,
+		autoclose: true
+	});
+
 	// reset booking form
 	$("#origin, #destination").val("");
 
@@ -273,15 +332,6 @@ $(document).ready(function() {
 	$("#origin").change(function() {
 		getDestination($(this));
 	});
-
-
-	$('.date').datepicker({
-		keyboardNavigation: false,
-		forceParse: false,
-		todayHighlight: true,
-		autoclose: true
-	});
-
 });
 
 function getDestination(obj) {
@@ -295,4 +345,3 @@ function getDestination(obj) {
 	$("#destination").html(opt);
 }
 </script>
-<?php require_once "includes/footer.php"; ?>

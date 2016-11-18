@@ -9,4 +9,17 @@ class Utility
         else
             return $number. $ends[$number % 10];
     }
+
+
+    public static function superUnique(array $array)
+    {
+        $result = array_map("unserialize", array_unique(array_map("serialize", $array)));
+
+        foreach ($result AS $key => $value) {
+            if (is_array($value)) {
+                $result[$key] = self::superUnique($value);
+            }
+        }
+        return $result;
+    }
 }

@@ -11,26 +11,35 @@ class TravelVehicle extends Model
     }
 
 
-    public function addVehicleType($travel_id, $vehicle_name, $vehicle_type_id, $num_of_seats)
+    public function addVehicleType($travel_id, $vehicle_name, $vehicle_type_id, $num_of_seats, $push_opt = 'Push')
     {
+        // check if vehicle has been added already
+        $sql = "SELECT id FROM " . self::$tbl . " WHERE travel_id = :travel_id AND vehicle_type_id = :vehicle_type_id";
+        $param = array(
+            'travel_id' => $travel_id,
+            'vehicle_type_id' => $vehicle_type_id
+        );
+        self::$db->query($sql, $param);
+        if ($d = self::$db->fetch()) {
+            return true;
+        }
+
         $sql = "INSERT INTO " . self::$tbl . "
                 (travel_id, vehicle_name, vehicle_type_id)
             VALUES
                 (:travel_id, :vehicle_name, :vehicle_type_id)";
 
-        $param = array(
-            'travel_id' => $travel_id,
-            'vehicle_name' => $vehicle_name,
-            'vehicle_type_id' => $vehicle_type_id
-        );
+       $param['vehicle_name'] = $vehicle_name;
 
         if (self::$db->query($sql, $param)) {
             $param['num_of_seats'] = $num_of_seats;
             $param['category'] = $_SESSION['abbr'];
-            try {
-                self::pushData($param, 'add-vehicle-type');
-            } catch (Exception $e) {
-                // log exception
+            if ($push_opt == 'Push') {
+                try {
+                    self::pushData($param, 'add-vehicle-type');
+                } catch (Exception $e) {
+                    // log exception
+                }
             }
             return true;
         }

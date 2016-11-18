@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 if (isset($_REQUEST['op'])) {
     if ($_REQUEST['op'] == 'get-travel-state-parks')
@@ -19,19 +22,11 @@ if (isset($_REQUEST['op'])) {
                         <td>
                             <div class='onoffswitch'>
                                 <input type='checkbox' data-toggle='modal' data-target='#confirmModal' class='onoffswitch-checkbox' id='{$park->park}-status' data-level='park' data-field='status' $status>
-                                <label class='onoffswitch-label' for='{$park->park}-status'>
-                                    <span class='onoffswitch-inner'></span>
-                                    <span class='onoffswitch-switch'></span>
-                                </label>
                             </div>
                         </td>
                         <td>
                             <div class='onoffswitch'>
                                 <input type='checkbox' data-toggle='modal' data-target='#confirmModal' class='onoffswitch-checkbox' id='{$park->park}-online' data-level='park' data-field='online' $online>
-                                <label class='onoffswitch-label' for='{$park->park}-online'>
-                                    <span class='onoffswitch-inner'></span>
-                                    <span class='onoffswitch-switch'></span>
-                                </label>
                             </div>
                         </td>
                         <td>{$park->address} <br> {$park->phone}</td>
@@ -58,7 +53,7 @@ if (isset($_REQUEST['op'])) {
         $amenities = implode($amenities, ">");
         $departureTime = $hour . ":" . $minute . ":00";
         $route = $travelParkMap->getRoute($park_map_id);
-        $trip->addTrip($park_map_id, $departure_order, $travel_id, $route->origin, $route->id, $vehicle_type_id, $amenities, $departureTime, $fare);
+        $trip->addTrip($park_map_id, $departure_order, $travel_id, $route->origin, $route->id, $vehicle_type_id, $amenities, $departureTime, $fare, 'ignore-push');
     }
     elseif ($_REQUEST['op'] == 'update-trip')
     {
@@ -99,5 +94,38 @@ if (isset($_REQUEST['op'])) {
         require_once "../api/models/travel.class.php";
         $travel = new Travel();
         $travel->updateParkSetting($_POST['travel_id'], $_POST['park_id'], $_POST['field'], $_POST['value']);
+    }
+    elseif ($_REQUEST['op'] == 'add-travel-admin')
+    {
+        $params['company_name'] = $_POST['company_name'];
+        $params['abbr'] = $_POST['abbr'];
+        $params['online_charge'] = $_POST['online_charge'];
+        $params['offline_charge'] = $_POST['offline_charge'];
+        $params['api_charge'] = $_POST['api_charge'];
+
+        try {
+            $result = $travel_model->saveTravel($params);
+            if ($result == false) {
+                echo "There was an error, travel was not added.";
+            } else {
+                echo "Done";
+            }
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+        }
+    }
+    elseif ($_REQUEST['op'] == 'add_travel_vehicle_type')
+    {
+        require_once "../api/models/travelvehicle.class.php";
+        $travelVehicle = new TravelVehicle();
+        extract($_POST);
+        $travelVehicle->addVehicleType($travel_id, $vehicle_name, $vehicle_type_id, $num_of_seats, 'ignore-push');
+    }
+    elseif($_REQUEST['op'] == 'get-travel-vehicle-types')
+    {
+        require_once "../api/models/travelvehicle.class.php";
+        $travelVehicle = new TravelVehicle();
+        $vehicles = $travelVehicle->getAllVehicleTypes($_POST['travel_id']);
+        echo json_encode($vehicles);
     }
 }

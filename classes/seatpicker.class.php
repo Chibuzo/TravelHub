@@ -40,7 +40,10 @@ class SeatPicker extends Model {
 		$this->getBoardingVehicleDetails();
 
 		switch ($this->vehicle_type_id) {
+			case 1:
 			case 3:
+				return self::getSiennaSeats();
+				break;
 			case 5:
 				return self::getLuxurySeats();
 				break;
@@ -289,6 +292,46 @@ class SeatPicker extends Model {
 			}
 		}
 		if ($counter == 3) $seat_arrangement .= "</div>";
+		$seat_arrangement .= "\n</div>\n";
+
+		return $seat_arrangement .= $this->lowerSittingDetails();
+	}
+
+
+	function getSiennaSeats() {
+		$booked_seats = $this->booked_seats;
+		$seat_arrangement = $this->upperSittingDetails('sienna');
+
+		$counter = 0;
+		for ($i = 1; $i <= $this->num_of_seats; $i++) {
+			$seat = $i; $class = '';
+
+			// rearrange seat number
+			if ($i > 1) {
+				if ($i % 2 == 0) $seat = $i + 1;
+				else {
+					$seat = $i - 1;
+					$class .= ' push-seat';
+				}
+			}
+			if (in_array($seat, $booked_seats)) $class .= " booked_seat";
+			else $class .= " seat";
+
+//			if ($counter == 0) $seat_arrangement .= "<div class='cols'>";
+			if ($counter == 0) $seat_arrangement .= $i <= 1 ? "<div class='front-row'>" : "<div class='seat-row'>";
+			$seat_arrangement .= "\t<div class='{$class}' data-hidden='no' title='Seat {$seat}' id='{$seat}'></div>";
+			++$counter;
+
+			if ($i == 1) { // For one seat at the front
+				$seat_arrangement .= "</div>"; // Close cols for the seat at the front
+				$counter = 0;
+			}
+
+			if ($counter == 2) {
+				$counter = 0;
+				$seat_arrangement .= "</div>"; // Close cols
+			}
+		}
 		$seat_arrangement .= "\n</div>\n";
 
 		return $seat_arrangement .= $this->lowerSittingDetails();

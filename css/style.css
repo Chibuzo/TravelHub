@@ -3,7 +3,7 @@ html { min-height: 100%; position: relative; }
 body {
 	font: normal 16px 'Open Sans', sans-serif;
 	margin-bottom: 150px;
-	color: #333;
+	color: #4c4c4c;
 	background-image: url('../images/bg1.png');
 	background-repeat: repeat;
 }
@@ -128,14 +128,14 @@ a.btn-primary, .btn-fill:visited {
 
 footer {
 	position: absolute;
-	color: #666;
+	color: #999;
 	bottom: 0;
 	width: 100%;
 	height: 151px;
-    background-image:url('../images/bg.png'); background-repeat: repeat;
+    background-color:#424242;
 	padding: 15px 0;
 	/*background: #333;*/
-	font-size: 13px;
+	font-size: 14px;
 }
 
 footer .container {
@@ -154,6 +154,14 @@ footer .container {
 	margin-left: 15px;
 }
 
+.footer-nav a:link {
+	color: #999;
+}
+
+.footer-nav a:visited {
+	color: #999;
+}
+
 footer .socials {
 	margin-top: 7px;
 	text-align: right;
@@ -161,6 +169,7 @@ footer .socials {
 
 footer .socials .fa {
 	margin-right: 10px;
+	color: #ddd;
 }
 
 

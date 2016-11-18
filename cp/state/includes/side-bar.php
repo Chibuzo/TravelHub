@@ -60,7 +60,7 @@
             </li>
 
             <li id="link-reports">
-                <a href="view_reports.php#reports">
+                <a href="report.php#reports">
                     <i class="fa fa-book"></i>
                     <span>Reports</span>
                 </a>

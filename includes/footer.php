@@ -9,9 +9,8 @@
 				<span class='pull-left'>&copy <?php echo date('Y'); ?> TravelHub</span>
 				<span>
 					<ul class="footer-nav">
-						<li><a href="#<?php echo BASE_URL . 'about.php'; ?>">About</a></li>
-						<li class="hidden"><a href="#<?php echo BASE_URL . 'howitworks.php'; ?>">Services</a></li>
-						<li><a href="#<?php echo BASE_URL . 'contactus.php'; ?>">Contact</a></li>
+						<li class=""><a href="<?php echo BASE_URL . 'howitworks'; ?>">How it works</a></li>
+						<li><a href="<?php echo BASE_URL . 'contact'; ?>">Contact</a></li>
 					</ul>
 				</span>
 
@@ -30,7 +29,7 @@
 		<div class="row">
 			<div class="col-md-12 socials">
 				<a href="https://www.facebook.com/travelhubb/"><i class="fa fa-facebook fa-lg"></i></a>
-				<a href="#"><i class="fa fa-twitter fa-lg"></i></a>
+				<a href="https://www.twitter.com/TravelHub_ng"><i class="fa fa-twitter fa-lg"></i></a>
 				<a href="https://www.instagram.com/travelhub.ng/"><i class="fa fa-instagram fa-lg"></i></a>
 			</div>
 		</div>

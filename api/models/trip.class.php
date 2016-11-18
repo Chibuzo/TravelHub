@@ -92,13 +92,14 @@ class Trip extends Model
 
     public function getTripsByRoute($route_id)
     {
-        $sql = "SELECT tr.id trip_id, vt.id vehicle_type_id, num_of_seats, name, fare, amenities, departure_time, departure, company_name, po.park origin_park, pd.park destination_park, tr.travel_id, tr.park_map_id FROM trips tr
+        $sql = "SELECT tr.id trip_id, tp.address, tp.phone, tp.online, vt.id vehicle_type_id, num_of_seats, name, fare, amenities, departure_time, departure, company_name, po.park origin_park, pd.park destination_park, tr.travel_id, tr.park_map_id FROM trips tr
 				JOIN vehicle_types vt ON tr.vehicle_type_id = vt.id
 				JOIN park_map pm ON tr.park_map_id = pm.id
 				JOIN parks po ON pm.origin = po.id
 				JOIN parks pd ON pm.destination = pd.id
 				JOIN travels t ON tr.travel_id = t.id
-				WHERE tr.route_id = :route_id AND fare > 0 ";
+				LEFT JOIN travel_park tp ON t.id = tp.travel_id AND po.id = tp.park_id
+				WHERE tr.route_id = :route_id AND fare > 0";
 
         self::$db->query($sql, array('route_id' => $route_id));
         return self::$db->fetchAll();

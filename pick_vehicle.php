@@ -50,7 +50,7 @@ require_once "includes/banner.php";
 	padding: 10px;
 }
 
-.vehicle {
+.vehicle, .show-park-details {
 	cursor: pointer;
 	padding: 7px 0px;
 	margin: 1px 0;
@@ -172,11 +172,11 @@ select {
 		overflow-x: auto;
 	}
 
-	.vehicle {
+	.vehicle, .show-park-details {
 		font-size: 11px;
 	}
 
-	.vehicle .col-xs-4 {
+	.vehicle .col-xs-4, .show-park-details .col-xs-4 {
 		width: 50%;
 	}
 
@@ -277,12 +277,17 @@ select {
 				foreach (explode(">", $info['amenities']) AS $am) {
 					$amenities[] = $am;
 				}
-
 				$fare = $info['fare'];
 
-				$btn = "<button class='display-seats btn btn-primary btn-fill pull-right btn-sm' data-fare='{$fare}' data-departure_order='{$info['departure']}' data-departure_time='{$info['departure_time']}' data-park_map_id='{$info['park_map_id']}' data-travel_date='{$travel_date}' data-num_of_seats='{$info['num_of_seats']}' data-trip_id='{$info['trip_id']}' data-travel_id='{$info['travel_id']}' data-vehicle_type_id='{$info['vehicle_type_id']}'><span class='fa fa-list'></span> Pick a seat</button>";
-
-				$html .= "<div class='vehicle col-md-12 row' data-vehicle-type-id='{$info['vehicle_type_id']}' data-vehicle-name='{$info['name']}' data-travel='{$info['company_name']}' data-boarding-park='{$info['origin_park']}' data-amenities='{$info['amenities']}'>
+				$action_class; // used to determine what to show on row click
+				if ($info['online'] == 1) {
+					$action_class = 'vehicle';
+					$btn = "<button class='display-seats btn btn-primary btn-fill pull-right btn-sm' data-fare='{$fare}' data-departure_order='{$info['departure']}' data-departure_time='{$info['departure_time']}' data-park_map_id='{$info['park_map_id']}' data-travel_date='{$travel_date}' data-num_of_seats='{$info['num_of_seats']}' data-trip_id='{$info['trip_id']}' data-travel_id='{$info['travel_id']}' data-vehicle_type_id='{$info['vehicle_type_id']}'><span class='fa fa-list'></span> Pick a seat</button>";
+				} else {
+					$action_class = 'show-park-details';
+					$btn = "<button class='show-details btn btn-primary btn-fill pull-right btn-sm'><i class='fa fa-eye'></i> Details</button>";
+				}
+				$html .= "<div class='{$action_class} col-md-12 row' data-vehicle-type-id='{$info['vehicle_type_id']}' data-vehicle-name='{$info['name']}' data-travel='{$info['company_name']}' data-boarding-park='{$info['origin_park']}' data-amenities='{$info['amenities']}' data-park_address='{$info['address']}' data-park_phone='{$info['phone']}'>
 							<div class='col-md-4 col-sm-4 col-xs-4'>
 								<div class='bold'><i class='fa fa-bus fa_c'></i>&nbsp{$info['company_name']}</div>
 								<span>{$info['name']}: {$info['num_of_seats']} - Seater</span><br />
@@ -340,6 +345,25 @@ select {
 	<div class='hidden' id='picked_seat'></div>
 </div>
 <div class="clearfix"></div>
+
+<div class="modal fade" id="parkAddressModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel">Booking Office Contact</h4>
+			</div>
+			<div class="modal-body">
+				<div id="park-address"></div><br>
+				<div id="park-phone"></div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 <?php require_once "includes/footer.php"; ?>
 <script type="text/javascript" src="js/plugins/jquery.multiselect.js"></script>
 <script>

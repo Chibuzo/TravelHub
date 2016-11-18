@@ -133,6 +133,21 @@ $(document).ready(function() {
 	});
 
 
+	// display park contact details
+	$('.show-details').click(function() {
+		$("#park-address").text($(this).parents('.show-park-details').data('park_address'));
+		$("#park-phone").text($(this).parents('.show-park-details').data('park_phone'));
+		$("#parkAddressModal").modal();
+	});
+
+	// display park contact details
+	$('.show-park-details').click(function() {
+		$("#park-address").text($(this).data('park_address'));
+		$("#park-phone").text($(this).data('park_phone'));
+		$("#parkAddressModal").modal();
+	});
+
+
 	$('.show-seat').on('click', '.glyphicon-remove', function() {
 		//$(this).closest('div', '.vehicle').fadeOut();
 		$(this).parents('.show-seat').slideUp(function() {

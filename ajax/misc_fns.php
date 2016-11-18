@@ -55,6 +55,26 @@ if (isset($_REQUEST['op'])) {
 			echo "Done";
 		}
 	}
+    elseif ($_POST['op'] == 'add-travel')
+    {
+        require_once "../api/models/travel.class.php";
+        $travel_model = new Travel();
+
+        $params['company_name'] = $_POST['company_name'];
+        $params['abbr'] = $_POST['abbr'];
+        $params['online_charge'] = $_POST['online_charge'];
+        $params['offline_charge'] = $_POST['offline_charge'];
+        $params['api_charge'] = $_POST['api_charge'];
+        try {
+            $result = $travel_model->saveTravel($params);
+            if ($result == false) {
+                echo $msg = "There was an error, travel was not saved.";
+            }
+            echo "Done";
+        } catch (\Exception $e) {
+
+        }
+    }
     elseif ($_POST['op'] == 'update-travel')
     {
         require_once "../api/models/travel.class.php";
@@ -111,8 +131,9 @@ if (isset($_REQUEST['op'])) {
         require_once "../api/models/user.class.php";
         $user = new User();
         extract($_POST);
-        if ($user->createStateAdmin($full_name, $username, $password, $travel_id, $state_id) == true) {
-            echo "Done";
+        $admin_id = $user->createStateAdmin($full_name, $username, $password, $travel_id, $state_id);
+        if (is_numeric($admin_id)) {
+            echo $admin_id;
         }
     }
     elseif ($_POST['op'] == 'add-new-park')
@@ -121,8 +142,9 @@ if (isset($_REQUEST['op'])) {
         $user = new User();
         extract($_POST);
         $phone = $_POST['telephone'] . ',' . $_POST['mobile'];
-        if ($user->createParkAdmin($address, $phone, $full_name, $username, $password, $travel_id, $park_id) == true) {
-            echo "Done";
+        $admin_id = $user->createParkAdmin($address, $phone, $full_name, $username, $password, $travel_id, $park_id);
+        if (is_numeric($admin_id)) {
+            echo $admin_id;
         }
     }
     elseif ($_POST['op'] == 'update-park')

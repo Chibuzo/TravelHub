@@ -3,28 +3,17 @@ require "includes/head.php";
 require "includes/side-bar.php";
 require_once "../../includes/db_handle.php";
 require_once "../../api/models/travel.class.php";
+require_once "../../api/models/vehiclemodel.class.php";
 
 $travel_model = new Travel();
+$vehicle_model = new VehicleModel();
 
-if (isset($_POST['add_travel'])) {
-    $params['company_name'] = $_POST['company_name'];
-    $params['abbr'] = $_POST['abbr'];
-    $params['online_charge'] = $_POST['online_charge'];
-    $params['offline_charge'] = $_POST['offline_charge'];
-    $params['api_charge'] = $_POST['api_charge'];
-
-    try {
-        $result = $travel_model->saveTravel($params);
-        if ($result == false) {
-            $msg = "There was an error, travel was not added.";
-        }
-    } catch (\Exception $e) {
-        echo $e->getMessage();
-    }
-}
+$all_vehicle_types = $vehicle_model->getAllVehicleTypes();
 ?>
 <style>
     .opt-icons .fa { color: #666; font-size: 17px; margin-left: 6px; }
+
+    #admin-form-div { display: none; }
 </style>
 <!-- Right side column. Contains the navbar and content of the page -->
 <div class="content-wrapper">
@@ -51,7 +40,7 @@ if (isset($_POST['add_travel'])) {
                     <div class="box-body">
                         <div>
                             <div id="route-div">
-                                <form method="post">
+                                <form method="post" id="form-add-travel">
                                     <div class="row">
                                         <div class="col-md-5">
                                             <div class="form-group" id="origin">
@@ -113,7 +102,7 @@ if (isset($_POST['add_travel'])) {
                                 $html = ""; $n = 0;
                                 foreach ($travel_model->getTravels() as $travel) {
                                     $n++;
-                                    $html .= "<tr class='$travel->id'>
+                                    $html .= "<tr data-travel_id='$travel->id'>
                                         <td class='text-right'>{$travel->id}</td>
                                         <td><a href='travel-page.php?travel_id={$travel->id}'>{$travel->company_name}</a></td>
                                         <td>{$travel->abbr}</td>
@@ -129,6 +118,9 @@ if (isset($_POST['add_travel'])) {
                                         <td class='opt-icons text-center' data-company-name='{$travel->company_name}'>
                                             <a href='' class='edit-travel' title='Edit' data-toggle='tooltip'><i class='fa fa-pencil'></i></a>
                                             <a href='' class='remove-travel hidden' title='Remove' data-toggle='tooltip'><i class='fa fa-trash-o'></i></a>
+                                            <a href='' class='hidden travel-' data-toggle='modal' data-target='#addRouteModal' title='Add Route' data-toggle='tooltip'><i class='fa fa-road'></i></a>
+                                            <a href='#vehicleModal' class='travel-vehicles' data-toggle='modal'><i class='fa fa-car' title='Add Vehicle Types' data-toggle='tooltip'></i></a>
+                                            <a href='#adminModal' data-toggle='modal' class='hidden travel-admins'><i class='fa fa-user' title='Add Admin' data-toggle='tooltip'></i></a>
                                             <a href='' class='travel-details' title='Setting' data-toggle='tooltip'><i class='fa fa-cog'></i></a>
                                         </td>
                                     </tr>";
@@ -159,39 +151,118 @@ if (isset($_POST['add_travel'])) {
         </div>
     </section>
 </div>
+
 <!-- Modal -->
-<div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="vehicleModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Add Vehicle Type</h4>
+            </div>
+
+            <div class="modal-body">
+                <table class="table tablebordered table-striped">
+                    <thead>
+                    <form action="" method="post" id="form-add-vehicle-type">
+                        <tr>
+                            <td colspan="2">
+                                <select name="vehicle_type_id" id="vehicle_type_id" class="form-control" required>
+                                    <option value="">-- Vehicle Type --</option>
+                                    <?php
+                                    foreach ($all_vehicle_types AS $vehicle_type) {
+                                        $diff = $vehicle_type->num_of_seats . ' seats';
+                                        if (strstr($vehicle_type->name, 'Hiace')) {
+                                            $diff = ($vehicle_type->num_of_seats == 14) ? 'One front seat' : 'Two front seats';
+                                        }
+                                        $vehicles .= "<option value='{$vehicle_type->id}' data-num_of_seats='{$vehicle_type->num_of_seats}'>{$vehicle_type->name} ($diff)</option>";
+                                    }
+                                    echo $vehicles;
+                                    ?>
+                                </select>
+                            </td>
+                            <td colspan="2">
+                                <input class="form-control" type="text" placeholder="Vehicle Name" name="vehicle_name" id="vehicle_name" required>
+                            </td>
+                            <input type="hidden" name="num_of_seats" id="num_of_seats" />
+                            <input type="hidden" name="op" value="add_travel_vehicle_type" />
+                            <input type="hidden" name="travel_id" id="travel_id" />
+                            <td><input type="submit" class="btn btn-default" value="Add" /></td>
+                        </tr>
+                    </form>
+                    <tr>
+                        <th width='30'>S/No</th>
+                        <th>Vehicle</th>
+                        <th>No of Seats</th>
+                        <th>Vehicle Type</th>
+                        <th class='text-center'>Option</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tbody-vehicle-types">
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="adminModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">Add Travel Manager</h4>
             </div>
-            <form action="" method="post" id="addUser">
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label>Full Name</label>
-                        <input class="form-control" type="text" placeholder="Full Name" name="full_name" id="full_name" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Username</label>
-                        <input class="form-control" type="text" placeholder="Username" name="username" id="username" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Password</label>
-                        <input class="form-control" type="password" placeholder="Password" name="password" id="password" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Verify Password</label>
-                        <input class="form-control" type="password" placeholder="Verify Password" name="v_password" id="v_password" required>
-                    </div>
-                    <input type="hidden" name="travel_id" id="travel_id" value="" />
+
+            <div class="modal-body">
+                <div id="admin-form-div">
+                    <form action="" method="post" id="addAdmin">
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input class="form-control" type="text" placeholder="Full Name" name="full_name" id="full_name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Username</label>
+                            <input class="form-control" type="text" placeholder="Username" name="username" id="username" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input class="form-control" type="password" placeholder="Password" name="password" id="password" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Verify Password</label>
+                            <input class="form-control" type="password" placeholder="Verify Password" name="v_password" id="v_password" required>
+                        </div>
+                        <input type="hidden" name="op" id="op" value="add-travel-admin" />
+                        <input type="hidden" name="travel_id" id="travel_id" value="" />
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
+
+                <div id="admin-table">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th width='30'>S/No</th>
+                            <th>Fullname</th>
+                            <th>Username</th>
+                            <th>Level</th>
+                            <th class='text-center'>Option</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tbody-admin">
+                        </tbody>
+                    </table>
                 </div>
-            </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
 
         </div>
     </div>
@@ -219,12 +290,23 @@ if (isset($_POST['add_travel'])) {
 <?php include_once "includes/footer.html"; ?>
 <script>
 $(document).ready(function() {
+    // add new travel
+    $("#form-add-travel").submit(function(e) {
+        e.preventDefault();
+
+        $.post("../../ajax/misc_fns.php", $(this).serialize() + "&op=add-travel", function(d) {
+            if (d.trim() == "Done") {
+                location.reload();
+            }
+        });
+    });
+
 
     // edit travel
     $("#travel-tbl").on("click", ".edit-travel", function(e) {
         e.preventDefault();
         var parentTr = $(this).parents("tr");
-        var id = $(this).parent("td").attr("id");
+        var id = $(this).parent("td").data("travel_id");
 
         var comapny_name = parentTr.find("td:nth-child(2)").text();
         var abbr = parentTr.find("td:nth-child(3)").text();
@@ -264,7 +346,7 @@ $(document).ready(function() {
         $(this).removeClass('edit-travel-admin').html("<i class='fa fa-save'></i>").addClass("save-travel-admin");
     });
 
-    $("body").on('click', ".save-travel-admin", function(e) {
+    /*$("body").on('click', ".save-travel-admin", function(e) {
         e.preventDefault();
         var _link = $(this);
         var parentTr = $(this).parents("tr");
@@ -283,7 +365,7 @@ $(document).ready(function() {
                 _link.removeClass('save-travel-admin').html("<i class='fa fa-pencil'></i>").addClass("edit-travel-admin");
             }
         });
-    });
+    });*/
 
     //show delete user modal
     $('body').on('click', '.delete-travel-admin', function(e) {
@@ -317,7 +399,7 @@ $(document).ready(function() {
         e.preventDefault();
         var _link = $(this);
         var parentTr = $(this).parents("tr");
-        var id = parentTr.attr("class");
+        var id = parentTr.data("travel_id");
         var company_name = parentTr.find("input[name=company_name]").val();
         var abbr = parentTr.find("input[name=abbr]").val();
         var online_charge = parentTr.find("input[name=online_charge]").val();
@@ -334,7 +416,7 @@ $(document).ready(function() {
             "id": id
         }, function (d) {
             if (d.trim() == "Done") {
-                parentTr.find("td:nth-child(2)").text(company_name);
+                parentTr.find("td:nth-child(2)").html("<a href='travel-page.php?travel_id=" + id + "'>" + company_name + "</a>");
                 parentTr.find("td:nth-child(3)").text(abbr);
                 parentTr.find("td:nth-child(4)").text(online_charge);
                 parentTr.find("td:nth-child(5)").text(offline_charge);
@@ -345,18 +427,6 @@ $(document).ready(function() {
         });
     });
 
-    //display travel details
-    $("#travel-tbl").on("click", ".travel-details", function(e) {
-        e.preventDefault();
-        var id = $(this).parent("td").attr("id");
-        var company_name = $(this).parent("td").data("company-name");
-
-        $("#travel-name").text(company_name);
-
-        $.post("../../ajax/misc_fns.php", {"op": "travel-details", "id": id}, function(d) {
-            $("#detail-div").html(d);
-        });
-    });
 
     //set travel_id for adding user
     $('#userModal').on('show.bs.modal', function (event) {
@@ -366,27 +436,93 @@ $(document).ready(function() {
         modal.find('.modal-body #travel_id').val(travel_id);
     });
 
-    $('#addUser').on('submit', function(e) {
+    /*$('#addAdmin').on('submit', function(e) {
         e.preventDefault();
-        var full_name = $('#full_name').val();
-        var username = $('#username').val();
         var password = $('#password').val();
         var v_password = $('#v_password').val();
-        var travel_id = $('#travel_id').val();
-
         if (password !== v_password) {
             alert("Password do not match.");
         } else {
-            $.post("../../ajax/misc_fns.php", {"op": "add-travel-admin", "full_name": full_name, "username": username, "password": password, "travel_id": travel_id}, function(d) {
+            $.post("../../ajax/travel-page.php", $(this).serialize() function(d) {
                 if (d.trim() == "Done") {
                     $.post("../../ajax/misc_fns.php", {"op": "travel-details", "id": travel_id}, function(_data) {
-                        $("#detail-div").html(_data);
+                        //$("#detail-div").html(_data);
                     });
                 }
             });
-            $('#userModal').modal('hide');
+            $('#adminModal').modal('hide');
         }
-    })
+    });
+
+
+    $(".travel-admins").click(function(e) {
+        e.preventDefault();
+        var travel_id = $(this).parents('tr').data('travel_id');
+        $.post('../../ajax/user_form.php', {'op': 'get-travel-admins', 'travel_id': travel_id}, function(d) {
+            var tbody = '';
+            $.each(d, function(i, admin) {
+                tbody += "<tr data-user_id='" + admin.id + "'>"
+                            +"<td>" + i + 1 + "</td>"
+                            +"<td>" + admin.fullname + "</td>"
+                            +"<td>" + admin.username + "</td>"
+                            +"<td>" + admin.user_type + "</td>";
+                // abandoned
+            });
+        }, JSON);
+    });*/
+
+    $("select[name='vehicle_type_id']").change(function () {
+        $("#num_of_seats").val($("select[name='vehicle_type_id'] option:selected").data('num_of_seats'));
+    });
+
+
+    $("#form-add-vehicle-type").submit(function(e) {
+        e.preventDefault();
+
+        $.post('../../ajax/travel-page.php', $(this).serialize(), function(d) {
+            var tr = "<tr data-vehicle_id='" + d + "'>"
+                +"<td></td>"
+                +"<td>" + $('#vehicle_type_id option:selected').text() + "</td>"
+                +"<td class='text-center'>" + $('#num_of_seats').val() + "</td>"
+                +"<td>" + $('#vehicle_name').val()
+                +"<td class='opt-icons text-center'><a href='' class='edit-vehicle-type'><i class='fa fa-pencil'></i></a>"
+                +"<a href='' class='disable-vehicle-type'><i class='fa fa-ban'></i></a>"
+                +"</td></tr>";
+            $('#tbody-vehicle-types').append(tr);
+            $(this)[0].reset();
+        });
+    });
+
+
+    $(".travel-vehicles").click(function(e) {
+        e.preventDefault();
+        var travel_id = $(this).parents('tr').data('travel_id');
+        var travel_abbr = $(this).parents('tr').find('td:nth-child(3)').text();
+        $("#vehicleModal .modal-title").text(travel_abbr + ' Vehicle Types');
+        $("#vehicleModal #travel_id").val(travel_id);
+
+
+        $.ajax({
+            url: '../../ajax/travel-page.php',
+            type: 'POST',
+            dataType: 'json',
+            data: {'op': 'get-travel-vehicle-types', 'travel_id': travel_id},
+            success: function (d) {
+                var tbody = '';
+                $.each(d, function (i, val) {
+                    tbody += "<tr data-vehicle_id='" + val.id + "'>"
+                        + "<td class='text-right'>" + (i + 1) + "</td>"
+                        + "<td>" + val.vehicle_name + "</td>"
+                        + "<td class='text-center'>" + val.num_of_seats + "</td>"
+                        + "<td>" + val.type_name + "</td>"
+                        + "<td class='opt-icons text-center'><a href='' class='edit-vehicle-type'><i class='fa fa-pencil'></i></a>"
+                        + "<a href='' class='disable-vehicle-type'><i class='fa fa-ban'></i></a>"
+                        + "</td></tr>";
+                });
+                $('#tbody-vehicle-types').html(tbody);
+            }
+        });
+    });
 
 });
 </script>

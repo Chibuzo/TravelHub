@@ -80,7 +80,7 @@ class User extends Travel {
         if ($user_id !== false) {
             if ($this->addTravelState($travel_id, $state_id, $user_id) !== false) {
                 self::$db->commitTransaction();
-                return true;
+                return $user_id;
             } else {
                 //TODO: roll-back isn't working!!!
                 self::$db->rollBackTransaction();
@@ -96,7 +96,7 @@ class User extends Travel {
         if ($user_id !== false) {
             if ($this->addTravelPark($address, $phone, $travel_id, $park_id, $user_id) !== false) {
                 self::$db->commitTransaction();
-                return true;
+                return $user_id;
             } else {
                 //TODO: roll-back isn't working!!!
                 self::$db->rollBackTransaction();
@@ -128,9 +128,9 @@ class User extends Travel {
 
         self::$db->query($sql, $param);
 		if ($obj = self::$db->fetch("obj")) {
-			$_SESSION['user_type']  = $obj->user_type;
-			$_SESSION['username']   = $obj->username;
-			$_SESSION['user_id']    = $obj->id;
+			$_SESSION['user_type'] = $obj->user_type;
+			$_SESSION['username']  = $obj->username;
+			$_SESSION['user_id']   = $obj->id;
 
 			// get travel details
 			$sql = "SELECT company_name, abbr, t.id
@@ -140,16 +140,23 @@ class User extends Travel {
 
 			self::$db->query($sql);
 			if ($travel = self::$db->fetch('obj')) {
-				$_SESSION['company_name']   = $travel->company_name;
-				$_SESSION['abbr']           = $travel->abbr;
-				$_SESSION['travel_id']      = $travel->id;
+				$_SESSION['company_name'] = $travel->company_name;
+				$_SESSION['abbr']         = $travel->abbr;
+				$_SESSION['travel_id']    = $travel->id;
+			}
+
+			// get state details for state admins
+			if ($obj->user_type == 'state_admin') {
+				$state = $this->getStateDetails($obj->id);
+				$_SESSION['state_id']   = $state->id;
+				$_SESSION['state_name'] = $state->state_name;
 			}
 
 			// lets get park id for park admins
 			if ($obj->user_type == 'park_admin') {
 				$park = $this->getParkDetails($obj->id);
-				$_SESSION['park_id']    = $park->id;
-				$_SESSION['park']       = $park->park;
+				$_SESSION['park_id'] = $park->id;
+				$_SESSION['park']    = $park->park;
 			}
 			return true;
 		}
@@ -295,7 +302,7 @@ class User extends Travel {
         return self::$db->query("SELECT * FROM travel_admins WHERE deleted = '0' ORDER BY date_created");
     }
 
-    function getUserByTravel($travel_id)
+    function getUsersByTravel($travel_id)
     {
         $sql = "SELECT * FROM travel_admins WHERE travel_admins.travel_id = :travel_id AND deleted = 0";
         self::$db->query($sql, array('travel_id' => $travel_id));
@@ -346,6 +353,16 @@ class User extends Travel {
 		self::$db->query($sql, array('user_id' => $user_id));
 		if ($park = self::$db->fetch('obj')) {
 			return $park;
+		}
+	}
+
+
+	function getStateDetails($user_id)
+	{
+		$sql = "SELECT state_id, state_name FROM travel_state ts JOIN states s ON ts.state_id = s.id WHERE ts.user_id = :user_id";
+		self::$db->query($sql, array('user_id' => $user_id));
+		if ($state = self::$db->fetch('obj')) {
+			return $state;
 		}
 	}
 }

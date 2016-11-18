@@ -4,10 +4,14 @@ require_once "../api/models/user.class.php";
 
 $user = new User();
 extract($_POST);
-if ($_REQUEST['op'] == 'add-user') {
-	if ($user->createUser($fullname, $username, $password, $user_level) === true) {
+if ($_REQUEST['op'] == 'add-travel-admin') {
+	if ($user->createUser($fullname, $username, $password, $user_level, $travel_id) === true) {
 		echo "Done";
 	}
+} elseif ($_REQUEST['op'] == 'get-travel-admins')
+{
+    $admins = $user->getUsersByTravel($travel_id);
+    echo json_encode($admins);
 }
 elseif ($_REQUEST['op'] == 'edit-user') {
 	//extract($_POST);

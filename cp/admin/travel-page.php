@@ -17,7 +17,6 @@ foreach ($db->query("SELECT * FROM states ORDER BY state_name") AS $st) {
     $states .= "<option value='{$st['id']}'>{$st['state_name']}</option>";
 }
 ?>
-<link rel="stylesheet" href="../../css/flip-switch.css" type="text/css" />
 <link rel="stylesheet" href="../bootstrap/css/multi-select.css" type="text/css" />
 <link href="../plugins/timepicker/bootstrap-timepicker.min.css" rel="stylesheet" type="text/css" />
 <style>
@@ -84,7 +83,7 @@ foreach ($db->query("SELECT * FROM states ORDER BY state_name") AS $st) {
                                         <th></th>
                                     </tr>
                                     </thead>
-                                    <tbody id="park-tbl">
+                                    <tbody id="states-tbl">
                                     <?php
                                     $html = ""; $n = 0;
                                     foreach ($travel_states AS $row) {
@@ -93,23 +92,15 @@ foreach ($db->query("SELECT * FROM states ORDER BY state_name") AS $st) {
                                         $online = $row->online == 1 ? 'Checked' : '';
                                         $html .= "<tr id='{$row->state_id}'>
 													<td>{$row->state_name}</td>
-													<td>" . $travel->getNumOfParksByState($travel_id, $row->state_id) . "</td>
-													<td class='textcenter'>
+													<td class='text-right'>" . $travel->getNumOfParksByState($travel_id, $row->state_id) . "</td>
+													<td class='text-center'>
 													    <div class='onoffswitch'>
                                                             <input type='checkbox' data-toggle='modal' data-target='#confirmModal' class='onoffswitch-checkbox' id='{$row->state_name}-status' data-level='state' data-field='status' $status>
-                                                            <label class='onoffswitch-label' for='{$row->state_name}-status'>
-                                                                <span class='onoffswitch-inner'></span>
-                                                                <span class='onoffswitch-switch'></span>
-                                                            </label>
                                                         </div>
 													</td>
-													<td>
+													<td class='text-center'>
 													    <div class='onoffswitch'>
                                                             <input type='checkbox' data-toggle='modal' data-target='#confirmModal' class='onoffswitch-checkbox' id='{$row->state_name}-online-status' data-level='state' data-field='online' $online>
-                                                            <label class='onoffswitch-label' for='{$row->state_name}-online-status'>
-                                                                <span class='onoffswitch-inner'></span>
-                                                                <span class='onoffswitch-switch'></span>
-                                                            </label>
                                                         </div>
 													</td>
 													<td class='opt-icons text-center'>
@@ -180,7 +171,7 @@ foreach ($db->query("SELECT * FROM states ORDER BY state_name") AS $st) {
                 <div class="modal-body">
                     <div class="form-group">
                         <label>State</label>
-                        <select name="state_id" class="form-control" required>
+                        <select name="state_id" id="state_id" class="form-control" required>
                             <option value="">-- State --</option>
                             <?php
                             echo $states;
@@ -228,7 +219,7 @@ foreach ($db->query("SELECT * FROM states ORDER BY state_name") AS $st) {
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Park</label>
-                        <select name="park_id" class="form-control" id="parks" required>
+                        <select name="park_id" class="form-control" id="park_id" required>
                             <option value="">-- Parks --</option>
                         </select>
                     </div>
@@ -345,7 +336,7 @@ foreach ($db->query("SELECT * FROM states ORDER BY state_name") AS $st) {
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">Manage Routes</h4>
             </div>
-            <div class="modal-body text-center">
+            <div class="modal-body">
                 <form method="post" id="new_park_map">
                     <div class="row">
                         <div class="col-md-3">
@@ -517,9 +508,29 @@ $(document).ready(function() {
         }
 
         $.post('../../ajax/misc_fns.php', $(this).serialize() + '&travel_id=' + travel_id, function(d) {
-            if (d.trim() == "Done") {
-
+            if ($.isNumeric(d)) {
+                var state_name = $("#state_id option:selected").text();
+                var state_id = $("#state_id option:selected").val();
+                var tr = "<tr id='" + state_id + "'>"
+                    +"<td>" + state_name + "</td>"
+                    +"<td class='text-right'>0</td>"
+                    +"<td class='text-center'>"
+                        +"<div class='onoffswitch'>"
+                            +"<input type='checkbox' data-toggle='modal' data-target='#confirmModal' class='onoffswitch-checkbox' id='" + state_name + "-status' data-level='state' data-field='status' checked>"
+                        +"</div>"
+                    +"</td>"
+                    +"<td class='text-center'>"
+                        +"<div class='onoffswitch'>"
+                            +"<input type='checkbox' data-toggle='modal' data-target='#confirmModal' class='onoffswitch-checkbox' id='" + state_name + "-online-status' data-level='state' data-field='online'>"
+                        +"</div>"
+                    +"</td>"
+                    +"<td class='opt-icons text-center'>"
+                        +"<a href='' class='view-parks'><i class='fa fa-arrow-right'></i></a>"
+                    +"</td>"
+                +"</tr>";
+                $("#states-tbl").append(tr);
             }
+            $('#addState')[0].reset();
         });
         $(".modal-close").click();
     });
@@ -536,9 +547,35 @@ $(document).ready(function() {
         }
 
         $.post('../../ajax/misc_fns.php', $(this).serialize() + '&travel_id=' + travel_id, function(d) {
-            if (d.trim() == "Done") {
-
+            if ($.isNumeric(d)) {
+                var park = $('#park_id option:selected').text();
+                var park_id = $("#park_id option:selected").val();
+                var tr = "<tr id='" + park_id + "' data-park='" + park + "'>"
+                    +"<td>" + park + "</td>"
+                    +"<td class='text-right'>0</td>"
+                    +"<td class='text-center'>"
+                        +"<div class='onoffswitch'>"
+                            +"<input type='checkbox' data-toggle='modal' data-target='#confirmModal' class='onoffswitch-checkbox' id='" + park + "-status' data-level='park' data-field='status' checked>"
+                        +"</div>"
+                    +"</td>"
+                    +"<td class='text-center'>"
+                        +"<div class='onoffswitch'>"
+                            +"<input type='checkbox' data-toggle='modal' data-target='#confirmModal' class='onoffswitch-checkbox' id='" + park + "-online' data-level='park' data-field='online'>"
+                        +"</div>"
+                    +"</td>"
+                    +"<td>" + $('#address').val() + " <br> " + $('#telephone').val() + ", " + $('#mobile').val() + "</td>"
+                    +"<td class='dropdown'>"
+                        +"<a href='' class='btn btn-default btn-xs' data-toggle='dropdown' aria-haspopup='true' aria-expanded='true' title='Configuration'><i class='fa fa-cogs fa-lg'></i></a>"
+                        +"<ul class='dropdown-menu'>"
+                        +"<li class='dropdown-header'>" + park + " Configuration Settings</li>"
+                    +"<li><a href='#' class='manage-route' data-toggle='modal' data-target='#manageRouteModal'>Manage Routes</a></li>"
+                    +"<li><a href='#' class='manage-trips' data-toggle='modal' data-target='#manageTripsModal'>Manage Trips</a></li>"
+                    +"</ul>"
+                    +"</td>"
+                    +"</tr>";
+                $("#state-parks").append(tr);
             }
+            $('#addPark')[0].reset();
         });
         $(".modal-close").click();
     });
@@ -574,7 +611,7 @@ $(document).ready(function() {
     });
 */
     // view state parks
-    $('.view-parks').on('click', function(e) {
+    $('#states-tbl').on('click', '.view-parks', function(e) {
         e.preventDefault();
         var state_id = $(this).parents('tr').attr('id');
         var state_name = $(this).parents('tr').find("td:nth-child(1)").text();
@@ -591,7 +628,7 @@ $(document).ready(function() {
         var opts = "<option value=''>-- Parks in " + state_name + " --</option>";
         opts += getStateParks(state_id, function(_opts) {
             opts += _opts;
-            $("#parks").html(opts);
+            $("#park_id").html(opts);
         });
         $("#add-park-btn").removeClass("hidden");
     });
@@ -656,8 +693,8 @@ $(document).ready(function() {
                     var n = i + 1;
                     routes += "<tr data-route_id='" + val.id + "'>"
                             +"<td>" + n + "</td>"
-                            +"<td class='text-left'>" + val.origin_name + "</td>"
-                            +"<td class='text-left'>" + val.destination_state + " (" + val.destination_name + ")</td>"
+                            +"<td>" + val.origin_name + "</td>"
+                            +"<td>" + val.destination_state + " (" + val.destination_name + ")</td>"
                             +"<td class='opt-icons text-center'>"
                                 +"<a href='' class='edit-vehicle' title='Edit' data-toggle='tooltip'><i class='fa fa-pencil'></i></a>"
                                 +"<a href='' class='delete' title='Remove' data-toggle='tooltip'><i class='fa fa-trash-o'></i></a>"
@@ -743,11 +780,10 @@ $(document).ready(function() {
         if ($('#op').val() == 'update-trip') {
             $("#trip-form").text("Add New Trip");
             $("#trip-form-div").slideUp();
-            $("#op").val('add-trip');
-            $("#amenities").val('');
-            $("#amenities").multiSelect("refresh");
+            $("#op").val('add-trip')
         }
-        $(this)[0].reset();
+        $("#amenities").multiSelect('deselect_all');
+        $("#form-trip")[0].reset();
     });
 
 
@@ -768,7 +804,7 @@ $(document).ready(function() {
         $("#departure_time").val(departure_time);
         var data_amenities = amenities.split(",");
         $("#amenities").val(data_amenities);
-        $("#amenities").multiSelect("refresh");
+        $("#amenities").multiSelect('refresh');
 
         $("#op").val("update-trip");
         $("#trip_id").val(trip_id);
