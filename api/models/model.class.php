@@ -8,7 +8,7 @@ class Model {
 
 	protected function __construct()
 	{
-		require_once $_SERVER['DOCUMENT_ROOT'] . "/travelhub/config/config.php";
+		//require_once $_SERVER['DOCUMENT_ROOT'] . "/travelhub/config/config.php";
 
 		self::$db = new db(DB_NAME);
 	}
@@ -51,6 +51,17 @@ class Model {
 		self::$db->query("SELECT COUNT(*) AS num_rows FROM {$tbl_name} {$where}");
 		$result = self::$db->fetch('obj');
 		return $result->num_rows;
+	}
+
+
+	public function updateField($tbl_name, $field, $value, $id)
+	{
+		$sql = "UPDATE {$tbl_name} SET {$field} = :value WHERE id = :id";
+		$param = array('value' => $value, 'id' => $id);
+		if (self::$db->query($sql, $param)) {
+			return true;
+		}
+		return false;
 	}
 
 

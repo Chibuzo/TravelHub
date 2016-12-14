@@ -17,7 +17,7 @@ if (!isset($_SESSION['username'])) {
 <!--    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />-->
     <link href="../../css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <!-- Ionicons -->
-    <link href="http://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet" type="text/css" />
 
     <!-- iCheck for checkboxes and radio inputs -->
     <link href="../plugins/iCheck/minimal/blue.css" rel="stylesheet" type="text/css" />
@@ -25,7 +25,7 @@ if (!isset($_SESSION['username'])) {
     <link href="../dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
-    <link href="../dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
+    <link href="../dist/css/skins/skin-blue.css" rel="stylesheet" type="text/css" />
     <link href="../plugins/morris/morris.css" rel="stylesheet" type="text/css" />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -34,6 +34,12 @@ if (!isset($_SESSION['username'])) {
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
+    <style>
+      .action-icons .fa, .action-icons .glyphicon {
+        padding: 1px 5px;
+        color: #9a9a9a;
+      }
+    </style>
   </head>
   <body class="skin-blue">
     <div class="wrapper">

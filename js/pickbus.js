@@ -88,6 +88,7 @@ $(document).ready(function() {
  /*** Proceed to customer details page ***/
 	$('.vehicle, .show-seat').on('click', '.continue', function(e) {
 		e.preventDefault();
+		var $this = $(this);
 		$(this).html("&nbsp; <i class='fa fa-cog fa-spin'></i> Working... &nbsp;<i class='fa fa-angle-double-right'></i>").prop("disabled", true);
 
 		var $seating_parent = $(this).parents('.seat_arrangement');
@@ -104,16 +105,18 @@ $(document).ready(function() {
 
 		if (seat_no.length < 1) {
 			alert("Pick a seat before you continue");
-			$(this).html("&nbsp; <i class='fa fa-caret-right'></i> Continue &nbsp;<i class='fa fa-angle-double-right'></i>").prop("disabled", false);
+			$this.html("&nbsp; <i class='fa fa-caret-right'></i> Continue &nbsp;<i class='fa fa-angle-double-right'></i>").prop("disabled", false);
 			return false;
 		}
 
 		// confirm seat avaliability
 		$.post('ajax/save_booking_details.php', {'op': 'check-seat-availability', 'seat_no': seat_no, 'boarding_vehicle_id': boarding_vehicle_id}, function(d) {
-			if (d.trim() == "2") {
+			if (d.trim() == "02" || d.trim() == "2") {
 				alert("Sorry, seat " + seat_no + " is no longer available. Please pick another seat.");
-				$(this).html("&nbsp; <i class='fa fa-caret-right'></i> Continue &nbsp;<i class='fa fa-angle-double-right'></i>").prop("disabled", false);
+				$this.html("&nbsp; <i class='fa fa-caret-right'></i> Continue &nbsp;<i class='fa fa-angle-double-right'></i>").prop("disabled", false);
 				// refresh seats
+				$seating_parent.find('.seat_wrap #' + seat_no).css('background-image', 'url("images/booked_seat.gif")').removeClass('seat').addClass('booked_seat');
+				return false
 			} else {
 				$.post('ajax/hold_details.php', {
 					'vehicle_type_id': vehicle_type_id,

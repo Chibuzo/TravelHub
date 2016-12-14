@@ -1,3 +1,9 @@
+<?php
+// fetch number of booking issues
+require_once "../../api/models/bookingissues.class.php";
+$bookingIssue = new BookingIssues();
+$issues = $bookingIssue->getNumOfIssues();
+?>
 <!-- Left side column. contains the logo and sidebar -->
 <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
@@ -52,10 +58,28 @@
                 </a>
             </li>
 
+            <li id="link-booking-issues">
+                <a href="issues.php#booking-issues">
+                    <i class="fa fa-info-circle"></i>
+                    <span>Booking Issues</span>
+                    <span class="pull-right-container">
+                        <small class="label pull-right bg-red"><?php echo $issues['synch']; ?></small>
+                        <small class="label pull-right bg-orange"><?php echo $issues['booking']; ?></small>
+                   </span>
+                </a>
+            </li>
+
             <li id="link-travels">
                 <a href="travels.php#travels">
                     <i class="fa fa-random"></i>
                     <span>Manage Travels</span>
+                </a>
+            </li>
+
+            <li id="link-nysc">
+                <a href="nysc.php#nysc">
+                    <i class="fa fa-graduation-cap"></i>
+                    <span>NYSC</span>
                 </a>
             </li>
 

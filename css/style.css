@@ -126,6 +126,11 @@ a.btn-primary, .btn-fill:visited {
 
 .red { color: #cc0000; }
 
+.action-icons .fa {
+	padding: 1px 5px;
+	color: #9a9a9a;
+}
+
 footer {
 	position: absolute;
 	color: #999;

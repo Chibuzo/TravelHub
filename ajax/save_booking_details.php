@@ -55,7 +55,7 @@ if ($_REQUEST['op'] == 'complete-booking')
 elseif ($_REQUEST['op'] == 'check-seat-availability')
 {
 	try {
-		$booking->checkSeatAvaliability($boarding_vehicle_id, $seat_no);
+		$booking->checkSeatAvailability($boarding_vehicle_id, $seat_no);
 	} catch (Exception $e) {
 		echo $e->getCode();
 	}

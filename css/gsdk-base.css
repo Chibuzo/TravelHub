@@ -279,6 +279,10 @@ input.ct-red + span.switch-left, input.ct-red + span + label + span.switch-right
    background-color: #FF9500;
    border-color: #FF9500;
 }
+
+a.btn-warning.btn-fill {
+    color: #fff;
+}
 .btn-danger.btn-fill{
     background-color: #FF3B30;
     border-color: #FF3B30;
@@ -1075,7 +1079,7 @@ input.ct-red + span.switch-left, input.ct-red + span + label + span.switch-right
     transition: left 1200ms cubic-bezier(0.455, 0.03, 0.4, 0.955) 0s;
     -webkit-transition: left 1200ms cubic-bezier(0.455, 0.03, 0.4, 0.955) 0s;
 }
-.panel {
+/*.panel {
     border: 0;
     border-bottom: 1px solid #CCCCCC;
     box-shadow: none;
@@ -1101,7 +1105,7 @@ input.ct-red + span.switch-left, input.ct-red + span + label + span.switch-right
 }
 .panel-title a:hover,.panel-title a:focus{
     color: #333333;
-}
+}*/
 
 /*   EXTRA SHIT  */
 /* @cristina: fisier singular, folosit pentru efectul de blur la parallax in header */
