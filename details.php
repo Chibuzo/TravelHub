@@ -1,5 +1,6 @@
 <?php
 session_start();
+$page_title = "Passenger Details";
 require_once "includes/banner.php";
 require_once "api/models/bookingmodel.class.php";
 require_once "classes/utility.class.php";
@@ -157,7 +158,7 @@ $(document).ready(function() {
 				+ '&customer_phone=' + $('#phone-number').val()
 				+ '&next_of_kin_phone=' + $('#next_of_kin_num').val(),
 
-			success: function(d) {
+			success: function(d) { alert(d)
 				if ($.trim(d) == "02") {
 					$(".alert").html("Sorry, <b>seat " + seat_no + "</b> is no longer available, please go back and select a different seat.<br />Thank you").fadeIn();
 				} else if ($.trim(d) == "03") {

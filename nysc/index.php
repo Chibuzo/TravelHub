@@ -1,6 +1,16 @@
 <?php
+session_start();
+$token = md5(uniqid(rand(), TRUE));
+$_SESSION['token'] = $token;
+$_SESSION['token_time'] = time();
+
+$page_title = "Book Bus Traveling Directly to your Nysc Orientation Camp";
 require_once "../includes/banner.php";
-require_once "../includes/db_handle.php";
+/*require_once "../includes/db_handle.php";*/
+require_once "../api/models/Nysc.php";
+
+$nysc = new Nysc();
+$camp_fares = $nysc->getCampFares();
 ?>
 <style>
 .tips {
@@ -19,7 +29,7 @@ require_once "../includes/db_handle.php";
     -o-background-size: cover;
     background-size: cover;
     backgroundcolor: #f0f0f0;
-    margin-top: 80px;
+    margin-top: 40px;
     color: #fff;
 }
 
@@ -37,6 +47,10 @@ require_once "../includes/db_handle.php";
     line-height: 20px;
     padding-bottom: 17px;
     font-weight: 300;
+}
+
+h3.panel-title {
+    font-weight: 400;
 }
 
 .payment-opt {
@@ -59,7 +73,7 @@ require_once "../includes/db_handle.php";
 </style>
 
 <div class="container">
-    <div class="row" style="padding-top: 15px">
+    <div class="row" style="padding-top: 15px; margin-bottom: 70px;">
         <div class="col-md-6" id="form">
             <div class="alert alert-info">
                 <i class="fa fa-info-circle fa-lg"></i>
@@ -67,10 +81,11 @@ require_once "../includes/db_handle.php";
                 Travelhub will contact you before the camp dates to confirm.
             </div>
             <form action="" class="form-horizontal" id="form-nysc">
+                <input type="hidden" name="token" value="<?php echo $token; ?>" />
                 <div class="form-group">
                     <label for="name" class="col-sm-4 control-label">Fullname *</label>
                     <div class="col-sm-7">
-                        <input type="text" name="fullname" id="name" class="form-control" required />
+                        <input type="text" name="fullname" id="fullname" class="form-control" required />
                     </div>
                 </div>
                 <div class="form-group">
@@ -90,7 +105,7 @@ require_once "../includes/db_handle.php";
                     <div class="col-sm-7">
                         <select name="origin" id="origin" class="form-control" required>
                             <option value="">-- Departure State --</option>
-                            <option value="Enugu">Enugu</option>
+<!--                            <option value="Enugu">Enugu</option>-->
                             <option value="Lagos">Lagos</option>
                         </select>
                     </div>
@@ -98,14 +113,20 @@ require_once "../includes/db_handle.php";
                 <div class="form-group">
                     <label for="camp" class="col-sm-4 control-label">Arrival Camp</label>
                     <div class="col-sm-7">
-                        <select name="camp" id="camp" class="form-control">
-                            <option value="">-- Select camp state --</option>
-                            <?php
-                                foreach ($db->query("SELECT * FROM states ORDER BY state_name") AS $st) {
-                                    echo "<option value='{$st['state_name']}'>{$st['state_name']}</option>";
-                                }
-                            ?>
-                        </select>
+                        <div class="row">
+                            <div class="col-md-7 col-xs-7">
+                                <select name="camp" id="camp-fare" class="form-control">
+                                    <option value="">-- Camp state --</option>
+                                    <?php
+                                    foreach ($camp_fares AS $st) {
+                                        if ($st->fare < 1) { continue; }
+                                        echo "<option value='{$st->state_name}' data-fare='{$st->fare}'>{$st->state_name}</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="col-md-5 col-xs-5" id="fare-div"><input type="text" name="fare" id="fare" class="form-control" placeholder="0.00" readonly /></div>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
@@ -113,8 +134,9 @@ require_once "../includes/db_handle.php";
                     <div class="col-sm-7">
                         <select name="travel_date" id="travel_date" class="form-control">
                             <option value="">-- Pick travel date --</option>
-                            <option value="2017-01-23">1st day (Not know yet)</option>
-                            <option value="2017-01-24">2nd day (Not know yet)</option>
+                            <option value="2017-01-23">23-01-2017</option>
+                            <option value="2017-01-24">24-01-2017</option>
+                            <option value="2017-01-25">25-01-2017</option>
                         </select>
                     </div>
                 </div>
@@ -126,16 +148,17 @@ require_once "../includes/db_handle.php";
                 </div>
                 <input type="hidden" name="op" value="book-nysc" />
                 <div class="form-group">
-                    <div class="col-sm-offset-4 col-sm-7"><input type="submit" name="submit" value="Save & Proceed" class="btn btn-warning btn-fill" /></div>
+                    <div class="col-md-offset-4 col-md-7 col-xs-12"><input type="submit" name="submit" value="Save & Proceed" class="btn btn-warning btn-fill" /></div>
                 </div>
             </form>
         </div>
         <div class="col-md-6">
+            <h4 class="text-center"><span class="glyphicon glyphicon-phone-alt"></span> Call us: 0906 3369 208</h4>
             <div class="tips">
                 <div class="feats">
                     <h3>Take a direct trip to nysc camp</h3>
                     <strong>Travelhub</strong> partners with various transport companies to take you directly to your nysc orientation camp.
-                    You also have the pleasure of travelling with your friends and fellow corpers.
+                    You also have the pleasure of travelling with your friends and other corper members.
                 </div>
             </div>
         </div>
@@ -144,9 +167,10 @@ require_once "../includes/db_handle.php";
     <div id="content-holder" class="hidden">
         <div>
             <h3>Payment Options</h3><br>
-            <div class="alert alert-info">You need to make payment at least 3 days before your travel date so that we
-            can book ahead for the vehicle you'll travel with to avoid disappointment.</div>
-            <div class="panel panel-default">
+            <div class="alert alert-info">We recommend that you make payment 72 or 48 hours before your departure date to enable us finalise your reservation.
+            <br><br>
+            <strong>You'll get an SMS containing your reservation details, shortly.</strong></div>
+            <div class="panel panel-default hidden">
                 <div class="panel-heading"><h3 class="panel-title">Online Payment</h3></div>
                 <div class="panel-body" style="position:relative;">
                     <img src="../images/visa-mastercard.png" class="pull-left" />
@@ -155,31 +179,34 @@ require_once "../includes/db_handle.php";
             </div>
 
             <div class="panel panel-default">
-                <div class="panel-heading"><h3 class="panel-title">Collection Centers</h3></div>
+                <div class="panel-heading"><h3 class="panel-title">Payment Centers</h3></div>
                 <div class="panel-body">
-                    You can pay cash at the following locations
+                    You can make payment at the following location:<br><br>
                     <div id="ifesinachi-park-Enugu" class="hidden">
                         Ifesinachi Plaza, Market Road, Holy Ghost, Enugu
                     </div>
                     <div id="ifesinachi-park-Lagos" class="hidden">
+                        <strong>Ifesinachi Transport Limited</strong><br>
                         No 2 Ikorodu road, Jibowu, Yaba, Lagos
                     </div>
                 </div>
             </div>
 
             <div class="panel panel-default">
-                <div class="panel-heading"><h3 class="panel-title">Bank Payment</h3></div>
+                <div class="panel-heading"><h3 class="panel-title">Bank Payment/Transfer</h3></div>
                 <div class="panel-body">
-                    You can pay directly into our bank account using your booking reference number: <br>
-                    <br>
-                    Bank: Diamond Bank<br>
-                    Accounnt Name: Travelhub<br>
-                    Account number: 000000000
+                    You can transfer or pay directly into our bank account using the same fullname you used to make your reservation. <br>
+                    <strong>Travelhub</strong> will send an SMS and email to you as soon as your payment alert is received.
+                    <br><br>
+                    <strong>Bank:</strong> Diamond Bank<br>
+                    <strong>Accounnt Name:</strong> Travelhub Transport Services LTD<br>
+                    <strong>Account number:</strong> 0086410673
                 </div>
             </div>
 
-            <div class="">
-                If you have any issue or questions please feel free to call us any time: <h4 style="margin-top:3px"><i class="fa fa-phone"></i> 08048579309</h4>
+            <div class="text-center">
+                <h4 style="margin: 2px"><span class="glyphicon glyphicon-phone-alt"></span> 0906 3369 208</h4>
+                If you have any issue or questions please feel free to call us any time<br><br><br>
             </div>
         </div>
     </div>
@@ -197,11 +224,25 @@ $(document).ready(function() {
         $.post('ajax/fns.php', $(this).serialize(), function(d) {
             if (d.trim() == 'Done') {
                 $("#form").fadeOut(function() {
+                    var details = "<address><strong>Fullname:</strong> " + $("#fullname").val()
+                                +"<br><strong>Phone:</strong> " + $("#phone").val()
+                                +"<br><strong>Route:</strong> " + origin + " to " + $("#camp-fare").val() + " camp"
+                                +"<br><strong>Fare:</strong> &#8358;" + $("#fare").val() * $("#travelers").val() + "</address>";
+
+                    $("#content-holder .alert-info").prepend(details);
                     $(this).html($("#content-holder").html()).fadeIn();
                 });
                 $("#ifesinachi-park-" + origin).removeClass('hidden');
             }
+            $('html, body').animate({scrollTop: '0px'}, 300);
         });
+    });
+
+
+    $("#camp-fare").change(function() {
+        var fare = $("#camp-fare option:selected").data('fare');
+        $("#fare").val(fare);
+        //$("#fare-div div").html("&#8358;" + fare);
     });
 });
 </script>

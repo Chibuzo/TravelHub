@@ -1,5 +1,6 @@
 <?php
 session_start();
+$page_title = "How it Works";
 require_once "includes/banner.php";
 ?>
 <style>
@@ -55,7 +56,7 @@ strong {
 			</p>
 			<p>
 				If that is stressful for you, call us to fix your travel at no extra cost or hidden charges:<br />
-				Call - <span style="font:bold 16px Tahoma">070 xxxx xxxx</span>
+				Call - <span style="font:bold 16px Tahoma">0906 3369 208</span>
 			</p>
 		</div>
 	</div>

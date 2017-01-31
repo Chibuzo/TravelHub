@@ -42,7 +42,7 @@ if (empty($_REQUEST['travel_date'])) {
 		$str_destinations = implode("', '", $destinations);
 	}
 }
-
+$page_title = "Pick vehicle";
 require_once "includes/banner.php";
 ?>
 <style>

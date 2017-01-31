@@ -1,4 +1,5 @@
 <?php
+$page_title = "Check Out";
 require_once "includes/banner.php";
 ?>
 

@@ -76,11 +76,14 @@ $issues = $bookingIssue->getNumOfIssues();
                 </a>
             </li>
 
-            <li id="link-nysc">
-                <a href="nysc.php#nysc">
-                    <i class="fa fa-graduation-cap"></i>
-                    <span>NYSC</span>
+            <li class="treeview" id="link-nysc">
+                <a href="#">
+                    <i class="fa fa-graduation-cap"></i> <span>NYSC</span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
+                <ul class="treeview-menu">
+                    <li><a href="nysc-dashboard.php"><i class="fa fa-circle-o"></i> Manage Program</a></li>
+                    <li class=""><a href="nysc-reservation.php"><i class="fa fa-circle-o"></i> Nysc Reservation</a></li>
+                </ul>
             </li>
 
             <li id="link-users">

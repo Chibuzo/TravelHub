@@ -17,7 +17,7 @@
 
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav nav-links">
-						<li><a href="howitworks" class="btn btn-default btnsm btn-round">How it works</a></li>
+						<li><a href="<?php echo BASE_URL; ?>howitworks" class="btn btn-default btnsm btn-round">How it works</a></li>
 					</ul>
 				</div>
 			</div>

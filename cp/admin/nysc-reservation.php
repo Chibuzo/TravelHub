@@ -10,7 +10,7 @@ $date = isset($_POST['travel_date']) ? $_POST['travel_date'] : date('Y-m-d');
 //$reports = $report->getReportBooks($date);
 
 $html = ''; $n = 0; $total_revenue = $total_expenses = $total_profit = 0;
-foreach ($nysc->getAll('nysc_travelers', 'date_booked') AS $rep) {
+foreach ($nysc->getAll('nysc_travelers', 'date_booked DESC') AS $rep) {
     // vars for filter/search
     $n++;
     $html .= "<tr>
@@ -24,6 +24,7 @@ foreach ($nysc->getAll('nysc_travelers', 'date_booked') AS $rep) {
 				<td>{$rep->payment_status}</td>
 				<td>" . date('d-m-Y', strtotime($rep->travel_date)) . "</td>
 				<td>" . date('d-m-Y', strtotime($rep->date_booked)) . "</td>
+				<td class='text-center'><a href='' class='send-sms'><i class='fa fa-envelope'></i> </a></td>
 			</tr>";
 }
 /*$html .= "<tr style='font-size:16px; font-weight: bold; text-align: right'><td colspan='5'>Totals:</td>
@@ -100,6 +101,7 @@ foreach ($nysc->getAll('nysc_travelers', 'date_booked') AS $rep) {
                                         <th>Payment Status</th>
                                         <th>Travel Date</th>
                                         <th>Date Booked</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -126,6 +128,28 @@ foreach ($nysc->getAll('nysc_travelers', 'date_booked') AS $rep) {
             forceParse: false,
             todayHighlight: true,
             autoclose: true
+        });
+
+
+        $(".send-sms").click(function(e) {
+            e.preventDefault();
+            var $parentTr = $(this).parents('tr');
+            var name = $parentTr.find('td:nth-child(2)').text();
+            var phone = $parentTr.find('td:nth-child(3)').text();
+            var camp = $parentTr.find('td:nth-child(5)').text();
+            var fare = $parentTr.find('td:nth-child(6)').text().split(",").join(""); // remove coma from formatted money
+            var tickets = $parentTr.find('td:nth-child(7)').text();
+            var travel_date = $parentTr.find('td:nth-child(9)').text();
+
+            if (confirm("Are you want to send SMS to this person?")) {
+                $.post('../../includes/smslive.php', {'name':name, 'phone':phone, 'camp':camp, 'fare': fare, 'tickets':tickets, 'travel_date':travel_date}, function(d) {
+                    if (d.trim() == "Done") {
+                        alert("SMS sent!");
+                    } else {
+                        alert("Error sending SMS");
+                    }
+                });
+            }
         });
     });
 </script>

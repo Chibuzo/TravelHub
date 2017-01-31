@@ -1,5 +1,6 @@
 <?php
 session_start();
+$page_title = "Check Out";
 require_once "includes/banner.php";
 require_once "includes/db_handle.php";
 

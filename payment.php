@@ -1,5 +1,6 @@
 <?php
 session_start();
+$page_title = "Payment Page";
 require_once "includes/banner.php";
 require_once "api/models/bookingmodel.class.php";
 

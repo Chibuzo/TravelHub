@@ -1,4 +1,5 @@
 <?php
+$page_title = "Plan your travels and book your bus tickets online";
 require_once "includes/banner.php";
 require "api/models/routemodel.class.php";
 
@@ -61,7 +62,7 @@ if (isset($_POST['bus_charter'])) {
 	color: #fff;
 }
 
-#feature-tagline-bg {
+#feature-tagline-bg, #nysc-board-bg {
 	position: relative;
 	background-color: rgba(0,0,0,0.5);
 	width: 530px;
@@ -75,7 +76,13 @@ if (isset($_POST['bus_charter'])) {
 	margin: auto;
 }
 
-#feature-tagline-text {
+#nysc-board-bg {
+	width: 600px;
+	height: 100px;
+	display: block;
+}
+
+#feature-tagline-text, #nysc-board {
 	text-align: center;
 	padding-left: 17px;
 	width: 530px;
@@ -85,7 +92,25 @@ if (isset($_POST['bus_charter'])) {
 	color: #fff;
 }
 
-#feature-tagline-text h4 {
+#nysc-board {
+	padding-left: 17px;
+	width: 600px;
+	top: -55px;
+}
+
+#nysc-board span {
+	position: relative;
+	right: 25px;
+}
+
+#nysc-board img {
+	position: relative;
+	float: left;
+	/*padding-right: 10px;*/
+	top: -32px;
+}
+
+#feature-tagline-text h4, #nysc-board h4 {
 	margin-bottom: 1px !important;
 	margin-top: 9px;
 	font: 700 20px 'Lato', 'Open Sans', San-serif;
@@ -152,6 +177,10 @@ h1 {
 	height: 25px;
 }
 
+a:hover {
+	text-decoration: none;
+}
+
 
 @media screen and (min-width: 200px) and (max-width: 600px) {
 	#bus_search h1 {
@@ -161,12 +190,25 @@ h1 {
 	#services .row div {
 		padding: 10px 5px;
 		font-weight: 300;
-		font-size:15px;
+		font-size: 15px;
 		line-height: 22px;
 	}
 
-	#feature-tagline-bg, #feature-tagline-text {
+	#feature-tagline-bg, #feature-tagline-text, #nysc-board-bg, #nysc-board {
 		width: auto;
+		font-size: 14px;
+	}
+
+	#feature-tagline-text h4, #nysc-board h4 {
+		font-weight: 400;
+	}
+
+	#nysc-board {
+		top: -77px;
+	}
+
+	#nysc-board-bg {
+		height: 120px;
 	}
 }
 
@@ -248,17 +290,29 @@ h1 {
 			<div class="row">
 				<div class="col-md-12" id="phone-div">
 					<span class="glyphicon glyphicon-phone-alt"></span><br>
-					0703 000 0000
+					0906 3369 208
 				</div>
 			</div>
 
-			<div id="feature-tagline-bg">
+			<div id="feature-tagline-bg" class="hidden">
 			</div>
-			<div id="feature-tagline-text">
-<!--				<img src="images/travelhub-emblem.png" style="float: left; margin-right: 25px; margin-top: -6px; width: 50px" />-->
+			<div id="feature-tagline-text" class="hidden">
 				<h4>CHECK FARES</h4>
 				Find over 500+ travel fares from different operators.
 			</div>
+<!--			<a href="nysc/">
+-->				<span id="nysc-board-bg">
+				</span>
+<!--			</a>
+-->
+			<a href="nysc/"><div id="nysc-board">
+				<h4>NYSC CAMP DIRECT</h4>
+				<img src="images/nysc-logo.png" />
+				<span>
+					Travelhub partners with various transport companies to <br>
+					take you straight to your orientation camp
+				</span>
+			</div><a href="nysc/">
 		</div>
 	</div>
 	</div>
