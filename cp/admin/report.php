@@ -139,8 +139,8 @@ $html .= "<tr style='font-size:16px; font-weight: bold; text-align: right'><td c
 	</section>
 </div>
 
-<?php include_once "includes/footer.html"; ?>
 <script type="text/javascript" src="../../js/bootstrap-datepicker.js"></script>
+<?php include_once "includes/footer.html"; ?>
 <script>
 $(document).ready(function() {
 	$('#tdate').datepicker({

@@ -75,6 +75,13 @@ $issues = $bookingIssue->getNumOfIssues();
                     <span>Manage Travels</span>
                 </a>
             </li>
+            
+            <li id="link-charter">
+                <a href="charter.php#charter">
+                    <i class="fa fa-bus"></i>
+                    <span>Charter/Hire Services</span>
+                </a>
+            </li>
 
             <li class="treeview" id="link-nysc">
                 <a href="#">

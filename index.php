@@ -21,16 +21,6 @@ if (isset($destinations)) {
 	$str_destinations = implode("', '", $destinations);
 }
 
-
-// submit bus charter
-if (isset($_POST['bus_charter'])) {
-	require_once "classes/buscharter.class.php";
-	$buscharter = new BusCharter();
-	//extract($_POST);
-	if ($buscharter->addBusCharter($name, $phone, $traveldate, $departure_location, $destination, $vehicle_type, $num_of_vehicles) === true) {
-		$msg = true;
-	}
-}
 ?>
 
 <style>
@@ -293,18 +283,20 @@ a:hover {
 					0906 3369 208
 				</div>
 			</div>
-
-			<div id="feature-tagline-bg" class="hidden">
+<?php
+		if (true) {
+?>			
+			<div id="feature-tagline-bg" class="">
 			</div>
-			<div id="feature-tagline-text" class="hidden">
+			<div id="feature-tagline-text" class="">
 				<h4>CHECK FARES</h4>
 				Find over 500+ travel fares from different operators.
 			</div>
-<!--			<a href="nysc/">
--->				<span id="nysc-board-bg">
-				</span>
-<!--			</a>
--->
+<?php } else { ?>			
+			<a href="nysc/">
+				<span id="nysc-board-bg"></span>
+			</a>
+
 			<a href="nysc/"><div id="nysc-board">
 				<h4>NYSC CAMP DIRECT</h4>
 				<img src="images/nysc-logo.png" />
@@ -312,7 +304,8 @@ a:hover {
 					Travelhub partners with various transport companies to <br>
 					take you straight to your orientation camp
 				</span>
-			</div><a href="nysc/">
+			</div></a>
+<?php } ?>
 		</div>
 	</div>
 	</div>

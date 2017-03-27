@@ -173,7 +173,7 @@ class BookingModel extends Model {
                 INNER JOIN parks op ON pm.origin = op.id
                 INNER JOIN parks dp ON pm.destination = dp.id
                 INNER JOIN vehicle_types ON vehicle_types.id = trips.vehicle_type_id
-                {$limit}";
+                ORDER BY date_booked DESC {$limit}";
 
 		self::$db->query($sql);
 		return self::$db->fetchAll('obj');

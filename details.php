@@ -158,7 +158,7 @@ $(document).ready(function() {
 				+ '&customer_phone=' + $('#phone-number').val()
 				+ '&next_of_kin_phone=' + $('#next_of_kin_num').val(),
 
-			success: function(d) { alert(d)
+			success: function(d) {
 				if ($.trim(d) == "02") {
 					$(".alert").html("Sorry, <b>seat " + seat_no + "</b> is no longer available, please go back and select a different seat.<br />Thank you").fadeIn();
 				} else if ($.trim(d) == "03") {
@@ -170,7 +170,7 @@ $(document).ready(function() {
 						//$('#payment-gateway').submit();
 						//$("#payment-btn").prop("disabled", true);
 					} else if (channel == 'bank') {
-						//location.href = "payment.php";
+						location.href = "payment.php";
 					} else {
 						$(".alert").html("Select a payment option to continue").fadeIn();
 						$("#payment-btn").val("Proceed to payment").prop("disabled", false);

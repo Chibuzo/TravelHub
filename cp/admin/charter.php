@@ -1,9 +1,9 @@
 <?php
 require "includes/head.php";
 require "includes/side-bar.php";
-require_once "../../api/models/buscharter.class.php";
+require_once "../../api/models/VehicleCharter.class.php";
 
-$bus = new BusCharter();
+$bus = new VehicleCharter();
 ?>
 <link href="../plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
 <style>
@@ -28,7 +28,7 @@ $bus = new BusCharter();
 			<div class="col-md-12">
 				<div class="box box-warning">
 					<div class="box-header with-border">
-						<h2 style='font-size: 18px' class="box-title"><i class="fa fa-bus"></i> &nbsp;Bus Hire</h2>
+						<h2 style='font-size: 18px' class="box-title"><i class="fa fa-bus"></i> &nbsp;Vehicle Charter</h2>
 						<div class="box-tools pull-right">
 							<button data-toggle="modal" data-target="#hotelModal" class="btn bg-olive hidden"><i class="fa fa-plus"></i> New Route</button>
 						</div>
@@ -54,21 +54,21 @@ $bus = new BusCharter();
 								<tbody>
 									<?php
 										$n = 0;
-										foreach ($bus->getBusCharter() AS $_bus) {
+										foreach ($bus->getPendingCharters() AS $_bus) {
 											$n++;
 											echo "<tr id='$_bus->id'>
 													<td class='text-right'>$n</td>
-													<td>$_bus->departure_location</td>
+													<td>$_bus->origin</td>
 													<td>$_bus->destination</td>
 													<td>$_bus->name</td>
 													<td>$_bus->phone</td>
 													<td>" . date('D d/m/Y', strtotime($_bus->travel_date)) . "</td>
-													<td>$_bus->bus_type</td>
+													<td>$_bus->vehicle_type</td>
 													<td class='text-right'>$_bus->num_of_vehicles</td>
 													<td>" . date('D d/m/Y', strtotime($_bus->date_chartered)) . "</td>
 													<td>$_bus->status</td>
 													<td class='text-center'>
-														<a href='' class='cancel' data-toggle='tooltip' title='Confirm request'><i class='fa fa-check fa-lg'></i></a>
+														<a href='' class='confirm' data-toggle='tooltip' title='Confirm request'><i class='fa fa-check fa-lg'></i></a>
 													</td>
 													<td class='text-center'>
 														<a href='' class='cancel' data-toggle='tooltip' title='Cancel bus hire'><i class='fa fa-times fa-lg'></i></a>
@@ -95,10 +95,26 @@ $(document).ready(function() {
 		e.preventDefault();
 		var $this = $(this);
 
-		if (confirm("Are you sure you want to cancel this reservation?")) {
-			var id = $(this).parent('td').attr('id');
+		if (confirm("Are you sure you want to cancel this charter?")) {
+			var id = $(this).parents('tr').attr('id');
 
-			$.post('../ajax/misc_fns.php', {'op': 'cancel-reservation', 'id': id}, function(d) {
+			$.post('../../ajax/vehicle-charter.php', {'op': 'cancel-charter', 'id': id}, function(d) {
+				if (d.trim() == 'Done') {
+					$this.parents("tr").fadeOut();
+				}
+			});
+		}
+	});
+	
+	
+	$(".confirm").click(function(e) {
+		e.preventDefault();
+		var $this = $(this);
+
+		if (confirm("Are you sure you want to confirm this charter?")) {
+			var id = $(this).parents('tr').attr('id');
+
+			$.post('../../ajax/vehicle-charter.php', {'op': 'confirm-charter', 'id': id}, function(d) {
 				if (d.trim() == 'Done') {
 					$this.parents("tr").fadeOut();
 				}

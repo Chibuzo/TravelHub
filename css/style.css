@@ -2,7 +2,7 @@ html { min-height: 100%; position: relative; }
 
 body {
 	font: normal 16px 'Open Sans', sans-serif;
-	margin-bottom: 150px;
+	margin-bottom: 300px;
 	color: #4c4c4c;
 	background-image: url('../images/bg1.png');
 	background-repeat: repeat;
@@ -13,6 +13,11 @@ header {
 	z-index: 3;
 	background-color:#2f353e;
 	/*height: 50px;*/
+}
+
+#banner-container {
+	width: 90% !important;
+	margin: auto;
 }
 
 #logo {
@@ -32,9 +37,9 @@ header {
 .nav-links { float: right; }
 
 ul.nav li a {
-	font: 300 18px "Open Sans", sans-serif;
+	font: 300 16px "Open Sans", sans-serif;
 	color: #ccc !important;
-	margintop: 19px;
+	margin-top: 16px;
 }
 
 ul.nav li a:hover { color: #999 !important; }
@@ -44,11 +49,17 @@ h1, h2, h3, h4, b {
 	color: #333;
 }
 
-h1, h2, h3 {
+h1, h2, h3, h5 {
 	font-family: 'Open Sans', sans-serif;
 	font-weight: 300;
 	margin-top: 8px;
 	margin-bottom: 2px;
+}
+
+h5 {
+	font-size: 21px;
+	margin-bottom: 13px;
+	color: #333;
 }
 
 a:link, a:visited {
@@ -124,7 +135,7 @@ a.btn-primary, .btn-fill:visited {
 	filter: alpha(opacity=50);
 }
 
-.red { color: #cc0000; }
+.red { color: #FF3B30; }
 
 .action-icons .fa {
 	padding: 1px 5px;
@@ -133,38 +144,45 @@ a.btn-primary, .btn-fill:visited {
 
 footer {
 	position: absolute;
-	color: #999;
+	color: #666;
 	bottom: 0;
 	width: 100%;
-	height: 151px;
-    background-color:#424242;
+	min-height: 300px;
+    background-color:#ddd;
 	padding: 15px 0;
 	/*background: #333;*/
-	font-size: 14px;
+	font-size: 15px;
+	font-weight: 300;
 }
 
 footer .container {
 	/*border-top: #c0c0c0 solid thin;*/
-	padding-top: 25px;
+	padding-top: 15px;
 }
 
 .footer-nav {
 	list-style-type: none;
-	float: left;
-	margin-left: -20px;
+	/*float: left;*/
+	margin-left: -52px;
 }
 
 .footer-nav li {
-	float: left;
+	/*float: left;*/
 	margin-left: 15px;
+	line-height: 24px;
 }
 
 .footer-nav a:link {
-	color: #999;
+	color: #3f3f3f;
 }
 
 .footer-nav a:visited {
-	color: #999;
+	color: #3f3f3f;
+}
+
+.footer-nav a:hover {
+	font-weight: 400;
+	text-decoration: none;
 }
 
 footer .socials {
@@ -177,11 +195,40 @@ footer .socials .fa {
 	color: #ddd;
 }
 
+footer .bottom-footer {
+	position: absolute;
+	background-color: #343434;
+	font-weight: 400;
+	font-size: 13px;
+	color: #ccc;
+	bottom: 0;
+	width: 100%;
+	padding: 30px;
+}
+
+#footer-emblem {
+	width: 55px;
+	margin-top: 18px;
+}
+
+.bottom-footer a:link {
+	color: #ccc;
+}
+
+.bottom-footer a:visited {
+	color: #ccc;
+}
+
 
 
 @media screen and (min-width: 320px) and (max-width: 600px) {
 	body {
 		font-size: 11px !important;
+		margin-bottom: 0;
+	}
+	
+	#banner-container {
+		width: auto !important;
 	}
 
 	.th-mobile {
@@ -209,6 +256,10 @@ footer .socials .fa {
 		border: none;
 		float: left;
 		text-align: left;
+	}
+	
+	footer, footer .bottom-footer {
+		position: relative;
 	}
 
 	footer .socials {

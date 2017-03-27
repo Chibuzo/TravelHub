@@ -95,25 +95,6 @@ if (isset($_REQUEST['op'])) {
         $travel = new Travel();
         $travel->updateParkSetting($_POST['travel_id'], $_POST['park_id'], $_POST['field'], $_POST['value']);
     }
-    elseif ($_REQUEST['op'] == 'add-travel-admin')
-    {
-        $params['company_name'] = $_POST['company_name'];
-        $params['abbr'] = $_POST['abbr'];
-        $params['online_charge'] = $_POST['online_charge'];
-        $params['offline_charge'] = $_POST['offline_charge'];
-        $params['api_charge'] = $_POST['api_charge'];
-
-        try {
-            $result = $travel_model->saveTravel($params);
-            if ($result == false) {
-                echo "There was an error, travel was not added.";
-            } else {
-                echo "Done";
-            }
-        } catch (\Exception $e) {
-            echo $e->getMessage();
-        }
-    }
     elseif ($_REQUEST['op'] == 'add_travel_vehicle_type')
     {
         require_once "../api/models/travelvehicle.class.php";

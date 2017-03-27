@@ -120,7 +120,7 @@ $all_vehicle_types = $vehicle_model->getAllVehicleTypes();
                                             <a href='' class='remove-travel hidden' title='Remove' data-toggle='tooltip'><i class='fa fa-trash-o'></i></a>
                                             <a href='' class='hidden travel-' data-toggle='modal' data-target='#addRouteModal' title='Add Route' data-toggle='tooltip'><i class='fa fa-road'></i></a>
                                             <a href='#vehicleModal' class='travel-vehicles' data-toggle='modal'><i class='fa fa-car' title='Add Vehicle Types' data-toggle='tooltip'></i></a>
-                                            <a href='#adminModal' data-toggle='modal' class='hidden travel-admins'><i class='fa fa-user' title='Add Admin' data-toggle='tooltip'></i></a>
+                                            <a href='#adminModal' data-toggle='modal' class='travel-admin'><i class='fa fa-user' title='Add Admin' data-toggle='tooltip'></i></a>
                                             <a href='' class='travel-details' title='Setting' data-toggle='tooltip'><i class='fa fa-cog'></i></a>
                                         </td>
                                     </tr>";
@@ -220,7 +220,7 @@ $all_vehicle_types = $vehicle_model->getAllVehicleTypes();
 
             <div class="modal-body">
                 <div id="admin-form-div">
-                    <form action="" method="post" id="addAdmin">
+                    <form action="" method="post" id="add-travel-admin">
                         <div class="form-group">
                             <label>Full Name</label>
                             <input class="form-control" type="text" placeholder="Full Name" name="full_name" id="full_name" required>
@@ -238,6 +238,7 @@ $all_vehicle_types = $vehicle_model->getAllVehicleTypes();
                             <input class="form-control" type="password" placeholder="Verify Password" name="v_password" id="v_password" required>
                         </div>
                         <input type="hidden" name="op" id="op" value="add-travel-admin" />
+                        <input type="hidden" name="user_level" value="travel_admin" />
                         <input type="hidden" name="travel_id" id="travel_id" value="" />
                         <button type="submit" class="btn btn-primary">Save</button>
                     </form>
@@ -346,26 +347,21 @@ $(document).ready(function() {
         $(this).removeClass('edit-travel-admin').html("<i class='fa fa-save'></i>").addClass("save-travel-admin");
     });
 
-    /*$("body").on('click', ".save-travel-admin", function(e) {
+    $("add-travel-admin").submit(function(e) {
         e.preventDefault();
-        var _link = $(this);
-        var parentTr = $(this).parents("tr");
-        var data = {};
-        data.id = parentTr.data("id");
 
-        data.full_name = parentTr.find("input[name=full_name]").val();
-        data.username = parentTr.find("input[name=username]").val();
-        data.op = "edit-travel-admin";
-
-        $.post("../../ajax/user_form.php", data, function(d) {
-            console.log(d);
+        var password = $('#password').val();
+        var v_password = $('#v_password').val();
+        if (password !== v_password) {
+            alert("Password do not match.");
+            return false;
+        }
+        $.post("../../ajax/user_form.php", $(this).serialize(), function(d) {
             if (d.trim() == "Done") {
-                parentTr.find("td:nth-child(2)").html(data.full_name);
-                parentTr.find("td:nth-child(3)").html(data.username);
-                _link.removeClass('save-travel-admin').html("<i class='fa fa-pencil'></i>").addClass("edit-travel-admin");
+
             }
         });
-    });*/
+    });
 
     //show delete user modal
     $('body').on('click', '.delete-travel-admin', function(e) {
@@ -436,26 +432,8 @@ $(document).ready(function() {
         modal.find('.modal-body #travel_id').val(travel_id);
     });
 
-    /*$('#addAdmin').on('submit', function(e) {
-        e.preventDefault();
-        var password = $('#password').val();
-        var v_password = $('#v_password').val();
-        if (password !== v_password) {
-            alert("Password do not match.");
-        } else {
-            $.post("../../ajax/travel-page.php", $(this).serialize() function(d) {
-                if (d.trim() == "Done") {
-                    $.post("../../ajax/misc_fns.php", {"op": "travel-details", "id": travel_id}, function(_data) {
-                        //$("#detail-div").html(_data);
-                    });
-                }
-            });
-            $('#adminModal').modal('hide');
-        }
-    });
 
-
-    $(".travel-admins").click(function(e) {
+    /*$(".travel-admins").click(function(e) {
         e.preventDefault();
         var travel_id = $(this).parents('tr').data('travel_id');
         $.post('../../ajax/user_form.php', {'op': 'get-travel-admins', 'travel_id': travel_id}, function(d) {

@@ -25,9 +25,9 @@ if ($_REQUEST['op'] == 'complete-booking')
 		}
 		$_SESSION['seat_no'] = $booking->reserveSeat($boarding_vehicle_id, $seat_no);
 		$_SESSION['ticket_id'] = $booking->book($_POST['boarding_vehicle_id'], $seat_no, $channel, $customer_id);
-		require_once "../includes/sms.php";
-		echo sendMTicket($_SESSION['ticket_id']);
-		die();
+		//require_once "../includes/sms.php";
+		//echo sendMTicket($_SESSION['ticket_id']);
+		//die();
 		// send booking details to terminal
 		$travel = new Travel();
 		$_travel = $travel->getTravelDepot($_SESSION['trip_id']);
